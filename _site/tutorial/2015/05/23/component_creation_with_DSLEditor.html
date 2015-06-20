@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>Creating a new component with eclipse based RoboComp's DSLEditor | RoboComp</title>
+	<meta name="description" content="Creating a new component with Eclipse based RoboComp’s DSLEditorWe will create now a new component that will connect to the RCIS simulator and run a simple c...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="http://example.com/tutorial/2015/05/23/component_creation_with_DSLEditor.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="RoboComp" href="http://example.com/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">RoboComp</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/robocomp" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Creating a new component with eclipse based RoboComp's DSLEditor</h1>
+    <p class="meta">
+    May 23, 2015
+    
+    </p>
+  </header>
+  <section class="post-content"><h1 id="creating-a-new-component-with-eclipse-based-robocomps-dsleditor">Creating a new component with Eclipse based RoboComp’s DSLEditor</h1>
+
+<p>We will create now a new component that will connect to the RCIS simulator and run a simple controller for the robot, using the laser data. First we need to install the DSLEditor software that is runtime Eclipse application.</p>
+
+<p>Create another terminal in Yakuake and type:</p>
+
+<pre><code>cd ~/robocomp/tools
+python fetch_DSLEditor.py
+</code></pre>
+
+<p>Select 32 or 64 bits according to your current linux installation. After a little while the DSLEditor will be installed under the <em>robocompDSL</em> directory:</p>
+
+<pre><code>cd roboCompDSL/DSLEditor
+./DSLEditor
+</code></pre>
+
+<p>Check that you have a <em>RoboComp</em> tab in the upper bar of the DSLEditor window and that the <em>robocomp</em> directory appears in the Project Explorer (left panel). If it does not, right click inside the <em>Project Explorer</em> panel and select <em>import</em>. Then select <em>General</em> and then <em>Existing Projects into Workspace</em>. Then select your <em>robocomp</em> directory and push <em>Finish</em>.</p>
+
+<p>Now we need to bring up some handy tabs in the lower pane. Select the <em>Window</em> tab in the upper bar, then <em>Show View</em>, then <em>Other</em> and again <em>Other</em>. Select now <em>Interfaces</em> and double-click on it. Go back to the main window.</p>
+
+<p>Now, in the left panel, unfold the <em>robocomp</em> directory down to <em>robocomp/components/</em> and then click on it with the right button. Select <em>New Folder</em> and enter <em>mycomponents</em> in the folder name. Do it again to create a new folder inside <em>mycomponents</em> named <em>myfirstcomp</em>. Select <em>myfirstcomp</em> and then click on the <em>RoboComp</em> tab in the upper bar of the main window. Select <em>Create CDSL file</em> and fill the requested name with <em>MyFirstComp.cdsl</em></p>
+
+<p>The new file will open inside a syntax-sensitive editor in the central panel. Ctrl-space gives you syntactically correct options. You can see the skeleton of a new empty component. Look for the tab <em>Interfaces</em> in the lower bar and select <em>DifferentialRobot.idsl</em>. Click on the green cross at the right of the bar to include it and accept when prompted in a pop-up window. You will see something like:</p>
+
+<pre><code>import "/robocomp/interfaces/IDSLs/DifferentialRobot.idsl";
+Component PFLocalizerComp{
+    Communications{
+        };
+        language Cpp;
+};
+</code></pre>
+
+<p>Repeat the same steps to include <em>Laser.idsl</em> and then add a <em>requires</em> statement inside de <em>Communications</em> section. The file now should look like this:</p>
+
+<pre><code>import "/robocomp/interfaces/IDSLs/DifferentialRobot.idsl";
+import "/robocomp/interfaces/IDSLs/Laser.idsl";
+Component MyFirstComp{
+    Communications{
+        requires DifferentialRobot, Laser;
+    };
+language Cpp;
+};
+</code></pre>
+
+<p>Save the file and click in the upper bar on the <em>RoboComp</em> tab. Select <em>Generate Code</em>. After a little while the new source tree for your <em>MyFirstComp</em> component will be created. You can go back now to Yakuake and create a new tab to compile it. Then:</p>
+
+<pre><code>cd ~/robocomp/components/mycomponents/myfirstcomp
+cmake .
+make
+bin/myfirstcomp --Ice.Config=etc/generic_config
+</code></pre>
+
+<p>and there it is! your component is running.</p>
+
+<p>What! Dissapointed? Yeah, I know it does nothing, but it runs and it is yours! Now let’s do some real programming.</p>
+
+<p>Stop the component with Ctrl Z and then type:</p>
+
+<pre><code>killall -9 myfirstcomp
+</code></pre>
+
+<p>Now start your favorite IDE. KDevelop will do it just fine and you have it already installed. Open it in another tab, from Ubuntu menu or with Alt-F2. Then:</p>
+
+<pre><code>Click the *Project* tab in the upper bar
+Select *Open/Import Project*
+Navigate to ~/robocomp/components/mycomponents/myfirstcomp
+Select *Makefile* and open the project
+</code></pre>
+
+<p>In the <em>Project</em> panel to the left of the screen, navigate to <em>src</em> and there select <em>specificworker.cpp</em> and open it. Open also <em>specificworker.h</em></p>
+
+<p>Now replace the empty <em>void compute()</em> method with this compact version of the classic AVOID-FORWARD-STOP architecture proposed by R. Brooks in the late 80’s:</p>
+
+<pre><code>void SpecificWorker::compute( )
+{
+    static	float rot = 0.1f;			// rads/sec
+    static float adv = 100.f;			// mm/sec
+    static float turnSwitch = 1;
+    const float advIncLow = 0.8;		// mm/sec
+    const float advIncHigh = 2.f;		// mm/sec
+    const float rotInc = 0.25;			// rads/sec
+    const float rotMax = 0.4;			// rads/sec
+    const float advMax = 200;			// milimetres/sec
+    const float distThreshold = 500; 	// milimetres
+try
+{
+    RoboCompLaser::TLaserData ldata = laser_proxy-&gt;getLaserData();
+    std::sort( ldata.begin(), ldata.end(), [](RoboCompLaser::TData a, RoboCompLaser::TData b){ return     a.dist &lt; b.dist; }) ;
+    if( ldata.front().dist &lt; distThreshold) 
+    {
+        adv = adv * advIncLow; 
+        rot = rot + turnSwitch * rotInc;
+        if( rot &lt; -rotMax) rot = -rotMax;
+        if( rot &gt; rotMax) rot = rotMax;
+        differentialrobot_proxy-&gt;setSpeedBase(adv, rot);
+    }
+    else
+    {
+        adv = adv * advIncHigh; 
+        if( adv &gt; advMax) adv = advMax;
+        rot = 0.f;
+        differentialrobot_proxy-&gt;setSpeedBase(adv, 0.f);		
+        turnSwitch = -turnSwitch;
+    }	
+}
+catch(const Ice::Exception &amp;ex)
+{
+    std::cout &lt;&lt; ex &lt;&lt; std::endl;
+}
+}
+</code></pre>
+
+<p>To compile the fancy version of <em>std::sort</em> you will have to first add this line at the end of the file <em>CMakeListsSpecific.txt</em> located in the same <em>src</em> directory:</p>
+
+<pre><code>ADD_DEFINITIONS( -std=c++11 )
+</code></pre>
+
+<p>and then type:</p>
+
+<pre><code>cmake .
+make
+</code></pre>
+
+<p>Hereafter, Press F8 in KDevelop to compile and link. Then, go to Yakuake and restart the component.</p>
+
+<p>Let us take InnerModel <em>simpleworld.xml</em> as an example. Open a new tab in Yakuake and execute</p>
+
+<pre><code>cd robocomp/files/innermodel
+rcis simpleworld.xml
+</code></pre>
+
+<p>Now you should see 2 windows. Now in Yakuake go back to tab where you had compiled <em>myfirstcomp</em> and run</p>
+
+<pre><code>bin/myfirstcomp --Ice.Config=etc/generic_config
+</code></pre>
+
+<p>You should see the robot maneouvring aroung the box. Now is when Robotics begin! Try to modify the code to let the robot go pass the blocking boxes.</p>
+</section>
+</article>
+
+<!-- Post navigation -->
+
+
+<!-- Disqus -->
+
+
+    </div>
+    <script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text">Copyright <a href="http://robocomp.github.io">RoboComp</a>
+</p>
+</footer>
+
+
+  </body>
+</html>

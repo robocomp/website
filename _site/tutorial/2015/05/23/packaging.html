@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title>Packaging RoboComp | RoboComp</title>
+	<meta name="description" content="Packaging Robocomp">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="http://example.com/tutorial/2015/05/23/packaging.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="RoboComp" href="http://example.com/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">RoboComp</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/robocomp" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Packaging RoboComp</h1>
+    <p class="meta">
+    May 23, 2015
+    
+    </p>
+  </header>
+  <section class="post-content"><h1 id="packaging-robocomp">Packaging Robocomp</h1>
+
+<h2 id="deb-packages">deb packages</h2>
+
+<p>we are using Cpack integrated with CMake for packaging robocomp.</p>
+
+<pre><code>cd ~/robocomp
+mkdir build
+cmake ..
+make package
+</code></pre>
+
+<p>will create a .deb package which we can install using any packaging application like dpkg. To install the created package, just double click on it(open with Software Center) or in terminal type :</p>
+
+<pre><code>dpkg -i &lt;packagename&gt;.deb
+</code></pre>
+
+<h2 id="source-packages-for-ppa">source packages for ppa</h2>
+
+<p>launchpad will only accept source packages and not binary.Launchpad will then build the packages. For building source packages we are using debuild which is a wrapper around the <em>dpkg-buildpackage + lintian</em>. so you will need to install debuild and dput on your system;</p>
+
+<p>The source_package.cmake script is used to create debian source package.</p>
+
+<p>The main CMakeLists.txt file defines a target <code>spackage</code> that builds the source package in build/Debian with <code>make spackage</code></p>
+
+<p>For uploading the package to ppa, First change the <strong>PPA_PGP_KEY</strong> in <a href="../cmake/package_details.cmake#L26">package_details.cmake</a> to details to the contact of the PGP key  details registered with your ppa account.Then create a source package by building the target <em>spackage</em>.Once the Source package is build successfully, upload it to your ppa by:</p>
+
+<pre><code>cd Debian/
+dput ppa:&lt;lp-username&gt;/&lt;ppa-name&gt; packet-source.changes
+</code></pre>
+
+<p>building of source package can be tested with:</p>
+
+<pre><code>cd Debian/robocomp-&lt;version&gt;
+debuild -i -us -uc
+</code></pre>
+
+<h3 id="note">Note:</h3>
+
+<p>If you want to upload another source package to ppa which doesn’t have any changes in the source but maybe in the debian files. you can build the spackage after commenting out <code>set(DEB_SOURCE_CHANGES "CHANGED" CACHE STRING "source changed since last upload")</code> in <a href="../cmake/package_details.cmake#L27">package_details.cmake</a> so that the the script will only increase the ppa version number and wont include the source package for uploading to ppa (which otherwise will give an error).</p>
+</section>
+</article>
+
+<!-- Post navigation -->
+
+
+<!-- Disqus -->
+
+
+    </div>
+    <script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text">Copyright <a href="http://robocomp.github.io">RoboComp</a>
+</p>
+</footer>
+
+
+  </body>
+</html>
