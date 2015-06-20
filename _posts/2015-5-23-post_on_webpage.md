@@ -1,13 +1,7 @@
 ---
 layout: post
 title: Write a post for robocomp, A step by step guide.
-categories: [Tutorial]
-tags: [General]
-description: In detail explanation as to how to write a post for robocomp
 ---
-
-#Write a post for robocomp, A step by step guide.
-
 
 In this tutorial you will be learning about writing a post for robocomp. I assume that you are already familiar with contributing via Github if you are not then you can follow [this article](http://rajathkumarmp.github.io/robocomp/tutorial/2015/05/23/contribute.html) and then come back here.
 

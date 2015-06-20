@@ -1,12 +1,7 @@
 ---
 layout: post
 title: Introduction to debian packaging
-categories: [Post]
-tags: [Debian]
-description: For packaging a program there should be a subdirectory under the program's source directory, called debian. Files in this directory customize the behavior of the...
 ---
-
-#Introduction to debian packaging
 
 For packaging a program there should be a subdirectory under the program's source directory, called debian. Files in this directory customize the behavior of the package. The most important of them are control, changelog, copyright, and rules, which are required for all packages.
 

@@ -1,11 +1,7 @@
 ---
 layout: post
 title: aprilTagsComp, Wrapping E. Olson's AprilTags in RoboComp
-categories: [Tutorial]
-tags: [AprilTags]
-description: AprilTags is an augmented reality tag system developed by E. Olson at the U. of Michigan, USA. A complete explanation and related papers can be ...
 ---
-#aprilTagsComp: wrapping E. Olson's AprilTags in RoboComp
 
 AprilTags is an augmented reality tag system developed by E. Olson at the U. of Michigan, USA. A complete explanation and related papers can be found [here](http://april.eecs.umich.edu/wiki/index.php/AprilTags). There is a C++ version written
  by Michael Kaes [here](http://people.csail.mit.edu/kaess/apriltags/) which is the one we use.

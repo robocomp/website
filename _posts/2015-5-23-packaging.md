@@ -1,16 +1,9 @@
 ---
 layout: post
 title: Packaging RoboComp
-categories: [Tutorial]
-tags: [debian]
-description: we are using Cpack integrated with CMake for packaging robocomp...
 ---
 
-#Packaging Robocomp
-
-##deb packages
-
-we are using Cpack integrated with CMake for packaging robocomp.
+**deb packages** : We are using Cpack integrated with CMake for packaging robocomp.
 
     cd ~/robocomp
     mkdir build

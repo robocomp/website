@@ -1,12 +1,7 @@
 ---
 layout: post
 title: Maintaining your own repository of components in GitHub 
-categories: [Tutorial]
-tags: [github]
-description: We recommend that you create a repository for your components (i.e. *mycomponents* directory in the example before) in your GitHub account (or other similar site) and pull/clone it in *~/robocomp/components* whenever yo need it....
 ---
-
-#Maintaining your own repository of components in GitHub
 
 We recommend that you create a repository for your components (i.e. *mycomponents* directory in the example before) in your GitHub account (or other similar site) and pull/clone it in *~/robocomp/components* whenever yo need it. For example, if your GitHub account is *myaccount*, first log in with your browser and create a new repository named *mycomponents* following this instructions: 
 
