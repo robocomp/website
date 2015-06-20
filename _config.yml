@@ -1,5 +1,5 @@
 # SITE CONFIGURATION
-baseurl: "" # the subpath of your site, e.g. /blog/
+baseurl: "/website" # the subpath of your site, e.g. /blog/
 url: "http://robocomp.github.io" # the base hostname & protocol for your site
 
 # THEME-SPECIFIC CONFIGURATION
