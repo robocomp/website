@@ -7,7 +7,7 @@ feature-img: "img/sample_feature_img.png"
 
 **Github**
 
-1. [Maintaining your own repository on github](http://robocomp.github.io/website/)
+1. [Maintaining your own repository on github](http://robocomp.github.io/website/2015/05/23/using_github.html)
 2. [Writing a post for robocomp, A step by step guide](http://robocomp.github.io/website/2015/05/23/post_on_webpage.html)
 
 **robocompdsl**
