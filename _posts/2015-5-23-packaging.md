@@ -1,5 +1,7 @@
 ---
 layout: post
+categories: [tutorial]
+tags: [nithin]
 title: Packaging RoboComp
 ---
 
@@ -12,7 +14,7 @@ title: Packaging RoboComp
 
 will create a .deb package which we can install using any packaging application like dpkg. To install the created package, just double click on it(open with Software Center) or in terminal type :
 
-    dpkg -i <packagename>.deb
+    sudo dpkg -i <packagename>.deb
 
 ##source packages for ppa
 
