@@ -8,6 +8,7 @@ feature-img: "img/sample_feature_img_3.png"
 **Rajath Kumar M.P.**
 
 1. [Write a post for robocomp, A step by step guide.](http://robocomp.github.io/website/2015/05/23/post_on_webpage.html)
+2. [GSoC, Till Now...](http://robocomp.github.io/website/2015/06/25/rajath1.html)
 
 **Mercedes Palotelli**
 
