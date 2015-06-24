@@ -1,0 +1,16 @@
+---
+layout: post
+title: Debian Packaging
+categories: [ GSoC15]
+tags: [nithin]
+description: In this blog I explains how the basics of debian packaging and how it is implemented in robocomp
+---
+
+##What is a binary package?
+A binary package in a is an application package which contains (pre-built) executables, as opposed to source code. Basically a binary package is an archive which contains executables some other info like rules on how to install them, dependencies etc. debian binary package is also a type of binary package. You can use a package manger to install these packages.I have explained I have explained it in tutorial [Debian packaging]().
+
+##Implementation in Robocomp
+For binary packages i was left with two options. whether i could use the same cmake script i used for creating source packages or i could use the `CPACK` packaging tool. Finally i decided to go with CPACK because - 1)less code , that means less messing up 2)its an well known tool so is expected to perform better than a script i am writing. CPACK has so many configuration options so i made a seperate cmake file `package_details.cmake` for configuring cpack so that its easier for users to change any configuration. CPACK will add a target `package` for generating binary package. so you could run `make package` for generating the package. 
+
+##NB
+*Unfortunately CPACK has a bug in it, its not changing the control files permission correctly which throws a warning during installation. so i have create a bash script which will fix the control file permissions.
