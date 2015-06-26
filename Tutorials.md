@@ -24,9 +24,9 @@ feature-img: "img/sample_feature_img.png"
 **Miscellaneous**
 
 1. [Software components in RoboComp, A brief introduction](http://robocomp.github.io/website/2015/05/23/components.html)
-2. [Packaging RoboComp](http://robocomp.github.io/website/2015/05/23/packaging.html)
+2. [Packaging RoboComp](http://robocomp.github.io/website/tutorial/2015/05/23/packaging.html)
 3. [Chroot environment](http://robocomp.github.io/website/2015/05/23/How_To_Make_Chroot_Environment.html)
-4. [Introduction to debian packaging](http://robocomp.github.io/website/2015/05/23/Debian_packaging.html)
+4. [Introduction to debian packaging](http://robocomp.github.io/website/tutorial/2015/05/23/Debian_packaging.html)
 
 
 
