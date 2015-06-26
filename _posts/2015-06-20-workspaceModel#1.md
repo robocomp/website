@@ -1,0 +1,42 @@
+---
+layout: post
+title: New build system and workspace model in Robocomp #1
+categories: [ GSoC15]
+tags: [nithin]
+description: 
+---
+
+I have started the workspace model design keeping in mind the following points.
+
+* you should be able to build all packages at once, if necessary and also separately  
+* the source tree should be kept clean  
+* It should scalable and also existing components should be easily moved in  
+* dependencies should be easily handled  
+
+Referring to other similar workspace models i came up with the following model.
+
+This is the recommended layout for development is as follows:
+
+![ Robocomp workspace model](https://github.com/robocomp/website/tree/gh-pages/img/workspace_model.jpg "Robocomp workspace model")
+
+##Elements of workspace
+
+
+###Workspace
+The workspace is the folder inside which you are going to be actively developing. Keeping things in a folder with connected development helps keep separation of development models.
+
+###Source space
+The source space is the folder is where it will be expected to look for packages when building. This folder is easily identified as it is where the toplevel.cmake is linked from the catkin project. Each component should be in a direct subdirectory. if the directory contains a file named *IGNORE_COMP* the component will be ignored while building the workspace.
+
+###Build Space
+The build space is the folder in which cmake is invoked and generates artifacts such as the CMakeCache. A typical invocation of cmake will look like this when following the recommended layout.
+
+    cmake ../src
+
+This need not be a direct sub directory of workspace. It can be any where.
+
+###Development Space
+The development space is where build system generates the binaries and config files which are executable before installation. This should be a direst subdirectory of workspace. Currently the `devel space is merged with the source space`.
+
+###Install Space
+If make install is called this is the directory into which cmake will target all installations. This directory contains a file names *.rc_install* which contain a semi colon separated paths of workspaces which are installed to this install space.
