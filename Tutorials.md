@@ -24,9 +24,10 @@ feature-img: "img/sample_feature_img.png"
 **Miscellaneous**
 
 1. [Software components in RoboComp, A brief introduction](http://robocomp.github.io/website/2015/05/23/components.html)
-2. [Packaging RoboComp](http://robocomp.github.io/website/2015/05/23/nithin3.html)
-3. [Chroot environment](http://robocomp.github.io/website/2015/05/23/How_To_Make_Chroot_Environment.html)
-4. [Introduction to debian packaging](http://robocomp.github.io/website/2015/05/23/nithin1.html)
+2. [Chroot environment](http://robocomp.github.io/website/2015/05/23/How_To_Make_Chroot_Environment.html)
+3. [Introduction to debian packaging](http://robocomp.github.io/website/2015/05/23/nithin1.html)
+4. [Packaging RoboComp](http://robocomp.github.io/website/2015/05/23/nithin3.html)
+5. [Build Tools](http://robocomp.github.io/website/2015/06/26/nithin6.html)
 
 
 
