@@ -5,9 +5,28 @@ permalink: /GSoC/
 feature-img: "img/sample_feature_img_3.png"
 ---
 
+**Nithin Murali**
+
+1. [New build system and workspace model in Robocomp #1](http://robocomp.github.io/website/2015/06/20/nithin4.html)
+
+2. [New build system and workspace model in Robocomp #2](http://robocomp.github.io/website/2015/06/25/nithin5.html)
+
+3. [Build Tools](http://robocomp.github.io/website/2015/06/26/nithin6.html)
+
+4. [Introduction to Debian Packaging](http://robocomp.github.io/website/2015/05/23/nithin1.html)
+
+5. [Debian Packaging #1](http://robocomp.github.io/website/2015/06/12/nithin8.html)
+
+6. [Debian Packaging #2](http://robocomp.github.io/website/2015/06/15/nithin7.html)
+
+7. [Packaging RoboComp](http://robocomp.github.io/website/2015/05/23/nithin3.html)
+
+8. [Building and deployment system design](http://robocomp.github.io/website/2015/05/23/nithin2.html)
+
 **Rajath Kumar M.P.**
 
 1. [Write a post for robocomp, A step by step guide.](http://robocomp.github.io/website/2015/05/23/post_on_webpage.html)
+
 2. [GSoC, Till Now...](http://robocomp.github.io/website/2015/06/25/rajath1.html)
 
 **Mercedes Palotelli**
