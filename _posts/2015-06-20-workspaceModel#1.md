@@ -17,7 +17,7 @@ Referring to other similar workspace models i came up with the following model.
 
 This is the recommended layout for development is as follows:
 
-![ Robocomp workspace model](https://github.com/robocomp/website/tree/gh-pages/img/workspace_model.jpg "Robocomp workspace model")
+![ Robocomp workspace model](/website/img/workspace_model.jpg "Robocomp workspace model")
 
 ##Elements of workspace
 

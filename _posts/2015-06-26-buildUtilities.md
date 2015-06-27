@@ -1,9 +1,6 @@
 ---
 layout: post
 title: Build tools
-categories: [tutorial]
-tags: [nithin]
-description: description of various build tools in robocomp, and how to use them.
 ---
 
 

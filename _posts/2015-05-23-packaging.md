@@ -1,11 +1,11 @@
 ---
 layout: post
-categories: [tutorial]
-tags: [nithin]
 title: Packaging RoboComp
 ---
 
-**deb packages** : We are using Cpack integrated with CMake for packaging robocomp.
+##**deb packages** :
+
+We are using Cpack integrated with CMake for packaging robocomp.
 
     cd ~/robocomp
     mkdir build

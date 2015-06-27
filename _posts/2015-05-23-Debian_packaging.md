@@ -1,7 +1,5 @@
 ---
 layout: post
-categories: [tutorial]
-tags: [nithin]
 title: Introduction to debian packaging
 ---
 
