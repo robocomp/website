@@ -5,6 +5,12 @@ permalink: /GSoC/
 feature-img: "img/sample_feature_img_3.png"
 ---
 
+**Kripasandhu Sarkar**
+
+1. [Computer vision components and libraries management #1](http://robocomp.github.io/website/2015/07/02/kripa1.html)
+
+2. [Computer vision components and libraries management #2](http://robocomp.github.io/website/2015/07/02/kripa2.html)
+
 **Nithin Murali**
 
 1. [Building and deployment system design](http://robocomp.github.io/website/2015/05/23/nithin2.html)
