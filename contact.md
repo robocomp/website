@@ -16,3 +16,9 @@ feature-img: "img/sample_feature_img.png"
     <p>
     <input type="submit" value="Send"></p>
 </form>
+
+
+<a href="https://groups.google.com/forum/?hl=es#!forum/robocomp-dev"> Meet Developers @ Google Group </a>
+
+
+<a href="https://gitter.im/robocomp"> Say hello @ Gitter </a>
