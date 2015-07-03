@@ -8,16 +8,16 @@
 	<meta http-equiv="X-Frame-Options" content="sameorigin">
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/website/css/main.css">
 
 	<!--Favicon-->
-	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/website/favicon.ico" type="image/x-icon">
 
 	<!-- Canonical -->
-	<link rel="canonical" href="http://example.com/blog/page3/">
+	<link rel="canonical" href="http://robocomp.github.io/website/blog/page3/">
 
 	<!-- RSS -->
-	<link rel="alternate" type="application/atom+xml" title="RoboComp" href="http://example.com/feed.xml" />
+	<link rel="alternate" type="application/atom+xml" title="RoboComp" href="http://robocomp.github.io/website/feed.xml" />
 
 	<!-- Font Awesome -->
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
@@ -35,18 +35,28 @@
 
 	<!-- Google Analytics -->
 	
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-37388407-1', 'auto');
+	ga('send', 'pageview');
+	</script>
+	
 </head>
 
   <body>
     <header class="site-header">
 	<div class="branding">
 		
-		<a href="/">
-			<img class="avatar" src="/img/avatar.png" alt=""/>
+		<a href="/website/">
+			<img class="avatar" src="/website/img/avatar.png" alt=""/>
 		</a>
 		
 		<h1 class="site-title">
-			<a href="/">RoboComp</a>
+			<a href="/website/">RoboComp</a>
 		</h1>
 	</div>
 	<nav class="site-nav">
@@ -56,9 +66,59 @@
 			
 			
 			<li>
-				<a class="page-link" href="/about/">
+				
+				<a class="page-link" href="/website/Blog/">
+					Blog
+				</a> &nbsp;&nbsp;·&nbsp;&nbsp;
+			</li>
+			
+			
+			
+			<li>
+				
+				<a class="page-link" href="/website/GSoC/">
+					GSoC
+				</a> &nbsp;&nbsp;·&nbsp;&nbsp;
+			</li>
+			
+			
+			
+			<li>
+				
+				<a class="page-link" href="/website/Tutorials/">
+					Tutorials
+				</a> &nbsp;&nbsp;·&nbsp;&nbsp;
+			</li>
+			
+			
+			
+			<li>
+				
+				<a class="page-link" href="/website/about/">
 					About
-				</a>
+				</a> &nbsp;&nbsp;·&nbsp;&nbsp;
+			</li>
+			
+			
+			
+			<li>
+				
+				<a class="page-link" href="/website/contact/">
+					Contact
+				</a> &nbsp;&nbsp;·&nbsp;&nbsp;
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				
+				<a class="page-link" href="/website/install/">
+					Install
+				</a> &nbsp;&nbsp;·&nbsp;&nbsp;
 			</li>
 			
 			
@@ -127,7 +187,7 @@
       <div class="home">
   
   <div class="call-out" 
-  style="background-image: url('/')">
+  style="background-image: url('/website/')">
     <p>RoboComp is an open-source Robotics framework providing the tools to create and modify software components that communicate through public interfaces. Components may require, subscribe, implement or publish interfaces in a seamless way. Building new components is done using two domain specific languages, IDSL and CDSL. With IDSL you define an interface and with CDSL you specify how the component will communicate with the world. With this information, a code generator creates C++ and/or Python sources, based on CMake, that compile and execute flawlessly. When some of these features have to be changed, the component can be easily regenerated and all the user specific code is preserved thanks to a simple inheritance mechanism.</p>
 
   </div>
@@ -138,19 +198,20 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/post/2015/05/23/README.html">
-            Tutorials Directory
+          <a class="post-link" href="/website/2015/06/12/nithin8.html">
+            Debian Packaging <p>#1</p>
           </a>
         </h1>
         <p class="meta">
-          May 23, 2015
+          June 12, 2015
         </p>
       </header>
       <div class="excerpt">
-        <h1 id="tutorials-for-robocomp">Tutorials for RoboComp</h1>
+        <h2 id="what-is-a-binary-package">What is a binary package?</h2>
+<p>A binary package in a is an application package which contains (pre-built) executables, as opposed to source code. Basically a binary package is an archive which contains executables some other info like rules on how to install them, dependencies etc. debian binary package is also a type of binary package. You can use a package manger to install these packages.I have explained I have explained it in tutorial <a href="http://robocomp.github.io/website/2015/05/23/nithin1.html">Debian packaging</a>.</p>
 
 
-        <a class="button" href="/post/2015/05/23/README.html">
+        <a class="button" href="/website/2015/06/12/nithin8.html">
           Continue reading
         </a>
       </div>
@@ -159,19 +220,19 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/post/2015/05/23/How_To_Make_Chroot_Environment.html">
-            Chroot environment
+          <a class="post-link" href="/website/2015/06/12/mercedes1.html">
+            <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#1</p>
           </a>
         </h1>
         <p class="meta">
-          May 23, 2015
+          June 12, 2015
         </p>
       </header>
       <div class="excerpt">
-        <h1 id="chroot-environment">Chroot environment</h1>
+        <p><strong>About Me</strong> : Hello! My name is Mercedes Paoletti Ávila, and I would like to introduce me a little in this first post. I’m graduate in engineering from the University of Extremadura, and currently I study the Master in computer engineering and ICT management in the same University. Over the past two years I have been working in the Robotics Laboratory of the UEx, Robolab. There I developed my end grade work, “inverse kinematics in social robots”, using the robotic framework implemented by the laboratory, Robocomp, and now I’m doing my Master’s Thesis, that is about robots planners and is part of the project of LJ Manso, AGM.</p>
 
 
-        <a class="button" href="/post/2015/05/23/How_To_Make_Chroot_Environment.html">
+        <a class="button" href="/website/2015/06/12/mercedes1.html">
           Continue reading
         </a>
       </div>
@@ -180,8 +241,8 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/post/2015/05/23/Debian_packaging.html">
-            Introduction to debian packaging
+          <a class="post-link" href="/website/2015/05/23/using_github.html">
+            Maintaining your own repository of components in GitHub
           </a>
         </h1>
         <p class="meta">
@@ -189,10 +250,10 @@
         </p>
       </header>
       <div class="excerpt">
-        <h1 id="introduction-to-debian-packaging">Introduction to debian packaging</h1>
+        <p>We recommend that you create a repository for your components (i.e. <em>mycomponents</em> directory in the example before) in your GitHub account (or other similar site) and pull/clone it in <em>~/robocomp/components</em> whenever yo need it. For example, if your GitHub account is <em>myaccount</em>, first log in with your browser and create a new repository named <em>mycomponents</em> following this instructions:</p>
 
 
-        <a class="button" href="/post/2015/05/23/Debian_packaging.html">
+        <a class="button" href="/website/2015/05/23/using_github.html">
           Continue reading
         </a>
       </div>
@@ -201,19 +262,40 @@
     <div class="post-teaser">
       <header>
         <h1>
-          <a class="post-link" href="/test">
-            Testpost
+          <a class="post-link" href="/website/2015/05/23/robocompdsl.html">
+            Using robocompdsl, The command line component generator
           </a>
         </h1>
         <p class="meta">
-          May 18, 2015
+          May 23, 2015
         </p>
       </header>
       <div class="excerpt">
-        <h1 id="test">Test</h1>
+        <p><strong>robocompdsl</strong> is the new tool used in RoboComp to automatically generate components and modify their main properties once they have been generated (e.g., communication requirements, UI type). It is one of the core tools of the framework so, if you installed RoboComp, you can start using it right away.</p>
 
 
-        <a class="button" href="/test">
+        <a class="button" href="/website/2015/05/23/robocompdsl.html">
+          Continue reading
+        </a>
+      </div>
+    </div>
+    
+    <div class="post-teaser">
+      <header>
+        <h1>
+          <a class="post-link" href="/website/2015/05/23/post_on_webpage.html">
+            Write a post for robocomp, A step by step guide.
+          </a>
+        </h1>
+        <p class="meta">
+          May 23, 2015
+        </p>
+      </header>
+      <div class="excerpt">
+        <p>In this tutorial you will be learning about writing a post for robocomp. I assume that you are already familiar with contributing via Github if you are not then you can follow <a href="http://rajathkumarmp.github.io/robocomp/tutorial/2015/05/23/contribute.html">this article</a> and then come back here.</p>
+
+
+        <a class="button" href="/website/2015/05/23/post_on_webpage.html">
           Continue reading
         </a>
       </div>
@@ -224,18 +306,23 @@
   
   <div class="pagination">
     
-    <a href="/blog/page2" class="button" >
+    <a href="/website/blog/page2" class="button" >
       <i class="fa fa-chevron-left"></i>
       Prev
     </a>
     
+    
+    <a href="/website/blog/page4" class="button" >
+      Next
+      <i class="fa fa-chevron-right"></i>
+    </a>
     
   </div>
   
 </div>
 
     </div>
-    <script src="/js/main.js"></script>
+    <script src="/website/js/main.js"></script>
 
 
 <footer class="site-footer">

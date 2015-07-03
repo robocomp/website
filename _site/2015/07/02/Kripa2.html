@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+	<meta charset="utf-8">
+	<title><i>GSoC,</i> Computer vision components and libraries management <p>#2</p> | RoboComp</title>
+	<meta name="description" content="Open Detection: Following the idea that it is better to have an independent library for Object Detection than contributing directly to Robocomp, I created th...">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/website/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/website/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="http://robocomp.github.io/website/2015/07/02/Kripa2.html">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="RoboComp" href="http://robocomp.github.io/website/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.js"></script>
+	
+
+	<!-- Google Analytics -->
+	
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-37388407-1', 'auto');
+	ga('send', 'pageview');
+	</script>
+	
+</head>
+
+  <body>
+    <header class="site-header">
+	<div class="branding">
+		
+		<a href="/website/">
+			<img class="avatar" src="/website/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/website/">RoboComp</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+			
+			
+			
+			
+			<li>
+				
+				<a class="page-link" href="/website/Blog/">
+					Blog
+				</a> &nbsp;&nbsp;·&nbsp;&nbsp;
+			</li>
+			
+			
+			
+			<li>
+				
+				<a class="page-link" href="/website/GSoC/">
+					GSoC
+				</a> &nbsp;&nbsp;·&nbsp;&nbsp;
+			</li>
+			
+			
+			
+			<li>
+				
+				<a class="page-link" href="/website/Tutorials/">
+					Tutorials
+				</a> &nbsp;&nbsp;·&nbsp;&nbsp;
+			</li>
+			
+			
+			
+			<li>
+				
+				<a class="page-link" href="/website/about/">
+					About
+				</a> &nbsp;&nbsp;·&nbsp;&nbsp;
+			</li>
+			
+			
+			
+			<li>
+				
+				<a class="page-link" href="/website/contact/">
+					Contact
+				</a> &nbsp;&nbsp;·&nbsp;&nbsp;
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				
+				<a class="page-link" href="/website/install/">
+					Install
+				</a> &nbsp;&nbsp;·&nbsp;&nbsp;
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- Social icons from Font Awesome, if enabled -->
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/robocomp" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/website/')">
+    <h1 class="title"><i>GSoC,</i> Computer vision components and libraries management <p>#2</p></h1>
+    <p class="meta">
+    July 2, 2015
+    
+    </p>
+  </header>
+  <section class="post-content"><p><strong>Open Detection:</strong> Following the idea that it is better to have an independent library for Object Detection than contributing directly to Robocomp, I created the new library ‘Open Detection’. It is available now in the following links</p>
+
+<ul>
+  <li>
+    <p>Github link: https://github.com/krips89/opendetection</p>
+  </li>
+  <li>
+    <p>Documentation link: http://krips89.github.io/opendetection_docs/index.html</p>
+  </li>
+</ul>
+
+<p>I have tried to document/provide tutorial inside the library whenever possible. So instead of writing everything here in the blog I’ll just post links to the tutorials/documentations.</p>
+
+<h3 id="installation-instructions">Installation Instructions</h3>
+<ul>
+  <li>Link: https://github.com/krips89/opendetection/blob/master/doc/tutorials/content/installation_instruction.rst</li>
+</ul>
+
+<h3 id="library-design">Library Design</h3>
+<p>The basic idea was to have a library with common and simple interface giving access to varies detection methods available here. After some thinking I came up with the design explained in the following tutorial:</p>
+
+<ul>
+  <li>https://github.com/krips89/opendetection/blob/master/doc/tutorials/content/basic_structures.rst</li>
+</ul>
+
+<p>The class diagrams providing a good reference is provided here:</p>
+
+<ul>
+  <li>http://krips89.github.io/opendetection_docs/inherits.html</li>
+</ul>
+
+<h3 id="documentation">Documentation</h3>
+<p>I did not document extensively till now as building an independent library from the scratch took a long time. The other very important reason is that the design is till little vulnerable to changes.
+I would wait little bit more for the design to be more concrete before I start documenting extensively.</p>
+
+<h2 id="things-finished">Things finished</h2>
+<p>Within this time frame I could finish the following tasks:</p>
+
+<ol>
+  <li>
+    <p>Design of the library.</p>
+  </li>
+  <li>
+    <p>Complete CMake infrastructure for modular building of the library from scratch.</p>
+  </li>
+  <li>
+    <p>2D feature based object detection (both Training and Detection phase) with demo.</p>
+  </li>
+  <li>
+    <p>Global feature based object detection (both training and detection phase) with demo.</p>
+  </li>
+  <li>
+    <p>Auto generated Documentation using Doxygen (http://krips89.github.io/opendetection_docs/index.html).</p>
+  </li>
+  <li>
+    <p>Sphinx based tutorial section to generate nice pages for tutorials and blogs like that of PCL.</p>
+  </li>
+  <li>
+    <p>Few other Utility classes which fits the needs and design for the library.</p>
+  </li>
+</ol>
+
+<h3 id="milestones-and-things-learnt">Milestones and things learnt:</h3>
+<p>In the next blog I’ll add the different sources I used to design and implement the above tasks and the things I learnt in this process.</p>
+
+<hr />
+<p>Kripasandhu Sarkar</p>
+</section>
+</article>
+
+<!-- Post navigation -->
+
+
+<!-- Disqus -->
+
+
+    </div>
+    <script src="/website/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text">Copyright <a href="http://robocomp.github.io">RoboComp</a>
+</p>
+</footer>
+
+
+  </body>
+</html>
