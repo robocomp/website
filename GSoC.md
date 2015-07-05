@@ -15,19 +15,19 @@ feature-img: "img/sample_feature_img_3.png"
 
 1. [Building and deployment system design](http://robocomp.github.io/website/2015/05/23/nithin2.html)
 
-2. [Debian Packaging #1](http://robocomp.github.io/website/2015/06/12/nithin8.html)
+2. [Introduction to Debian Packaging](http://robocomp.github.io/website/2015/05/23/nithin1.html)
 
-3. [Debian Packaging #2](http://robocomp.github.io/website/2015/06/15/nithin7.html)
+3. [Debian Packaging #1](http://robocomp.github.io/website/2015/06/12/nithin8.html)
 
-4. [New build system and workspace model in Robocomp #1](http://robocomp.github.io/website/2015/06/20/nithin4.html)
+4. [Debian Packaging #2](http://robocomp.github.io/website/2015/06/15/nithin7.html)
 
-5. [New build system and workspace model in Robocomp #2](http://robocomp.github.io/website/2015/06/25/nithin5.html)
+5. [New build system and workspace model in Robocomp #1](http://robocomp.github.io/website/2015/06/20/nithin4.html)
 
-3. [Build Tools](http://robocomp.github.io/website/2015/06/26/nithin6.html)
+6. [New build system and workspace model in Robocomp #2](http://robocomp.github.io/website/2015/06/25/nithin5.html)
 
-4. [Introduction to Debian Packaging](http://robocomp.github.io/website/2015/05/23/nithin1.html)
+7. [Build Tools (tutorial)](http://robocomp.github.io/website/2015/06/26/nithin6.html)
 
-7. [Packaging RoboComp](http://robocomp.github.io/website/2015/05/23/nithin3.html)
+8. [Packaging RoboComp (tutorial)](http://robocomp.github.io/website/2015/05/23/nithin3.html)
 
 **Rajath Kumar M.P.**
 
