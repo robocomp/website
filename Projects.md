@@ -175,15 +175,6 @@ The video shows Pulguita under the dynamics of target detection with inhibition 
 
 <img src="https://robolab.unex.es/images/stories/robots/pulg_0001.jpg" alt="Smiley face" height="300" width="300">
 
-15 **Master-Slave Surgical Tool**
-
-Master-Slave Surgical Tool pair of robotized minimally invasive surgical instruments. The goal of this project is to design a mechanism to operate remotely a surgical instrument with force feedback. The left image shows the two chassis supporting the instruments. In the right image, a custom made torque sensor is used to reproduce in the master side the resistance encountered by the slave.
-
-This project has been developed in collaboration with the Minimally Invasive Surgical Center of Cáceres, Spain and the group of Professor Félix Monasterio at the Universidad Politécnica de Madrid.
-
-<img src="https://robolab.unex.es/images/stories/robots/Pinzas/pinzas-3.bmp" alt="Smiley face" height="300" width="250">	<img src="https://robolab.unex.es/images/stories/robots/Pinzas/pinzas-10.bmp" alt="Smiley face" height="300" width="250">
-
-
 
 
 
