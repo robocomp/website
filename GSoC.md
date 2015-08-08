@@ -17,21 +17,19 @@ feature-img: "img/sample_feature_img_3.png"
 
 2. [Introduction to Debian Packaging](http://robocomp.github.io/website/2015/05/23/nithin1.html)
 
-3. [Debian Packaging #1](http://robocomp.github.io/website/2015/06/12/nithin8.html)
+3. [Debian Packaging](http://robocomp.github.io/website/2015/06/12/nithin8.html)
 
-4. [Debian Packaging #2](http://robocomp.github.io/website/2015/06/15/nithin7.html)
+4. [Setting up ppa](http://robocomp.github.io/website/2015/07/25/nithin10.html)
 
-5. [Setting up ppa](http://robocomp.github.io/website/2015/07/25/nithin10.html)
+5. [New build system and workspace model in Robocomp #1](http://robocomp.github.io/website/2015/06/20/nithin4.html)
 
-6. [New build system and workspace model in Robocomp #1](http://robocomp.github.io/website/2015/06/20/nithin4.html)
+6. [New build system and workspace model in Robocomp #2](http://robocomp.github.io/website/2015/06/25/nithin5.html)
 
-7. [New build system and workspace model in Robocomp #2](http://robocomp.github.io/website/2015/06/25/nithin5.html)
+7. [Build Tools (tutorial)](http://robocomp.github.io/website/2015/06/26/nithin6.html)
 
-8. [Build Tools (tutorial)](http://robocomp.github.io/website/2015/06/26/nithin6.html)
+8. [Packaging RoboComp (tutorial)](http://robocomp.github.io/website/2015/05/23/nithin3.html)
 
-9. [Packaging RoboComp (tutorial)](http://robocomp.github.io/website/2015/05/23/nithin3.html)
-
-10. [ Till now, after midterms](http://robocomp.github.io/website/2015/08/08/nithin9.html)
+9. [ Till now, after midterms](http://robocomp.github.io/website/2015/08/08/nithin9.html)
 
 **Rajath Kumar M.P.**
 
