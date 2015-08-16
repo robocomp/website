@@ -37,7 +37,7 @@ feature-img: "img/sample_feature_img_3.png"
 
 2. [GSoC, Till Now...](http://robocomp.github.io/website/2015/06/25/rajath1.html)
 
-**Mercedes Palotelli**
+**Mercedes Paoletti**
 
 1. [GSoC, Symbolic planning techniques for recognizing objects domestic #1](http://robocomp.github.io/website/2015/06/12/mercedes1.html)
 
