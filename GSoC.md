@@ -46,3 +46,5 @@ feature-img: "img/sample_feature_img_3.png"
 3. [GSoC, Symbolic planning techniques for recognizing objects domestic #3](http://robocomp.github.io/website/2015/06/17/mercedes3.html)
 
 4. [GSoC, Symbolic planning techniques for recognizing objects domestic #4](http://robocomp.github.io/website/2015/08/13/mercedes4.html)
+
+5. [GSoC, Symbolic planning techniques for recognizing objects domestic #5](http://robocomp.github.io/website/2015/08/16/mercedes5.html)
