@@ -19,9 +19,9 @@ permalink: /GSoC15/
 
 1. [Building and deployment system design](http://robocomp.github.io/website/2015/05/23/nithin2/)
 
-2. [Introduction to Debian Packaging](http://robocomp.github.io/website/2015/05/23/nithin1/)
+2. [Debian Packaging 1](http://robocomp.github.io/website/2015/05/23/nithin1/)
 
-3. [Debian Packaging](http://robocomp.github.io/website/2015/06/12/nithin8/)
+3. [Debian Packaging 2](http://robocomp.github.io/website/2015/06/12/nithin8/)
 
 4. [Setting up ppa](http://robocomp.github.io/website/2015/07/25/nithin10/)
 
@@ -33,7 +33,9 @@ permalink: /GSoC15/
 
 8. [Packaging RoboComp (tutorial)](http://robocomp.github.io/website/2015/05/23/nithin3/)
 
-9. [ Till now, after midterms](http://robocomp.github.io/website/2015/08/08/nithin9/)
+9. [Till now, after midterms](http://robocomp.github.io/website/2015/08/08/nithin9/)
+
+10. [Packaging libccd and FCL ] (tutorial)](http://robocomp.github.io/website/2015/08/21/nithin11/)
 
 **Rajath Kumar M.P.**
 
