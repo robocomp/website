@@ -35,7 +35,7 @@ permalink: /GSoC15/
 
 9. [Till now, after midterms](http://robocomp.github.io/website/2015/08/08/nithin9/)
 
-10. [Packaging libccd and FCL ] (tutorial)](http://robocomp.github.io/website/2015/08/21/nithin11/)
+10. [Packaging libccd and FCL (tutorial)](http://robocomp.github.io/website/2015/08/21/nithin11/)
 
 **Rajath Kumar M.P.**
 
