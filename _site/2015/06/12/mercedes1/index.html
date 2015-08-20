@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#1</p> &middot; RoboComp
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/rcwebsite2/public/css/poole.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/syntax.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/rcwebsite2public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/rcwebsite2public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/rcwebsite2">
+          RoboComp
+        </a>
+      </h1>
+      <p class="lead">A simple robotics framework.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/rcwebsite2">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/Blog/">Blog</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/GSoC/">GSoC</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/projects/">Projects</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/Tutorials/">Tutorials</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/contact/">Contact</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/install/">Install</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
+      <span class="sidebar-nav-item">Currently v1.0.0</span>
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title"><i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#1</p></h1>
+  <span class="post-date">12 Jun 2015</span>
+  <p><strong>About Me</strong> : Hello! My name is Mercedes Paoletti Ávila, and I would like to introduce me a little in this first post. I&#39;m graduate in engineering from the University of Extremadura, and currently I study the Master in computer engineering and ICT management in the same University. Over the past two years I have been working in the Robotics Laboratory of the UEx, Robolab. There I developed my end grade work, &quot;inverse kinematics in social robots&quot;, using the robotic framework implemented by the laboratory, Robocomp, and now I&#39;m doing my Master&#39;s Thesis, that is about robots planners and is part of the project of LJ Manso, AGM. </p>
+
+<p>And just following this course of action, this project combines the two concepts (planning and inverse kinematics) for recognizing and manipulating objects, using the framework Robocomp.</p>
+
+<h2>Symbolic planning techniques for recognizing objects domestic</h2>
+
+<p>The main object of this project is the application of symbolic techniques to build efficient pipelines in order to improve computer vision techniques, recognition and interpretation of domestic objects, to be finally executed on a domestic robot, so that the robot is able to move around a house and identify and interact with any objects located inside. The goal is that given a high-level task (eg. &quot;grab a mug&quot;), we can use symbolic planning techniques to build a pipeline of visual processing.</p>
+
+<p>In order to reach this goal, we need some previous concepts:</p>
+
+<p>1) We need a planner to organize the sequence of commands to be executed by the robot. We will use the AGM planner [1].</p>
+
+<p>2) We need a system to recognize marks or some objects. For now, we wil use the algorithm proposed by Edwin Olson, AprilTags [2]</p>
+
+<p>3) We also need a system that controls the movement of the robot and corrects the calibration errors and gaps of the engines. We will use the inverse kinematics component developed in Robocomp, which will add techniques of trajectory planning and visual feedback.</p>
+
+<p>All this provides a robust support that allows the robot to move freely within a given environment, such as a home, and interact with everyday objects that are in it.</p>
+
+<p>You can acces to the code of these components in the Robocomp repository: https://github.com/robocomp</p>
+
+<hr>
+
+<p>[1] AGM documentation: http://ljmanso.com/agm/</p>
+
+<p>[2] AprilTags: http://april.eecs.umich.edu/papers/details.php?name=olson2011tags</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/rcwebsite2/2015/07/02/kripa1/">
+            <i>GSoC,</i> Computer vision components and libraries management <p>#1</p>
+            <small>02 Jul 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/rcwebsite2/2015/07/02/Kripa2/">
+            <i>GSoC,</i> Computer vision components and libraries management <p>#2</p>
+            <small>02 Jul 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/rcwebsite2/2015/06/26/nithin6/">
+            Build tools
+            <small>26 Jun 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

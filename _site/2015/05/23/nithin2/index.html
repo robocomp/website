@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      <i>GSoC,</i> Building and deployment system design &middot; RoboComp
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/rcwebsite2/public/css/poole.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/syntax.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/rcwebsite2public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/rcwebsite2public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/rcwebsite2">
+          RoboComp
+        </a>
+      </h1>
+      <p class="lead">A simple robotics framework.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/rcwebsite2">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/Blog/">Blog</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/GSoC/">GSoC</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/projects/">Projects</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/Tutorials/">Tutorials</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/contact/">Contact</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/install/">Install</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
+      <span class="sidebar-nav-item">Currently v1.0.0</span>
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title"><i>GSoC,</i> Building and deployment system design</h1>
+  <span class="post-date">23 May 2015</span>
+  <h3>About Me:</h3>
+
+<p>Hi all , I am Nithin Murali and i would like to introduce me a little in this post. I am pursuing my engineering degree on Electrical Engineering from Indian Institute of Technology Bombay. I am working on an Autonomous Underwater Vehicle which we are developing for the RObosub competition. We are developing in ROS framework. That was my first introduction to robotic frameworks. I have read about Robocomop before but a real chance to contribute to this ambitious framework was brought to me by GSOC 2015. I have Chosen the project <em>RoboComp Building and deployment system design</em>.</p>
+
+<h3>About the project</h3>
+
+<p>Currently the the build system in Robocomp is not very efficient. It is limited only to the core libraries and some additional tools. So we will have to seprately build all the components one by one. Also as the number of component increases it will be more difficult to manage all of them. So I am planning to come up with an workspace model for Robocomp. It would accompany with various tools which will ease handling of components.</p>
+
+<p>As of now the users have to build robocomp from source for using it. But there may be users who dont want to work on the framework but is only interested in developing new components. For such users it is important that that we should supply an compiled package (preferably debian package). Also package would be more accessible if we could provide an ppa for robocomp. So i am planning to package robocomp and also create a ppa for robocomp.</p>
+
+<p>Currently Robocomp dosent have any tests written nor is it using any testinf framework. So one of my task would be decide on a testing framework/stragery and write tests for existing framework.</p>
+
+<hr>
+
+<p>Nithin Murali</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/rcwebsite2/2015/07/02/kripa1/">
+            <i>GSoC,</i> Computer vision components and libraries management <p>#1</p>
+            <small>02 Jul 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/rcwebsite2/2015/07/02/Kripa2/">
+            <i>GSoC,</i> Computer vision components and libraries management <p>#2</p>
+            <small>02 Jul 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/rcwebsite2/2015/06/26/nithin6/">
+            Build tools
+            <small>26 Jun 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Build tools &middot; RoboComp
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/rcwebsite2/public/css/poole.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/syntax.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/rcwebsite2public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/rcwebsite2public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/rcwebsite2">
+          RoboComp
+        </a>
+      </h1>
+      <p class="lead">A simple robotics framework.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/rcwebsite2">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/Blog/">Blog</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/GSoC/">GSoC</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/projects/">Projects</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/Tutorials/">Tutorials</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/contact/">Contact</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/install/">Install</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
+      <span class="sidebar-nav-item">Currently v1.0.0</span>
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Build tools</h1>
+  <span class="post-date">26 Jun 2015</span>
+  <h3>rc<em>init</em>ws</h3>
+
+<p>This will initialize a Robocomp workspace in the current/specified directory.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">rc_init_ws [path]
+</code></pre></div>
+<h3>rcbuild</h3>
+
+<p>When invoked form workspace without any arguments if not inside source path, it will build all the non-ignored components inside the workspace,  if inside any component source directory it will build only that component. But if a component is specified it will build it.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"> rcbuild [-h] [-i | --doc | --installdoc] [component]
+</code></pre></div>
+<p>The <code>doc</code> will generate documentation, <code>installdoc</code> will install the docs to install path, <code>install</code> will build and install the components. currently you can only generate docs for one component at a time.</p>
+
+<h3>rccomp</h3>
+
+<p>This dosent have much functions as of now. <code>rccomp list</code> will list all the components.</p>
+
+<h3>rced</h3>
+
+<p>when invoked as component-name file-name. it will open the the file in the component. if multiple files with same name exists, it will give choices and will ask you to choose one. It uses the editor specified in $EDITOR by default, if not present it will use <code>vim</code>.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">rced [-h] component file
+</code></pre></div>
+<h3>rcrun</h3>
+
+<p>Using rcrun you can start, stop or force stop any component from anywhere. You can also start a component in debug mode, given you have the required <em>config file</em> in the <em>etc</em> directory. If you have specified a config file then rcrun will use it to start the component. By default rcrun will use the <code>config</code> config file in <code>etc</code> directory, if not found it will search for <code>generic_config</code> if not found it will use any of config files present.If the debug flag is set, it will search for a config file that ends with <em>.debug</em>.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">rcrun [-h] [-s START |-st STOP | -fst FSTOP] [-d | -cf CFILE | -c CONFIG] [-is] [component]
+</code></pre></div>
+<h3>rccd</h3>
+
+<p>Using this you can cd into the component directory given the component name.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">rccd component
+</code></pre></div>
+<hr>
+
+<p>Nithin Murali</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/rcwebsite2/2015/07/02/kripa1/">
+            <i>GSoC,</i> Computer vision components and libraries management <p>#1</p>
+            <small>02 Jul 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/rcwebsite2/2015/07/02/Kripa2/">
+            <i>GSoC,</i> Computer vision components and libraries management <p>#2</p>
+            <small>02 Jul 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/rcwebsite2/2015/06/25/rajath1/">
+            <i>GSoC,</i> Till Now ... <p>#1</p>
+            <small>25 Jun 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

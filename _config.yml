@@ -1,72 +1,26 @@
-# SITE CONFIGURATION
-baseurl: "/website" # the subpath of your site, e.g. /blog/
-url: "http://robocomp.github.io" # the base hostname & protocol for your site
+# Dependencies
+markdown:         redcarpet
+highlighter:      pygments
 
-# THEME-SPECIFIC CONFIGURATION
-theme:
-  # Meta
-  title: RoboComp
-  avatar: avatar.png
-  gravatar: # Email MD5 hash
-  description: "Robotics Framework" # used by search engines
+# Permalinks
+permalink:        pretty
+relative_permalinks: true
 
-  # Header and footer text
-  header_text: >
-     <p>RoboComp is an open-source Robotics framework providing the tools to create and modify software components that communicate through public interfaces. Components may require, subscribe, implement or publish interfaces in a seamless way. Building new components is done using two domain specific languages, IDSL and CDSL. With IDSL you define an interface and with CDSL you specify how the component will communicate with the world. With this information, a code generator creates C++ and/or Python sources, based on CMake, that compile and execute flawlessly. When some of these features have to be changed, the component can be easily regenerated and all the user specific code is preserved thanks to a simple inheritance mechanism.</p>
+# Setup
+title:            RoboComp
+tagline:          ''
+description:      'A simple robotics framework.'
+url:              http://rajathkumarmp.github.io
+baseurl:          /rcwebsite2
 
-  header_text_feature_image:
-  footer_text: >
-   Copyright <a href="http://robocomp.github.io">RoboComp</a>
+author:
+  name:           'RoboComp'
+  url:            github.com/robocomp
 
-  # Icons
-  rss: false
-  email_address: # Full email address, e.g. "sam@example.com"
-  behance:
-  bitbucket:
-  dribbble:
-  facebook:
-  flickr:
-  github: "robocomp"
-  google_plus:
-  instagram:
-  linkedin:  # Full URL
-  pinterest:
-  reddit:
-  soundcloud:
-  stack_exchange:  # Full URL
-  steam:
-  tumblr:
-  twitter:
-  wordpress:
-  youtube:
+paginate:         5
 
-  # Scripts
-  google_analytics: UA-37388407-1 # Tracking ID, e.g. "UA-000000-01"
-  disqus_shortname:
-  katex: true # Enable if using math markup
+# Custom vars
+version:          1.0.0
 
-  # Localization strings
-  str_follow_on: "Follow on"
-  str_rss_follow: "Follow RSS feed"
-  str_email: "Email"
-  str_next: "Next"
-  str_prev: "Prev"
-  str_continue_reading: "Continue reading"
-
-  # Colours, typography and padding
-  # Open the "_sass > base" folder, and open "_variables.scss"
-  google_fonts: "Source+Sans+Pro:400,700,700italic,400italic"
-  
-  # Post navigation
-  post_navigation: false
-
-# PAGINATION
-paginate: 5
-paginate_path: "blog/page:num"
-
-# BUILD SETTINGS
-markdown: kramdown
-highlighter: pygments
-sass:
-  sass_dir: _sass
-  style: :compressed
+github:
+  repo:           https://github.com/robocomp

@@ -2,7 +2,6 @@
 layout: page
 title: Install
 permalink: /install/
-feature-img: "img/sample_feature_img_2.png"
 ---
 
 [RoboComp](http://robocomp.net)
