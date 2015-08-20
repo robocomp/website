@@ -1,20 +1,16 @@
 ---
 layout: post
-title: GSoc-Idea: Computer vision components and libraries management 2
-categories: [GSoC15]
-tags: [kripasindhu_sarkar]
-description: 3nd blog on the GSoC Idea: Computer vision components and libraries management; Learning + resources used
+title: GSoC, Computer vision components and libraries management -Open Detection <p>#4</p>
 ---
-#GSoC: Computer vision components and libraries management - Open Detection
 
-##Experience 
+**Experience** 
 It has been a quite a ride through this Google Summer of Code. Writing a completely new library with complete building framework/rest framework for documentation or tutorial/and Doxygen framework for auto documentation-class diagrams was challenging. It was equally exciting as well. Because of this I believe that I have acquired quite a good 'library maintainer/admin' skills. I will continue contributing into this library after the finish of this GSoC.
 
 After the challenges in building library support tools, the next major challenge was library design. Since, there was no previous 'coding flavor/design' I had to come up with the polymorphic and repeatable class design. There was so much confusion in choosing one alternative among the so many choices of good design. While the progress of the library I had to redesign the framework, and and remove structures, include namespaces and several things. I initially had thought that the design will be pretty much stable after the first month, which was not true. I still feel that the main design may need to be changed in the future to have a more logical structure. I hope this constant effort of keeping a good design will be helpful for the library users, and in the end, won't end up with an unstructured library like OpenCV. In the future I'll always keep an eye open for the design in general. 
 
 Now coming to the actual work of implementing different algorithm, I had really good experience in getting my hands dirty with variety of popular object detection methods. This was exactly what I had thought from this project. Taking out three months and working on the popular methods of your research topic is probably important and I hope that I'll make a good us of this in the future.
 
-##Learning 
+**Learning** 
 Here I'll point out some of the tools and resources I have used while building the library.
 
 ####CMake building framework:

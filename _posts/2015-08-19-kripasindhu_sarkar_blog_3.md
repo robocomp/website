@@ -1,13 +1,9 @@
 ---
 layout: post
-title: GSoc-Idea: Computer vision components and libraries management 2
-categories: [GSoC15]
-tags: [kripasindhu_sarkar]
-description: 3nd blog on the GSoC Idea: Computer vision components and libraries management; Things done till now + resources used + learning
+title: GSoC, Computer vision components and libraries management - Open Detction <p>#3</p>
 ---
-#GSoC: Computer vision components and libraries management - Open Detection
 
-##Contributions after Mid-term
+**Contributions after Mid-term**
 Following are the contributions towards the project _after_ the mid-term evaluations:
 
 * HOG based detection (with demo).
