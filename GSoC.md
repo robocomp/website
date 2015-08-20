@@ -37,9 +37,27 @@ permalink: /GSoC15/
 
 **Rajath Kumar M.P.**
 
-1. [Write a post for robocomp, A step by step guide.](http://robocomp.github.io/website/2015/05/23/post_on_webpage/)
+1. [Python, Getting Distance and Angle Measurements](http://robocomp.readthedocs.org/en/latest/code-examples/getting-started/python/Distance-measurement-python/)
 
-2. [GSoC, Till Now...](http://robocomp.github.io/website/2015/06/25/rajath1/)
+2. [Python, DifferentialRobot Tutorial](http://robocomp.readthedocs.org/en/latest/code-examples/getting-started/python/moving-robot-in-a-square-and-circle-python/)
+
+3. [Python, Obstacle Avoiding Bot](http://robocomp.readthedocs.org/en/latest/code-examples/getting-started/python/obstacle-avoiding-bot-python/)
+
+4. [C++, Laser.idsl tutorial](http://robocomp.readthedocs.org/en/latest/code-examples/getting-started/c++/getting-distance-measurement%20-c++/)
+
+5. [C++, Differential Robot Tutorial](http://robocomp.readthedocs.org/en/latest/code-examples/getting-started/c++/mmoving-robot-in-square-and-circle-c++/)
+
+6. [C++, Obstacle Avoiding Bot](http://robocomp.readthedocs.org/en/latest/code-examples/getting-started/c++/obstacle-avoiding-bot-c++/)
+
+7. [Interfaces Documentation, DifferentialRobot.idsl](http://robocomp.readthedocs.org/en/latest/interfaces/DifferentialRobot/)
+
+8. [Interfaces Documentation, Laser.idsl](http://robocomp.readthedocs.org/en/latest/interfaces/Laser/)
+
+9. [Write a post for robocomp, A step by step guide.](http://robocomp.github.io/website/2015/05/23/post_on_webpage/)
+
+10. [GSoC, Till Now, Before Midterms](http://robocomp.github.io/website/2015/06/25/rajath1/)
+
+11. [GSoC, After Midterms](http://robocomp.github.io/website/2015/08/20/rajath3/)
 
 **Mercedes Palotelli**
 
