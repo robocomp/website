@@ -45,11 +45,13 @@ permalink: /GSoC15/
 
 1. [GSoC, Symbolic planning techniques for recognizing objects domestic #1](http://robocomp.github.io/website/2015/06/12/mercedes1/)
 
-2. [GSoC, Symbolic planning techniques for recognizing objects domestic #2](http://robocomp.github.io/website/2015/06/15/mercedes2/)
+2. [GSoC, Symbolic planning techniques for recognizing objects domestic #2: Inverse Kinematics](http://robocomp.github.io/website/2015/06/15/mercedes2/)
 
-3. [GSoC, Symbolic planning techniques for recognizing objects domestic #3](http://robocomp.github.io/website/2015/06/17/mercedes3/)
+3. [GSoC, Symbolic planning techniques for recognizing objects domestic #3: Visual Inverse Kinematics](http://robocomp.github.io/website/2015/06/17/mercedes3/)
 
-4. [GSoC, Symbolic planning techniques for recognizing objects domestic #4](http://robocomp.github.io/website/2015/08/13/mercedes4/)
+4. [GSoC, Symbolic planning techniques for recognizing objects domestic #4: Inverse kinematics Graph Generator](http://robocomp.github.io/website/2015/08/13/mercedes4/)
 
-5. [GSoC, Symbolic planning techniques for recognizing objects domestic #5](http://robocomp.github.io/website/2015/08/16/mercedes5/)
+5. [GSoC, Symbolic planning techniques for recognizing objects domestic #5: System Review](http://robocomp.github.io/website/2015/08/16/mercedes5/)
+
+6. [GSoC, Symbolic planning techniques for recognizing objects domestic #6: Grasping object](http://robocomp.github.io/website/2015/08/20/mercedes6/)
 
