@@ -55,7 +55,7 @@ permalink: /GSoC15/
 
 9. [Write a post for robocomp, A step by step guide.](http://robocomp.github.io/website/2015/05/23/post_on_webpage/)
 
-10. [GSoC, Till Now, Before Midterms](http://robocomp.github.io/website/2015/06/25/rajath1/)
+10. [GSoC, Before Midterms](http://robocomp.github.io/website/2015/06/25/rajath1/)
 
 11. [GSoC, After Midterms](http://robocomp.github.io/website/2015/08/20/rajath3/)
 
