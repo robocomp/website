@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Contact
-permalink: /contact/
+permalink: http://robocomp.github.io/website/contact/
 ---
 
 <center>

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Projects
-permalink: /projects/
+permalink: http://robocomp.github.io/website/projects/
 ---
 
 **Publications**
