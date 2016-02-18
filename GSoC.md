@@ -1,7 +1,7 @@
 ---
 layout: page
 title: GSoC'15
-permalink: http://robocomp.github.io/website/GSoC15/
+permalink: /GSoC15/
 ---
 
 **Kripasandhu Sarkar**

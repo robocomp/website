@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Blog
-permalink: http://robocomp.github.io/website/Blog/
+permalink: /Blog/
 ---
 
 **GSoC 2015**

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Install
-permalink: http://robocomp.github.io/website/install/
+permalink: -install/
 ---
 
 [RoboComp](http://robocomp.net)
