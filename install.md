@@ -1,10 +1,10 @@
-https://github.com/robocomp/robocomp
-
 ---
 layout: page
 title: Install
 permalink: -install/
 ---
+
+https://github.com/robocomp/robocomp
 
 [RoboComp](http://robocomp.net)
 ===============================
