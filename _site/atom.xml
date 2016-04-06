@@ -1,0 +1,1330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>RoboComp</title>
+ <link href="http://rajathkumarmp.github.io/atom.xml" rel="self"/>
+ <link href="http://rajathkumarmp.github.io/"/>
+ <updated>2015-08-18T21:52:05+05:30</updated>
+ <id>http://rajathkumarmp.github.io</id>
+ <author>
+   <name>RoboComp</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title><i>GSoC,</i> Computer vision components and libraries management <p>#1</p></title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/07/02/kripa1/"/>
+   <updated>2015-07-02T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/07/02/kripa1</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;About me&lt;/strong&gt;:Hello, I am Kripasindhu Sarkar, a new PhD student at German Research Center for Artificial Intelligence (DFKI), Kaiserslautern working in the topic of Object Detection in simple and depth images. 
+I am extremely interested in the topic of object detection and computer vision; specifically in solving the problem by using theories from human cognition and perception to simulate human way of visualizing the problem. 
+But for now, I am focused on getting a very good grasp at the existing engineering (mostly) techniques in the field of computer vision and object detection. 
+Before joining here as a PhD student I worked as a Software Engineer at Paypal for 2 years and, prior to that I did my masters and graduation from Indian Institute of Technology Kharagpur (IIT Kharagpur).&lt;/p&gt;
+
+&lt;h2&gt;Computer vision components and libraries management&lt;/h2&gt;
+
+&lt;p&gt;The project is about designing and implementing a system for object detection and recognition in 3D point clouds and 2D images, and come up with a structured library with a good and easy-to-use APIs.
+There has been a good amount of research in this direction and my work was to cherry-pick important ideas and present them as usable components. I&amp;#39;ll now explain in details the various methods I chose to
+use as a part of this project.&lt;/p&gt;
+
+&lt;h3&gt;Local feature based on 2D images&lt;/h3&gt;
+
+&lt;p&gt;The idea is the find local features (like SIFT/SURF/ORB etc) in images of the object to be detected and the given test image. If enough matches are found between the descriptors of the to images an object is defined to be found. Important assumption is that the object to be detected must have textures. Advantage is that we get the complete 6 DOF of the object which might be useful for grasping. This comes in several flavors. &lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Planner objects: If we know the object is planner, we can directly compute its tomography (pose) after the match.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Random objects: If the object is of arbitrary shape it is quite difficult to detect an object with its pose but can be done in a tricky offline phase [1]. A 3D reconstruction is performed through bundle adjustments with the object to be detected to find the 2D - 3D correspondences. On the run time, given an input image, If enough matches are found, the object is detected with its full pose by solving PnP problem. &lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Dense feature based on 2D images:&lt;/h3&gt;
+
+&lt;p&gt;The idea is the find features over a grid or a region of an image encoding the properties of that region and use that feature in some classification algorithm to perform detection. Naturally, we need to calculate dense feature over all possible region size over the image and apply the classifier; and thus it is bit slow as well. Also object pose is not identified in this type. Few of them are:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;HOG based simple classification (well known).
+Difficulty in implementation: Moderate; HOG implementation with multiscale detector is present in OpenCV; but the training has to be performed separately using 3rd party tool like libsvm/matlab etc (but is straightfwd).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;HOG based Part Based Model: This is the famous and legendary and state of art (not anymore) object detector which uses LSVM.
+Difficulty in implementation: Difficult; OpenCV has the detection code, but not that good. Training LSVM is not straight fwd and we need to use the original Matlab implementation of the authors.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Wevlet based face detector with adaboost: This is also well known face detector algorithm used widely.
+Difficulty in implementation: Easy; though the concept is not that straight fwd, it is readily avilable in OpenCV.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Detection/Recognition on Depth Images&lt;/h3&gt;
+
+&lt;p&gt;If we can get the Point Cloud with some laser scan or Kinect, there are plenty of algorithms to detect object with its pose. Again we have local feature based and global feature based algorithms described below:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Direct object with local and global features [4]:
+Very similar to that of RGB image based algorithm with difference in the types of features. Local features have the advantage that preprocessing steps like segmentation is not required but tends to be slow. On the other hand we need to do segmentation to apply global features in the clusters. But once the segmentation (like identifying planes, etc and different clusters) of the scene is done, we can use the results subsequently. 
+Difficulty in implementation: Easy; components of pipeline is available in PCL.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Object matching using classifiers: 
+Global features readily available in PCL and found it to have similar results to a current benchmark but faster (10 seconds for classification testing in the benchmark [2] which uses sliding window based classification on all scales using HOG like descriptors). &lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;The library - Open Detection&lt;/h2&gt;
+
+&lt;p&gt;It was decided later to have an independent library for Object Detection instead of integrating everything to Robocomp. The result is the inception of a separate library &amp;#39;Open Detection&amp;#39;.
+The details of the design of the library is discussed in the next blog.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;[1] I. Gordon and D. G. Lowe, “What and where: 3d object recognition with accurate pose,” in Toward Category-Level Object Recognition, ser. Lecture Notes in Computer Science, J. Ponce, M. Hebert, C. Schmid, and A. Zisserman, Eds., vol. 4170. Springer, 2006, pp. 67–82.
+[2] MOPED: A Scalable and Low Latency Object Recognition and Pose Estimation System
+[3] Object Detection with Discriminatively Trained Part Based Models
+[4] Aldoma, A.; Marton, Zoltan-Csaba; Tombari, F.; Wohlkinger, W.; Potthast, C.; Zeisl, B.; Rusu, R.B.; Gedikli, S.; Vincze, M., &amp;quot;Tutorial: Point Cloud Library: Three-Dimensional Object Recognition and 6 DOF Pose Estimation,&amp;quot; Robotics &amp;amp; Automation Magazine, IEEE , vol.19, no.3,&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title><i>GSoC,</i> Computer vision components and libraries management <p>#2</p></title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/07/02/Kripa2/"/>
+   <updated>2015-07-02T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/07/02/Kripa2</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;Open Detection:&lt;/strong&gt; Following the idea that it is better to have an independent library for Object Detection than contributing directly to Robocomp, I created the new library &amp;#39;Open Detection&amp;#39;. It is available now in the following links&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Github link: https://github.com/krips89/opendetection&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Documentation link: http://krips89.github.io/opendetection_docs/index.html&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I have tried to document/provide tutorial inside the library whenever possible. So instead of writing everything here in the blog I&amp;#39;ll just post links to the tutorials/documentations.&lt;/p&gt;
+
+&lt;h3&gt;Installation Instructions&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Link: https://github.com/krips89/opendetection/blob/master/doc/tutorials/content/installation_instruction.rst&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Library Design&lt;/h3&gt;
+
+&lt;p&gt;The basic idea was to have a library with common and simple interface giving access to varies detection methods available here. After some thinking I came up with the design explained in the following tutorial:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;https://github.com/krips89/opendetection/blob/master/doc/tutorials/content/basic_structures.rst&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The class diagrams providing a good reference is provided here:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;http://krips89.github.io/opendetection_docs/inherits.html&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Documentation&lt;/h3&gt;
+
+&lt;p&gt;I did not document extensively till now as building an independent library from the scratch took a long time. The other very important reason is that the design is till little vulnerable to changes.
+I would wait little bit more for the design to be more concrete before I start documenting extensively. &lt;/p&gt;
+
+&lt;h2&gt;Things finished&lt;/h2&gt;
+
+&lt;p&gt;Within this time frame I could finish the following tasks:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Design of the library.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Complete CMake infrastructure for modular building of the library from scratch.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;2D feature based object detection (both Training and Detection phase) with demo.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Global feature based object detection (both training and detection phase) with demo.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Auto generated Documentation using Doxygen (http://krips89.github.io/opendetection_docs/index.html).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Sphinx based tutorial section to generate nice pages for tutorials and blogs like that of PCL.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Few other Utility classes which fits the needs and design for the library.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Milestones and things learnt:&lt;/h3&gt;
+
+&lt;p&gt;In the next blog I&amp;#39;ll add the different sources I used to design and implement the above tasks and the things I learnt in this process.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Kripasandhu Sarkar&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Build tools</title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/06/26/nithin6/"/>
+   <updated>2015-06-26T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/06/26/nithin6</id>
+   <content type="html">&lt;h3&gt;rc&lt;em&gt;init&lt;/em&gt;ws&lt;/h3&gt;
+
+&lt;p&gt;This will initialize a Robocomp workspace in the current/specified directory.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;rc_init_ws [path]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;rcbuild&lt;/h3&gt;
+
+&lt;p&gt;When invoked form workspace without any arguments if not inside source path, it will build all the non-ignored components inside the workspace,  if inside any component source directory it will build only that component. But if a component is specified it will build it.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt; rcbuild [-h] [-i | --doc | --installdoc] [component]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;doc&lt;/code&gt; will generate documentation, &lt;code&gt;installdoc&lt;/code&gt; will install the docs to install path, &lt;code&gt;install&lt;/code&gt; will build and install the components. currently you can only generate docs for one component at a time.&lt;/p&gt;
+
+&lt;h3&gt;rccomp&lt;/h3&gt;
+
+&lt;p&gt;This dosent have much functions as of now. &lt;code&gt;rccomp list&lt;/code&gt; will list all the components.&lt;/p&gt;
+
+&lt;h3&gt;rced&lt;/h3&gt;
+
+&lt;p&gt;when invoked as component-name file-name. it will open the the file in the component. if multiple files with same name exists, it will give choices and will ask you to choose one. It uses the editor specified in $EDITOR by default, if not present it will use &lt;code&gt;vim&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;rced [-h] component file
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;rcrun&lt;/h3&gt;
+
+&lt;p&gt;Using rcrun you can start, stop or force stop any component from anywhere. You can also start a component in debug mode, given you have the required &lt;em&gt;config file&lt;/em&gt; in the &lt;em&gt;etc&lt;/em&gt; directory. If you have specified a config file then rcrun will use it to start the component. By default rcrun will use the &lt;code&gt;config&lt;/code&gt; config file in &lt;code&gt;etc&lt;/code&gt; directory, if not found it will search for &lt;code&gt;generic_config&lt;/code&gt; if not found it will use any of config files present.If the debug flag is set, it will search for a config file that ends with &lt;em&gt;.debug&lt;/em&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;rcrun [-h] [-s START |-st STOP | -fst FSTOP] [-d | -cf CFILE | -c CONFIG] [-is] [component]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;rccd&lt;/h3&gt;
+
+&lt;p&gt;Using this you can cd into the component directory given the component name.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;rccd component
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;hr&gt;
+
+&lt;p&gt;Nithin Murali&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title><i>GSoC,</i> Till Now ... <p>#1</p></title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/06/25/rajath1/"/>
+   <updated>2015-06-25T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/06/25/rajath1</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Built a website for robocomp using jekyll. &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Progress:&lt;/strong&gt; Took the task of building a website for documenting the open source project &lt;em&gt;RoboComp&lt;/em&gt; for the first 4 weeks of Google Summer of Code 2015. The website should be able to segregate the posts into categories, Make it easy for users to post content and most importantly have a proper flow among the posts so that a new users will find it easy to learn the framework.&lt;/p&gt;
+
+&lt;p&gt;Started building the website by using the &lt;a href=&quot;https://github.com/dbtek/dbyll&quot;&gt;dbyll theme&lt;/a&gt;. Messed around with the code a bit and had the website up for robocomp. Website &lt;a href=&quot;https://rajathkumar.github.io/robocomp&quot;&gt;link&lt;/a&gt;. After a few iterations the website was all good. While exploring on the same topic stumbled upon &lt;a href=&quot;https://rohanchandra.github.io/project/type/&quot;&gt;Type theme&lt;/a&gt;. Which was a jekyll based them more clean and elegant than the first one. Ported the entire website to the type theme and currently have shifted the &lt;a href=&quot;http://robocomp.github.io/website/&quot;&gt;website&lt;/a&gt; to the &lt;a href=&quot;https://github.com/robocomp&quot;&gt;robocomp organization on github&lt;/a&gt;. Currently have tweaked the website based on the suggetsions recieved by the mentors.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Future:&lt;/strong&gt; Will implement automatic segregation of posts based on categories the user mention. Extend the features of the website and add analytics, comments for blog posts etc. Give the website its final iterations based on the suggestions recieved.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Rajath Kumar M.P&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>New build system and workspace model in Robocomp <p>#2</p></title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/06/25/nithin5/"/>
+   <updated>2015-06-25T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/06/25/nithin5</id>
+   <content type="html">&lt;p&gt;For managing these components we would need different utilities. So i started compiling a list of different utilities keeping a reference to other frameworks. Finally i have decide on my list&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;rc&lt;em&gt;init&lt;/em&gt;ws&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;rcbuild&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;rced&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;rccd&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;rcrun&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;rccomp&lt;br&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For more information about the utilities see the &lt;a href=&quot;http://robocomp.github.io/website/2015/06/26/nithin6.html&quot;&gt;tutorial&lt;/a&gt; on build utilities. All the utilities are implemented using python except &lt;code&gt;rccd&lt;/code&gt; which is implemented as a shell function, As a subprocess cant affect its parents environment. So i was thinking, as anyway we will need to source a bash script, we could move the exporting of the environment variables also into that script. &lt;/p&gt;
+
+&lt;h2&gt;Future work&lt;/h2&gt;
+
+&lt;p&gt;One useful feature that needs to be implemented is auto complete for the arguments. It would be a very useful feature as we don&amp;#39;t need need to know the exact component name, etc. Also some serious work on the manifest.xml has to be done. It was planned to contain basic info on packages like name, maintainer, dependencies etc. I didn&amp;#39;t do it right now because i was not really sure about the component dependencies, i will need to discuss about it a bit.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Nithin Murali&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title><i>GSoC,</i> 2015 ideas</title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/06/22/gsoc15/"/>
+   <updated>2015-06-22T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/06/22/gsoc15</id>
+   <content type="html">&lt;p&gt;1.- &lt;strong&gt;RoboComp tutorial, social management and documentation&lt;/strong&gt;: RoboComp’ sources has been ported to GitHub and we are building a new documentation repository there. We are using GitHub markdown language (GFM) write new docs and turorials. We want to build a set of short tutorials that guide the new users along several interconnected topics, such as component oriented programming, robotics, computer vision, robotics software modules integrating heterogeneous sources, cognitive architectures and testing and validating, all from inside RoboComp. These new tutorials will be developed using RoboComp’s robotics simulator, RCIS, so interactive examples can be created and used in the explanations. This package also includes work on automated installation scripts using CMake. Generic knowledge of linux systems, website and wiki administration is needed. This is a key task for our project as it would bring more attention to it as it will open the development to new people interested in the field.&lt;/p&gt;
+
+&lt;p&gt;Required student level: intermediate programming and systems administration.&lt;/p&gt;
+
+&lt;p&gt;2.- &lt;strong&gt;Computer vision components and libraries management&lt;/strong&gt;: RoboComp is being used to build a new cognitive architecture called RoboCog. Among the different modules already in progress, the object detection module is crucially important. We are pursuing an efficient 2D/3D vision pipeline that, working with the robot body control module, is able to localize, recognize, fit a pre-existing model and track a series of daily objects that the robot might encounter. Grasping would be one target of this pipeline, or even a means to complete recognition. There are currently many components implementing computer vision algorithms and intensive work done in pipeline construction. The key tasks on this idea would be to collaborate in the creation of high level tools to organize, document and test different pipelines for an specific task. These tools will be designed in collaboration with the mentors and tested in RoboComp’s RCIS simulator and real robots.&lt;/p&gt;
+
+&lt;p&gt;Required student level: intermediate computer vision knowledge, C++ programming, basic CMake knowledge&lt;/p&gt;
+
+&lt;p&gt;3.- &lt;strong&gt;RoboComp Building and deployment system design&lt;/strong&gt;: Current CMake building system in RoboComp is limited only to the core libraries, the RCIS simulator and some additional tools. A very useful task would be to come up with a more complex CMake structure that could build the entire system, including all finished components, without breaking current dependencies. Also, a few scripts will have to be built to compile individual components, run tests, search and inspect the source tree efficiently, check dependencies and documentation requirements. This code needs also to take into account the dependencies between components that can be stored in xml-like files -i,e, manifestos- within the component itself.&lt;/p&gt;
+
+&lt;p&gt;Required student level: intermediate CMake knowledge, programming in C++, basic knowledge of shell scripting&lt;/p&gt;
+
+&lt;p&gt;4.- &lt;strong&gt;Deployment generator and run-time monitoring&lt;/strong&gt;: When creating a specific robot architecture, many components have to be brought into a common deployment environment. Each component has its runtime configuration and network parameters that have to be declared in a common deployment file, from where the complete system can be brought to life. This task proposes the design of a domain specific language to facilitate the creation of shellscript deployment files that are syntactically and semantically correct. Once a net of RoboComp components is up and running, additional tools are needed to monitorize their execution through an existing default interface called CommonBehavior.This tool will use the DSL as input and will show a graphical representation of the running system. It will be written in Python and will extend important efforts already made in this direction.&lt;/p&gt;
+
+&lt;p&gt;Required student level: intermediate programming with Python and introductory knowledge of formal languages&lt;/p&gt;
+
+&lt;p&gt;For any questions, proposals, or comments please contact RoboComp&amp;#39;s org admin at:
+marcogunex.es&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>New build system and workspace model in Robocomp <p>#1</p></title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/06/20/nithin4/"/>
+   <updated>2015-06-20T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/06/20/nithin4</id>
+   <content type="html">&lt;p&gt;I have started the workspace model design keeping in mind the following points.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;you should be able to build all packages at once, if necessary and also separately&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;the source tree should be kept clean&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;It should scalable and also existing components should be easily moved in&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;dependencies should be easily handled&lt;br&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Referring to other similar workspace models i came up with the following model.&lt;/p&gt;
+
+&lt;p&gt;The recommended layout for development is as follows:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/website/img/workspace_model.jpg&quot; alt=&quot; Robocomp workspace model&quot; title=&quot;Robocomp workspace model&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Elements of workspace&lt;/h2&gt;
+
+&lt;h3&gt;Workspace&lt;/h3&gt;
+
+&lt;p&gt;The workspace is the folder inside which you are going to be actively developing. Keeping things in a folder with connected development helps keep separation of development models.&lt;/p&gt;
+
+&lt;h3&gt;Source space&lt;/h3&gt;
+
+&lt;p&gt;The source space is the folder is where it will be expected to look for packages when building. This folder is easily identified as it is where the toplevel.cmake is linked from the catkin project. Each component should be in a direct subdirectory. if the directory contains a file named &lt;em&gt;IGNORE_COMP&lt;/em&gt; the component will be ignored while building the workspace.&lt;/p&gt;
+
+&lt;h3&gt;Build Space&lt;/h3&gt;
+
+&lt;p&gt;The build space is the folder in which cmake is invoked and generates artifacts such as the CMakeCache. A typical invocation of cmake will look like this when following the recommended layout.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cmake ../src
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This need not be a direct sub directory of workspace. It can be any where.&lt;/p&gt;
+
+&lt;h3&gt;Development Space&lt;/h3&gt;
+
+&lt;p&gt;The development space is where build system generates the binaries and config files which are executable before installation. This should be a direst subdirectory of workspace. Currently the &lt;code&gt;devel space is merged with the source space&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3&gt;Install Space&lt;/h3&gt;
+
+&lt;p&gt;If make install is called this is the directory into which cmake will target all installations. This directory contains a file names &lt;em&gt;.rc_install&lt;/em&gt; which contain a semi colon separated paths of workspaces which are installed to this install space. Please note that the robocomp istall path &lt;em&gt;/opt/robocomp&lt;/em&gt; can is also an install space.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Nithin Murali&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title><i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#3</p></title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/06/17/mercedes3/"/>
+   <updated>2015-06-17T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/06/17/mercedes3</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;Visual inverse kinematics, Basic understanding :&lt;/strong&gt; In the previous post we anticipate the problems caused by the gaps and inaccuracies of motors in the inverse kinematics of the robot. Now, in this third post we will talk about the solution implemented during the GSoC15 project.&lt;/p&gt;
+
+&lt;p&gt;So, with the inverse kinematics component that we have implemented in Robocomp, we had the problem of inaccuracies and gaps in the robotic arm motors, problems that made the robot believed reach the target position without having actually achieved it. To solve this problem it was decided to implement a solution inside the visual field (which is what concerns us throughout this project), whose aim is to provide the inverse kinematics component a visual feedback that allows correct its mistakes. The operation of the algorithm is very simple and takes as its starting point the investigations of Seth Hutchinson, Greg Hager and Peter Corke, collected in &lt;code&gt;A Tutorial on Visual Servo Control&lt;/code&gt; [1].&lt;/p&gt;
+
+&lt;h2&gt;&amp;#39;Looking&amp;#39;, then &amp;#39;moving&amp;#39;&lt;/h2&gt;
+
+&lt;p&gt;As Hutchinson, Hager and Corke reflect in their work:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Vision is a useful robotic sensor since it mimics the human sense of vision and allows for non-contact measurement of the environment. [...] Typically visual sensing and manipulation are combined in a open-loop fashion, &amp;#39;looking&amp;#39; then &amp;#39;moving&amp;#39;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So the goal of &lt;code&gt;Visual servo control&lt;/code&gt; is to control the movement and location of the robot using visual techniques (detection and recognition of objects in an image). To get an idea how it works, we must have clear some fundamental concepts in this field&lt;/p&gt;
+
+&lt;h3&gt;Kinematics of a robot&lt;/h3&gt;
+
+&lt;p&gt;We need to know what a kinematic chain is, what reference system and transformation coordinate are anda what algorithm is executed inside the robot kinematic. These concepts were explained in the second post of this collection. If you have doubts, consult it.&lt;/p&gt;
+
+&lt;p&gt;If we link the kinematic chains concept with visual techniques (ie, now, in addition to the chain formed by the motors of the robotic arm, we have a camera in the chain looking one of the chain ends), we have two types of systems:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Endpoint open-loop (EOL): Systems which only observed the target object. These systems don&amp;#39;t need to look at his end effector so normally the camera is on the end effector (hand-eye).&lt;/li&gt;
+&lt;li&gt;Endpoint closed-loop (ECL): Systems which observed the target object and the end effector of the arm.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The visual inverse kinematics that we implemented in Robocomp uses this last configuration because is independent of hand-eye calibration errors (precisely, the clearances errors and inaccuracies that bother us in the inverse kinematics), although often requires solution of a more demanding vision problem, because we need to track the end effector.&lt;/p&gt;
+
+&lt;h3&gt;Camera Projection Models&lt;/h3&gt;
+
+&lt;p&gt;We need to understand the geometric aspects of the imaging process if we want to understand how the information provided by the vision system is used to control the movement of the robot. The first thing to consider is that an image taken by a camera is always in 2D, so we&amp;#39;re losing spatial information (the depth of the scene). &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://masters.donntu.org/2012/etf/nikitin/library/article10.files/image10.01.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;To resolve this issue we have several options:
+1. We can use multiple cameras that capture the studio space from different positions.
+2. We can obtain multiple views with a single camera.
+3. We can have previously stored the geometric relationship between certain characteristics of the target or the elements in the studio space.&lt;/p&gt;
+
+&lt;p&gt;In any case, we must keep in mind certain things common to all cameras. For example the system of axes: the &lt;code&gt;X&lt;/code&gt; and &lt;code&gt;Y&lt;/code&gt; axes form the basis of the image plane and the &lt;code&gt;Z&lt;/code&gt; axis is perpendicular to the image plane, along the optical axis of the camera. The origin is located on the &lt;code&gt;Z&lt;/code&gt; axis at a distance &lt;code&gt;λ&lt;/code&gt; of the image plane. That distance &lt;code&gt;λ&lt;/code&gt; is what we call focal length.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.hitl.washington.edu/artoolkit/documentation/images/ch03-17.gif&quot; alt=&quot;ALt text&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;We can map the position and the orientation of the end effector in space calculating the projective geometry of the camera. But this method, complicated in itself, increases their difficulty because we need &lt;code&gt;recognize&lt;/code&gt; the end effector in the picture, in addition to deriving the speed from the changes observed in each frame that the camera capture. For these reasons, in our visual inverse kinematic component, we use the algorithm proposed by Edwin Olson, &lt;code&gt;Apriltags&lt;/code&gt; [2] a visual fiducial system that uses a 2D barcode style &lt;code&gt;tag&lt;/code&gt; (binary, black and white synthetic brands), allowing full 6 DOF localization of features from a single image. Thus, if we put a apriltag in the end effector, we can get its position and orientation in a very simple way. &lt;/p&gt;
+
+&lt;h2&gt;visualBIK component&lt;/h2&gt;
+
+&lt;p&gt;Having already some clear concepts, let us study how the component developed in this project, &lt;code&gt;visualBIK&lt;/code&gt;, works.&lt;/p&gt;
+
+&lt;p&gt;Our component implements a simple state machine where waits the reception of a target position (a vector with traslations and rotations: [tx, ty, tz,    rx, ry, rz]) through its interface. When a target is received, the visualBIK send it to the inverse kinematics component like a &lt;code&gt;POSE6D&lt;/code&gt; target, and waits for him to finish running the target and placing the arm. As the end effector will be a little out of the target position (due to inaccuracies), the visualBIK will be prepared to correct this error:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;It calculates the visual pose of the end effector (through apriltags, visualBIK receives the position of the end effector mark that the camera head sees).&lt;/li&gt;
+&lt;li&gt;After, it compute the error vector between the visual pose and the target pose.&lt;/li&gt;
+&lt;li&gt;With this error vector, visualBIK corrects the target pose and sends the new position to the inverse kinematics component.&lt;/li&gt;
+&lt;li&gt;This process is repeated until the error achieved in translation and rotation is less than a predetermined threshold.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In this way we can correct the errors introduced by the inaccuracies of the joints.&lt;/p&gt;
+
+&lt;p&gt;This component (like component inverse kinematics) is still in the testing phase and is more than likely suffer some changes that improve its operation.&lt;/p&gt;
+
+&lt;p&gt;Bye!&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;[1] Hutchinson, S., Hager, G., Corke, P. &lt;code&gt;A Tutorial on Visual Servo Control&lt;/code&gt;, IEEE Trans. Robot. Automat., 12(5):651--670, Oct. 1996. Download in http://www-cvr.ai.uiuc.edu/~seth/ResPages/pdfs/HutHagCor96.pdf&lt;/p&gt;
+
+&lt;p&gt;[2] OLson, E. &lt;code&gt;AprilTag: A robust and flexible visual fiducial system&lt;/code&gt;, Robotics and Automation (ICRA), 2011 IEEE International Conference on, 3400-3407&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Debian Packaging <p>#2</p></title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/06/15/nithin7/"/>
+   <updated>2015-06-15T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/06/15/nithin7</id>
+   <content type="html">&lt;h2&gt;Source packages and ppa&lt;/h2&gt;
+
+&lt;p&gt;A Personal Package Archive (PPA) s a special software repository for uploading source packages to be built and published as an APT repository by Launchpad.So basically if a software has a ppa then users can just add the pa to their sources and they will be able to install the software package and will also get updates automatically. As alreasy mentioned we can only upload source packages into a ppa, by definition &lt;em&gt;Source packages provide you with all of the necessary files to compile or otherwise, build the desired piece of software.&lt;/em&gt; now the next question is how can we create source packages. I have explained it in tutorial &lt;a href=&quot;http://robocomp.github.io/website/2015/05/23/nithin1.html&quot;&gt;Debian packaging&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Implementation in Robocomp&lt;/h2&gt;
+
+&lt;p&gt;For creating source package for robocomp i wrote a cmake module &lt;em&gt;source_package&lt;/em&gt;.The module will basically copy the source in to another directory (currently &lt;em&gt;Debian&lt;/em&gt; in build folder) and will create the source tar.Then it will create all debian/ files dynamically. The script will be executed when the target &lt;code&gt;spackage&lt;/code&gt; is made.&lt;/p&gt;
+
+&lt;p&gt;After creating the source packages one trouble i faces was in setting up (registering) the PGP keys. Once you have created a launchpad account you should sign the Ubuntu Code of Conduct.Then you can upload the package using &lt;code&gt;dput&lt;/code&gt; utility.&lt;/p&gt;
+
+&lt;h3&gt;NB&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;You cant upload a package with same name into same ppa again, launchpad will reject it. so you need to change the package name and hence the version, every time you upload. This is automatically taken care off by the script.  &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;If there are any changes to the source, then you should upload the whole source into the ppa. Well, any changes to fies in &lt;em&gt;debian&lt;/em&gt; folder is not considered a source change. In Robocomp its implemented in such a way that if there is any changes to the source, then you have to change the Robocomp version.  &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Right now we are not generating the changelog automatically. But that is a feature we could add, generating changelog from the git commit messages.  &lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Nithin Murali&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title><i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#2</p></title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/06/15/mercedes2/"/>
+   <updated>2015-06-15T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/06/15/mercedes2</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;What is inverse kinematics?&lt;/strong&gt; : In this second post, although it may seem begin the house from the roof, let&amp;#39;s talk about how a robot moves its arms and hands in order to manipulate daily objects.&lt;/p&gt;
+
+&lt;p&gt;The ultimate goal of this work is make the robot to be able to recognize certain daily objects in a house (for example a mug), and to manipulate these objects with its effectors (hands). To do this, one of the things we need to implement is the inverse kinematics of the robot. Although this is the last step, we start by inverse kinematics to be easier and more intuitive than object recognition (besides that we have almost finalized the cinematic component in Robocomp).&lt;/p&gt;
+
+&lt;h3&gt;What does the inverse kinematics?&lt;/h3&gt;
+
+&lt;p&gt;A recurring problem in robotics is to give to robots a certain autonomy in terms of movement. Focusing on a practical and realistic example, as is the trajectory of a robotic arm from an initial position to a target point, the question is how does the robot move its arm from the starting pose to the final pose? or what values take its engines arm to reach the final position? This is the typical problem of inverse kinematics, which is responsible for calculating the angular values of a kinematic chain composed engines (joints) of the arm to reach a target position. &lt;/p&gt;
+
+&lt;p&gt;But before we get down to work, we need to review a few concepts.&lt;/p&gt;
+
+&lt;h3&gt;Previous concepts&lt;/h3&gt;
+
+&lt;h4&gt;kinematic chains&lt;/h4&gt;
+
+&lt;p&gt;The first concept that we should be clear is the &lt;code&gt;kinematic chain&lt;/code&gt;. The kinematic chain is a set of elements that produce motion, deforming the chain to adapt it to movement. Kinematic chains are composed of two elements:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;joints&lt;/code&gt;: joints or motors that produce the movement. Each joint gives a degree of freedom.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;links&lt;/code&gt;: rigid segments that connect the joints together.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;An example of kinematic chain in robotic is the arm of the robot, that is composed by all the motors that the robot has and the segments that connect this motors in order to create the arm form.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.sitenordeste.com/mecanica/images/cadena_cinematica.JPG&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+
+&lt;h4&gt;Reference systems and Transformation coordinate.&lt;/h4&gt;
+
+&lt;p&gt;One of the problems of robot manipulators is to know where their structural elements are arranged in the space in which they move. We therefore need a referral system that puts or position the elements of the robot in the workspace. So, a &lt;code&gt;reference system&lt;/code&gt; is a set of agreements or conventions used by an observer to measure positions, rotations and other physical parameters of the system being studied. In our case, the arm of the robot is into the three-dimensional workspace (R³, with the axis X, Y and Z), where each components (for example, each joint) has one traslation (tx, ty, tz) and one rotation (rx, ry, rz). Therefore, the position of each component is given by a vector of six elements: &lt;code&gt;P=[tx, ty, tz,   rx, ry, rz]&lt;/code&gt; (the first three translational and three rotational recent). Normally, we represent the poses by homogeneous trasnformation matrices, which are of the form:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;    | R  T |
+P = | 0  1 |
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;where &lt;code&gt;R&lt;/code&gt; is the rotation matrix and &lt;code&gt;T&lt;/code&gt; the traslation coordenates.&lt;/p&gt;
+
+&lt;p&gt;One of the kinematic problems is that each motor (which can be moved and/or rotated with respect to the previous motor of the chain) has his own reference system, so if we want to calculate the position of a particular point or joint, we will have to make a number of changes (&lt;code&gt;transformations&lt;/code&gt;) to move from one reference system to another. For example, if we have the newt arm:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;X_1--------------X_2--------X_3-----O
+       M_1&amp;gt;2          M_2&amp;gt;3    M_3&amp;gt;O
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;where &lt;code&gt;X_n&lt;/code&gt; represents the position of the joints, &lt;code&gt;-&lt;/code&gt; is the link that connects the joints, &lt;code&gt;o&lt;/code&gt; is the end effector of the arm and &lt;code&gt;M_n&amp;gt;m&lt;/code&gt; are the transformation matrices to change the reference system n to the system m, and we want to calculate the position of the end effector in the reference system of the joint X_1, we have to calculate this equation:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Po_inX_1 = M_2&amp;gt;1 * M_3&amp;gt;2 * M_o&amp;gt;3 * Po_inO.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Problems to solve the inverse kinematics.&lt;/h3&gt;
+
+&lt;p&gt;If the forward kinematics is responsible for calculating the position of the end effector in a kinematic chain, given some angular values for the joints, the inverse kinematics is just the opposite: it is responsible for calculating the angle values of the joints so the end effector reaches a position. This last problem is much more difficult to solve. So difficult that we are forced to use generic mathematical methods that try to approach an optimal solution iteratively within a reasonable time. We have opted for an iterative method known as the &lt;code&gt;Levenberg-Marquardt&lt;/code&gt; or &lt;code&gt;damped least squares&lt;/code&gt; algorithm. This method is used for solving nonlinear least squares problems where a solution to decrease an error function is sought.&lt;/p&gt;
+
+&lt;h3&gt;Inverse kinematics in Robocomp&lt;/h3&gt;
+
+&lt;p&gt;As a result of the TFG, &lt;code&gt;Inverse kinematics in Social Robots&lt;/code&gt; [1], since 2014 Robocomp has a component [2] that is responsible for calculating the inverse kinematics of the social robot Ursus [3], developed by Robolab. This component has undergone a big evolution, since it was created last year to now, and is more than likely to continue evolving to achieve inverse kinematics each finer and in less time. &lt;/p&gt;
+
+&lt;p&gt;Originally, this component receives three types of targets:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;POSE6D: It is the typical target with with translations and rotations in the X, Y and Z axis. The end effector has to be positioned at coordinates (tx, ty, tz) of the target and align their rotation axes with the target, specified in (rx, ry, rz).&lt;/li&gt;
+&lt;li&gt;ADVANCEAXIS: its goal is to move the end effector of the robot along a vector. This is useful for improving the outcome of the above problem, for example, imagine that the hand has been a bit away from a mug. With this feature we can calculate the error vector between the end effector and the mug, and move the effector along the space to place it in an optimal position, near the mug.&lt;/li&gt;
+&lt;li&gt;ALIGNAXIS: Its goal is that the end effector is pointing to target without moving to it but rotated as the target. It may be useful in certain cases where we are more interested in oriented the end effector with the same rotation of the target.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;To solve these various inverse kinematic problems, the component uses as main base the &lt;code&gt;Levenberg-Marquardt&lt;/code&gt; algorithm proposed in the article &lt;code&gt;SBA: A Software Package for Generic Sparse Bundle Adjustment&lt;/code&gt; by Lourakis and Argyros:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Input: A vector functon f: R^m → R^n with n≥m, a measurement vector x ∈ R^n and an initial parameters estimate p_0 ∈ R^m.
+Output: A vector p+ ∈ R^m minimizing ||x-f(p)||^2.
+Algorithm:
+    k:=0;                 v:=2;                     p:=p0;
+    A:=transposed(J)·J;   error:=x-f(p);            g:=transposed(J)·error;
+    stop:=(||g||∞ ≤ ε1);  μ:=t*max_i=1,...,m (Aii)
+
+    while(!stop) and (k&amp;lt;k_max)
+         k:=k+1;
+         repeat
+               SOLVE (A+μ·I)·δ_p=g;
+               if(||δ_p||≤ ε2·(||p||+ε2))
+                    stop:=true;
+               else
+                    p_new:=p+δ_p
+                    ρ:=(||error||^2-||x-f(p_new)||^2)/(transposed(δ_p)·(μ·δ_p+g));
+                    if ρ&amp;gt;0
+                        stop:=(||error||-||x-f(p_new)||&amp;lt;ε4·||error||);
+                        p:=p_new;
+                        A:=transposed(J)·J;    error:=x-f(p);    g:=transposed(J)·error;
+                        stop:=(stop) or (||g||∞ ≤ ε1);
+                        μ:=μ*max(1/3, 1-(2·ρ-1)^3);
+                        v:=2;
+                    else
+                        μ:=μ*v;
+                        v:=2*v;
+                    endif
+               endif
+         until(ρ&amp;gt;0) or (stop)
+         stop:=(||error||≤ ε3);
+    endwhile
+    p+:=p;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Where &lt;code&gt;A&lt;/code&gt; is the hessian matrix, &lt;code&gt;J&lt;/code&gt; is the jacobian matrix, &lt;code&gt;g&lt;/code&gt; is the gradient descent, &lt;code&gt;δ_p&lt;/code&gt; is the increments, &lt;code&gt;ρ&lt;/code&gt; is the ratio of profit that tells us if we are approaching a minimum or not, &lt;code&gt;μ&lt;/code&gt; is the damping factor, and &lt;code&gt;t&lt;/code&gt; and &lt;code&gt;ε1, ε2, ε3, ε4&lt;/code&gt; are different thresholds. But the IK component of Robocomp adds several concepts to the original L-M algorithm, in order to complete the proper operation of the component: &lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Weight matrix: that controls the relevance between the translations (in meters) and rotations (in radians) of the target. So, where &lt;code&gt;g&lt;/code&gt; was calculated as &lt;code&gt;transposed(J)·error&lt;/code&gt;, now &lt;code&gt;g&lt;/code&gt; is &lt;code&gt;transposed(J)·(W·error)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Motors lock: when a motor reachs its minimun or maximun limit, we modified the jacobian matrix.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The new version of the inverse kinematics component simplifies the code of the old version and adds some more functionality:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Executes more than once a target. The inverse kinematic result is not the same if the start point of the effector is the robot&amp;#39;s home or a point B near tho the goal point.&lt;/li&gt;
+&lt;li&gt;Executes the traslations without the motors of the wrisht (only for Ursus). This makes possible to move the arm with stiff wrist, and then we can rotate easely the wrist when the end effectos is near the target.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Another improvement being studied is to include a small planner responsible for planning the trajectories of the robot arm, in order to facilitate the work of the IK component and reduce its execution time. However, one of the problems that the inverse kinematics can not solve by itself is the problem of gaps and imperfections of the robot. These gaps and inaccuracies make the robot move its arm toward the target position improperly, so that the robot &amp;quot;thinks&amp;quot; that the end effector has reached the target but in reality has fallen far short of the target pose.&lt;/p&gt;
+
+&lt;p&gt;In order to solve this last problem, we need visual feedback to correct the errors and mistakes introduced for the gaps and inaccuracies in the kinematic chain. The visualBIK component, developed during this project, is responsible for solve this visual feedback and correct the inverse kinematic, but we&amp;#39;ll talk about it in the next post. &lt;/p&gt;
+
+&lt;p&gt;Bye!&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;[1] Master Thesis, Universidad de Extremadura, Escuela Politécnica de Cáceres. Mercedes Paoletti Ávila. &lt;code&gt;Cinemática Inversa en Robots Sociales&lt;/code&gt;. Directed by Pablo Bustos and Luis Vicente Calderita. July 2014. Download in https://robolab.unex.es/index.php?option=com_remository&amp;amp;Itemid=53&amp;amp;func=startdown&amp;amp;id=143&lt;/p&gt;
+
+&lt;p&gt;[2] inverse kinematics component repository: https://github.com/robocomp/robocomp-ursus/tree/master/components/inversekinematics&lt;/p&gt;
+
+&lt;p&gt;[3] C. Suárez Mejías, C. Echevarría, P. Núñez, L. Manso, P. Bustos, S. Leal and C. Parra. &lt;code&gt;Ursus: A Robotic Assistant for Training of Patients with Motor Impairments&lt;/code&gt;. Book, Converging Clinical and Engineering Research on Neurorehabilitation, Springer series on BioSystems and BioRobotics, Editors, J.L Pons, D. Torricelli and Marta Pajaro. Springer, ISBN 978-3-642-34545-6, pages 249-254. January 2012. Download in https://robolab.unex.es/index.php?option=com_remository&amp;amp;Itemid=53&amp;amp;func=startdown&amp;amp;id=128&lt;/p&gt;
+
+&lt;p&gt;[4] Lourakis, M. I., Argyros, A. (2009). &lt;code&gt;SBA: A Software Package for Generic Sparse Bundle Adjustment&lt;/code&gt;. Article of ACM Transactions on Mathematical Software, volume 36, issue 1, pages 1-30. Download in http://doi.acm.org/10.1145/1486527&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Debian Packaging <p>#1</p></title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/06/12/nithin8/"/>
+   <updated>2015-06-12T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/06/12/nithin8</id>
+   <content type="html">&lt;h2&gt;What is a binary package?&lt;/h2&gt;
+
+&lt;p&gt;A binary package in a is an application package which contains (pre-built) executables, as opposed to source code. Basically a binary package is an archive which contains executables some other info like rules on how to install them, dependencies etc. debian binary package is also a type of binary package. You can use a package manger to install these packages.I have explained I have explained it in tutorial &lt;a href=&quot;http://robocomp.github.io/website/2015/05/23/nithin1.html&quot;&gt;Debian packaging&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Implementation in Robocomp&lt;/h2&gt;
+
+&lt;p&gt;For binary packages i was left with two options. whether i could use the same cmake script i used for creating source packages or i could use the &lt;code&gt;CPACK&lt;/code&gt; packaging tool. Finally i decided to go with CPACK because - 1)less code , that means less messing up 2)its an well known tool so is expected to perform better than a script i am writing. CPACK has so many configuration options so i made a seperate cmake file &lt;code&gt;package_details.cmake&lt;/code&gt; for configuring cpack so that its easier for users to change any configuration. CPACK will add a target &lt;code&gt;package&lt;/code&gt; for generating binary package. so you could run &lt;code&gt;make package&lt;/code&gt; for generating the package. &lt;/p&gt;
+
+&lt;h3&gt;NB&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Unfortunately CPACK has a bug in it, its not changing the control files permission correctly which throws a warning during installation. so i have create a bash script which will fix the control file permissions.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Nithin Murali&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title><i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#1</p></title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/06/12/mercedes1/"/>
+   <updated>2015-06-12T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/06/12/mercedes1</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;About Me&lt;/strong&gt; : Hello! My name is Mercedes Paoletti Ávila, and I would like to introduce me a little in this first post. I&amp;#39;m graduate in engineering from the University of Extremadura, and currently I study the Master in computer engineering and ICT management in the same University. Over the past two years I have been working in the Robotics Laboratory of the UEx, Robolab. There I developed my end grade work, &amp;quot;inverse kinematics in social robots&amp;quot;, using the robotic framework implemented by the laboratory, Robocomp, and now I&amp;#39;m doing my Master&amp;#39;s Thesis, that is about robots planners and is part of the project of LJ Manso, AGM. &lt;/p&gt;
+
+&lt;p&gt;And just following this course of action, this project combines the two concepts (planning and inverse kinematics) for recognizing and manipulating objects, using the framework Robocomp.&lt;/p&gt;
+
+&lt;h2&gt;Symbolic planning techniques for recognizing objects domestic&lt;/h2&gt;
+
+&lt;p&gt;The main object of this project is the application of symbolic techniques to build efficient pipelines in order to improve computer vision techniques, recognition and interpretation of domestic objects, to be finally executed on a domestic robot, so that the robot is able to move around a house and identify and interact with any objects located inside. The goal is that given a high-level task (eg. &amp;quot;grab a mug&amp;quot;), we can use symbolic planning techniques to build a pipeline of visual processing.&lt;/p&gt;
+
+&lt;p&gt;In order to reach this goal, we need some previous concepts:&lt;/p&gt;
+
+&lt;p&gt;1) We need a planner to organize the sequence of commands to be executed by the robot. We will use the AGM planner [1].&lt;/p&gt;
+
+&lt;p&gt;2) We need a system to recognize marks or some objects. For now, we wil use the algorithm proposed by Edwin Olson, AprilTags [2]&lt;/p&gt;
+
+&lt;p&gt;3) We also need a system that controls the movement of the robot and corrects the calibration errors and gaps of the engines. We will use the inverse kinematics component developed in Robocomp, which will add techniques of trajectory planning and visual feedback.&lt;/p&gt;
+
+&lt;p&gt;All this provides a robust support that allows the robot to move freely within a given environment, such as a home, and interact with everyday objects that are in it.&lt;/p&gt;
+
+&lt;p&gt;You can acces to the code of these components in the Robocomp repository: https://github.com/robocomp&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;[1] AGM documentation: http://ljmanso.com/agm/&lt;/p&gt;
+
+&lt;p&gt;[2] AprilTags: http://april.eecs.umich.edu/papers/details.php?name=olson2011tags&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Maintaining your own repository of components in GitHub</title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/05/23/using_github/"/>
+   <updated>2015-05-23T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/05/23/using_github</id>
+   <content type="html">&lt;p&gt;We recommend that you create a repository for your components (i.e. &lt;em&gt;mycomponents&lt;/em&gt; directory in the example before) in your GitHub account (or other similar site) and pull/clone it in &lt;em&gt;~/robocomp/components&lt;/em&gt; whenever yo need it. For example, if your GitHub account is &lt;em&gt;myaccount&lt;/em&gt;, first log in with your browser and create a new repository named &lt;em&gt;mycomponents&lt;/em&gt; following this instructions: &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;https://help.github.com/articles/create-a-repo/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now is good time to write down a short description of what your component does in the README.md file.&lt;/p&gt;
+
+&lt;p&gt;Then we need to clean up the binary and generated files in &lt;em&gt;myfirstcomp&lt;/em&gt;. Note that this is not necessary if you upload the component to the repo just after creating it with DSLEditor and before you type &lt;em&gt;cmake .&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cd ~/robocomp/components/mycomponents/myfirstcomp
+make clean
+sudo rm -r CMakeFiles
+rm CMakeCache.txt
+rm cmake_install.cmake
+rm Makefile
+rm *.kd*
+rm src/moc*
+sudo rm -r src/CMakeFiles
+rm src/cmake_install.cmake
+rm src/Makefile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;now we are ready:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cd ~/robocomp/components/mycomponents
+git init
+git remote add origin &amp;quot;https://github.com/myaccount/mycomponents.git&amp;quot;
+git add mycomponents
+git push -u origin master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You can go now to GitHub and chek that your sources are there!&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Using robocompdsl, The command line component generator</title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/05/23/robocompdsl/"/>
+   <updated>2015-05-23T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/05/23/robocompdsl</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;robocompdsl&lt;/strong&gt; is the new tool used in RoboComp to automatically generate components and modify their main properties once they have been generated (e.g., communication requirements, UI type). It is one of the core tools of the framework so, if you installed RoboComp, you can start using it right away.&lt;/p&gt;
+
+&lt;p&gt;This new version can only be used from the command line, but the languages used to define components and their interfaces remain mostly the same: &lt;strong&gt;CDSL&lt;/strong&gt; to specify components and &lt;strong&gt;IDSL&lt;/strong&gt; to specify interfaces. The only difference with the old RoboCompDSLEditor tool is that the reserved keywords (are now case independent). Take a look to the tutorial &lt;a href=&quot;components.md&quot;&gt;&amp;quot;a brief introduction to Components&amp;quot;&lt;/a&gt; for an introduction to the concept of component generation and the languages involved.&lt;/p&gt;
+
+&lt;p&gt;There are three tasks we can acomplish using &lt;strong&gt;robocompdsl&lt;/strong&gt;: &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;generating a CDSL template file&lt;/li&gt;
+&lt;li&gt;generating the code for a previously existing CDSL file&lt;/li&gt;
+&lt;li&gt;regenerating the code for an already generated component.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Generating a CDSL template file&lt;/h2&gt;
+
+&lt;p&gt;Even tough writing CDSL files is easy --their structure is simple and the number of reserved words is very limited-- robocompdsl can generate template CDSL files to be used as a guide when writing CDSL files.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ robocompdsl path/to/mycomponent/mycomponent.cdsl
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This will generate a CDSL file with the following content:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;import &amp;quot;/robocomp/interfaces/IDSLs/import1.idsl&amp;quot;;
+import &amp;quot;/robocomp/interfaces/IDSLs/import2.idsl&amp;quot;;
+
+Component CHANGETHECOMPONENTNAME
+{
+    Communications
+    {
+        implements interfaceName;
+        requires otherName;
+        subscribesTo topicToSubscribeTo;
+        publishes topicToPublish;
+    };
+    language Cpp;
+    gui Qt(QWidget);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The CDSL language is described in the tutorial &lt;a href=&quot;components.md&quot;&gt;&amp;quot;A brief introduction to Components&amp;quot;&lt;/a&gt;. Just don&amp;#39;t forget to change the name of the component.&lt;/p&gt;
+
+&lt;h2&gt;Generating a component given a CDSL file&lt;/h2&gt;
+
+&lt;p&gt;Once we have our CDSL file we can generate the component&amp;#39;s source code running robocompdsl with the CDSL file as first argument and the directory where the code should be placed as the second argument.&lt;/p&gt;
+
+&lt;p&gt;From the component&amp;#39;s directory:
+    $ cd path/to/mycomponent
+    $ robocompdsl mycomponent.cdsl .&lt;/p&gt;
+
+&lt;p&gt;Or somewhere else:
+    $ robocompdsl path/to/mycomponent/mycomponent.cdsl path/to/mycomponent&lt;/p&gt;
+
+&lt;p&gt;These commands will generate the C++ or Python code in the specified directory.&lt;/p&gt;
+
+&lt;h2&gt;Updating the source code of a component after modifying its CDSL file&lt;/h2&gt;
+
+&lt;p&gt;Once we generated our component we might change our mind and decide to add a new connection to another interface or to publish a new topic. In these cases we can regenerate the code of the component just by changing the &lt;em&gt;.cdsl&lt;/em&gt; file and executing again the command.&lt;/p&gt;
+
+&lt;p&gt;As you might have learned from the tutorial &lt;a href=&quot;components.md&quot;&gt;&amp;quot;A brief introduction to Components&amp;quot;&lt;/a&gt; RoboComp components are divided in specific code (files where you write your code) and generic code (autogenerated code which doesn&amp;#39;t need to be edited). Running robocompdsl again on the same directory will ony overwrite these generic files. To ensure robocompdsl doesn&amp;#39;t overwrite the changes you made to the specific files these are left unchanged, so the component might not compile after regeneration (e.g., you might need to add new methods).&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Write a post for robocomp, A step by step guide.</title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/05/23/post_on_webpage/"/>
+   <updated>2015-05-23T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/05/23/post_on_webpage</id>
+   <content type="html">&lt;p&gt;In this tutorial you will be learning about writing a post for robocomp. I assume that you are already familiar with contributing via Github if you are not then you can follow &lt;a href=&quot;http://rajathkumarmp.github.io/robocomp/tutorial/2015/05/23/contribute.html&quot;&gt;this article&lt;/a&gt; and then come back here.&lt;/p&gt;
+
+&lt;p&gt;By now you would have already forked the repository.
+Now switch to &lt;code&gt;gh-pages&lt;/code&gt; branch
+You can do this via github client or on the command line by navigating to the directory and executing the command&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;`git checkout gh-pages`
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After checking out to the github pages branch in your navigate to the &lt;code&gt;_posts&lt;/code&gt; directory. Here you will find all the posts.&lt;/p&gt;
+
+&lt;p&gt;To write a new post. Create a new file and save it as &lt;code&gt;XYZ.md&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that you will be using Github markdown language.&lt;/p&gt;
+
+&lt;p&gt;Once you save the file as &lt;code&gt;XYZ.md&lt;/code&gt;. It will be saved as draft and not published on to the website.&lt;/p&gt;
+
+&lt;p&gt;At the header of every article/post you write. Always add this&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;---
+layout:
+title: 
+categories:
+tags:
+description:
+---
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Layout can be &lt;code&gt;post&lt;/code&gt;, &lt;code&gt;page&lt;/code&gt; or &lt;code&gt;default&lt;/code&gt;. Always set the layout as &lt;code&gt;post&lt;/code&gt;. The title is the title of the post. Categories and Tags should be set accoridingly whichever is applicable. This is helpful in navigating or finding posts on same topic. Description is a short explanation or gist of the entire post.&lt;/p&gt;
+
+&lt;p&gt;A sample header looks like this.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;---
+layout: post
+title: Write a post for robocomp, A step by step guide.
+categories: [Tutorial]
+tags: [General]
+description: In detail explanation as to how to write  a post for robocomp
+---
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After adding the header you can proceed writing the post by using Github Markdown language. Now for the most important step. To publish the post or to change the post from draft to final you will have to rename the file to&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;`YYYY-MM-DD-XYZ.md`
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;That&amp;#39;s it and you would successfully published a post on to the robocomp&amp;#39;s website.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Packaging RoboComp</title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/05/23/nithin3/"/>
+   <updated>2015-05-23T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/05/23/nithin3</id>
+   <content type="html">&lt;h3&gt;deb packages&lt;/h3&gt;
+
+&lt;p&gt;For creating a robocomp debian package :&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cd ~/robocomp
+mkdir build
+cmake ..
+make package
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;will create a .deb package in the build directory, which we can install using any packaging application like dpkg. To install the created package, just double click on it(open with Software Center) or in terminal type&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo dpkg -i &amp;lt;packagename&amp;gt;.deb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;source packages for ppa&lt;/h3&gt;
+
+&lt;p&gt;Launchpad will only accept source packages and not binary.Launchpad will then build the packages. For building source packages we are using debuild which is a wrapper around the &lt;em&gt;dpkg-buildpackage + lintian&lt;/em&gt;. so you will need to install debuild and dput on your system.The source_package.cmake script is used to create debian source package.&lt;/p&gt;
+
+&lt;p&gt;The main CMakeLists.txt file defines a target &lt;code&gt;spackage&lt;/code&gt; that builds the source package in build/Debian with &lt;code&gt;make spackage&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;For uploading the package to ppa, First change the &lt;strong&gt;PPA_PGP_KEY&lt;/strong&gt; in &lt;a href=&quot;../cmake/package_details.cmake#L26&quot;&gt;package_details.cmake&lt;/a&gt; to the contact of the PGP key  details registered with your ppa account.Then create a source package by building the target &lt;em&gt;spackage&lt;/em&gt;.Once the Source package is build successfully, upload it to your ppa by:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cd Debian/
+dput ppa:&amp;lt;lp-username&amp;gt;/&amp;lt;ppa-name&amp;gt; package-source.changes
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;building of source package can be tested with:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cd Debian/robocomp-&amp;lt;version&amp;gt;
+debuild -i -us -uc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;Note:&lt;/h4&gt;
+
+&lt;p&gt;If you want to upload another source package to ppa which doesn&amp;#39;t have any changes in the source but maybe in the debian files. you can build the spackage after commenting out &lt;code&gt;set(DEB_SOURCE_CHANGES &amp;quot;CHANGED&amp;quot; CACHE STRING &amp;quot;source changed since last upload&amp;quot;)&lt;/code&gt; in &lt;a href=&quot;../cmake/package_details.cmake#L27&quot;&gt;package_details.cmake&lt;/a&gt; so that the the script will only increase the ppa version number and wont include the source package for uploading to ppa (which otherwise will give an error).&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Nithin Murali&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title><i>GSoC,</i> Building and deployment system design</title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/05/23/nithin2/"/>
+   <updated>2015-05-23T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/05/23/nithin2</id>
+   <content type="html">&lt;h3&gt;About Me:&lt;/h3&gt;
+
+&lt;p&gt;Hi all , I am Nithin Murali and i would like to introduce me a little in this post. I am pursuing my engineering degree on Electrical Engineering from Indian Institute of Technology Bombay. I am working on an Autonomous Underwater Vehicle which we are developing for the RObosub competition. We are developing in ROS framework. That was my first introduction to robotic frameworks. I have read about Robocomop before but a real chance to contribute to this ambitious framework was brought to me by GSOC 2015. I have Chosen the project &lt;em&gt;RoboComp Building and deployment system design&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h3&gt;About the project&lt;/h3&gt;
+
+&lt;p&gt;Currently the the build system in Robocomp is not very efficient. It is limited only to the core libraries and some additional tools. So we will have to seprately build all the components one by one. Also as the number of component increases it will be more difficult to manage all of them. So I am planning to come up with an workspace model for Robocomp. It would accompany with various tools which will ease handling of components.&lt;/p&gt;
+
+&lt;p&gt;As of now the users have to build robocomp from source for using it. But there may be users who dont want to work on the framework but is only interested in developing new components. For such users it is important that that we should supply an compiled package (preferably debian package). Also package would be more accessible if we could provide an ppa for robocomp. So i am planning to package robocomp and also create a ppa for robocomp.&lt;/p&gt;
+
+&lt;p&gt;Currently Robocomp dosent have any tests written nor is it using any testinf framework. So one of my task would be decide on a testing framework/stragery and write tests for existing framework.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Nithin Murali&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Introduction to debian packaging</title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/05/23/nithin1/"/>
+   <updated>2015-05-23T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/05/23/nithin1</id>
+   <content type="html">&lt;h2&gt;What is a package&lt;/h2&gt;
+
+&lt;p&gt;By definition &lt;em&gt;Debian packages are standard Unix ar archives that include two tar archives optionally compressed with gzip (zlib), Bzip2, lzma, or xz (lzma2): one archive holds the control information and another contains the program data.&lt;/em&gt;
+All debain packages should follow certain conventions. The root source directory should contain a directory named &lt;em&gt;debian&lt;/em&gt;. This directory contains files which stores info about the package.
+These are the required files under the debian directory&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;rules&lt;/strong&gt;&lt;br&gt;
+This is the maintainer script for the package building. This script is run by the packaging application to build and install the source into a &lt;em&gt;tmp&lt;/em&gt; directory in the debian folder. It has the following Targets&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;clean target&lt;/em&gt; : to clean all compiled, generated, and useless files in the build-tree.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;build target&lt;/em&gt; : to build the source into compiled programs and formatted documents in the build-tree.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;build-arch target&lt;/em&gt; : to build the source into arch-dependent compiled programs in the build-tree.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;build-indep target&lt;/em&gt; : to build the source into arch-independent formatted documents in the build-tree.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;binary target&lt;/em&gt; : to create all binary packages (effectively a combination of binary-arch and binary-indep targets)&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;binary-arch target&lt;/em&gt; : to create arch-dependent (Architecture: any) binary packages in the parent directory.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;binary-indep target&lt;/em&gt;: to create arch-independent (Architecture: all) binary packages in the parent directory.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;changelog&lt;/strong&gt;&lt;br&gt;
+This file contains the project changelog along with the project name , version and distribution and urgency of your package.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;compact&lt;/strong&gt;&lt;br&gt;
+The compact file defines the debhelper compatibility level.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;debian/control&lt;/strong&gt;&lt;br&gt;
+This file contains various values which dpkg, dselect, apt-get, apt-cache, aptitude, and other package management tools will use to manage the package. The control file describes the source and binary package, and gives some information about them, such as their names, who the package maintainer is, build and run dependencies and so on.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;copyright&lt;/strong&gt;&lt;br&gt;
+This file contains information about the copyright and license of the upstream sources&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;(pre/post)(inst/rm)&lt;/strong&gt;&lt;br&gt;
+This are the scipts which are run before or after installation or removal of package.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now once you have the source directory in the prescribed format. you will need a &lt;em&gt;.tar.gz&lt;/em&gt; archive of the source in the same folder.Then we can create a debian binary package using &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;debuild -i -us -uc -b
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Or a debian source package using&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;debuild -i -us -uc -S
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;hr&gt;
+
+&lt;p&gt;Nithin Murali&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Software components in RoboComp, A brief introduction</title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/05/23/components/"/>
+   <updated>2015-05-23T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/05/23/components</id>
+   <content type="html">&lt;p&gt;Two major problems encountered when creating large, complex software are scalability and reusability. These problems become especially acute when it comes to writing the software that controls today robots. Robotics is the mixed bag of technology, where almost everything finds its way through. Also, Robotics is the place where our dreams of intelligent machines meet, in an endless attempt to build a truly useful tool for our daily lives. Because of this, we organize the software for our robots in big architectures that try to reproduce whatever we understand by intelligent behavior. The most audacious architectures are called &lt;em&gt;cognitive architectures&lt;/em&gt; and try to integrate all levels of behavior and reasoning needed to achieve intelligence. Some of them have been with us for more than 30 years, &lt;a href=&quot;http://soar.eecs.umich.edu/&quot;&gt;SOAR.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The problem with building these little monsters is that you need a very powerful underlying infrastructure that lets you build and modify software created by many people and that has to execute on real, moving machines. Also, everybody expect robots to be smarter than they really are and that is a lot of preassure. Components provide a new, developing technology that can be very helpful here. Components are &lt;em&gt;programs that communicate&lt;/em&gt; and as such, they are built with everything at hand, libraries, objects, threads, sockets, lambda functions and any other thing you can come up with to code a program. Also, components need a way to communicate among them and here is where communication middlewares get in. If you want to communicate programs written in different languages, running across the internet, executing on different hardware architectures -even browsers- then you cannot get along with a socket. You really need a middleware. Putting together these to elements, programs and a communication middleware, you almost come up with a component. One more thing is needed, a model for your components. You need to define what is a generic component and consequently how its internal structure is going to be, its directory and building ecosystem, how it has to be documented, its default behavior, how it will be deployed and its modes of communicating. There are several proposals that do exactly this, being the most famous &lt;a href=&quot;http://www.corba.org&quot;&gt;CORBA.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In RoboComp (2005-) we have created our own component model, inspired by the &lt;a href=&quot;http://orca-robotics.sourceforge.net/&quot;&gt;ORCA&lt;/a&gt; model and making it evolve to fit our needs along these years. As a middleware, RoboComp primarily uses &lt;a href=&quot;www.zeroc.com&quot;&gt;Ice&lt;/a&gt; and there is ongoing experimental work to make RoboComp middleware agnostic, so its components can be re-generated to use other middlewares such as &lt;a href=&quot;http://portals.omg.org/dds/&quot;&gt;DDS&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;RoboComp&amp;#39;s components model is quite simple and we always try to simplify it even more. It can be best explained through two Domain Specific Languages (DSLs) that have been created to define a component at a very high level of abstraction. &lt;strong&gt;IDSL&lt;/strong&gt; stands for &amp;quot;Interface Definition Specific Language&amp;quot; and currently is a subset of Ice&amp;#39;s Slice interface language. With IDSL you write the data structures and functions that a component can implement, require, subscribe to or publish. A component can implement several interfaces, offering different views of its internal functioning. Also, the same interface can be implemented by many components. This is an example of a simple interface written in IDSL:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;module RoboCompSpeech
+{
+  interface Speech
+  {
+     bool say(string text,bool overwrite);
+     bool isBusy();
+  };
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;CDSL&lt;/strong&gt; stands for &amp;quot;Component Definition Specific Language&amp;quot; and allows the user to specifiy its name, accesible interfaces, communication connections, target language and other available modules or libraries that you want to include in the building scripts.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;import &amp;quot;/robocomp/interfaces/IDSLs/DifferentialRobot.idsl&amp;quot;;
+import &amp;quot;/robocomp/interfaces/IDSLs/Laser.idsl&amp;quot;;
+Component prueba
+{
+    Communications
+    {
+      requires DifferentialRobot, Laser;
+    };
+    language cpp;
+    gui Qt(QWidget);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Using these two DSLs, RoboComp can generate the source code of the component using a tool designed to this end. The complete, functioning code of a component is created ready to be compiled and executed. We use a smart inheritance mechanism to separate the generic stuff from the user specific stuff and, based on it, the next time you generate a component, your code will remain untouched but access to new defined proxies will be there.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Creating a new component with eclipse based RoboComp's DSLEditor</title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/05/23/component_creation_with_DSLEditor/"/>
+   <updated>2015-05-23T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/05/23/component_creation_with_DSLEditor</id>
+   <content type="html">&lt;p&gt;We will create now a new component that will connect to the RCIS simulator and run a simple controller for the robot, using the laser data. First we need to install the DSLEditor software that is runtime Eclipse application. &lt;/p&gt;
+
+&lt;p&gt;Create another terminal in Yakuake and type:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cd ~/robocomp/tools
+python fetch_DSLEditor.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Select 32 or 64 bits according to your current linux installation. After a little while the DSLEditor will be installed under the &lt;em&gt;robocompDSL&lt;/em&gt; directory:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cd roboCompDSL/DSLEditor
+./DSLEditor
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Check that you have a &lt;em&gt;RoboComp&lt;/em&gt; tab in the upper bar of the DSLEditor window and that the &lt;em&gt;robocomp&lt;/em&gt; directory appears in the Project Explorer (left panel). If it does not, right click inside the &lt;em&gt;Project Explorer&lt;/em&gt; panel and select &lt;em&gt;import&lt;/em&gt;. Then select &lt;em&gt;General&lt;/em&gt; and then &lt;em&gt;Existing Projects into Workspace&lt;/em&gt;. Then select your &lt;em&gt;robocomp&lt;/em&gt; directory and push &lt;em&gt;Finish&lt;/em&gt;. &lt;/p&gt;
+
+&lt;p&gt;Now we need to bring up some handy tabs in the lower pane. Select the &lt;em&gt;Window&lt;/em&gt; tab in the upper bar, then &lt;em&gt;Show View&lt;/em&gt;, then &lt;em&gt;Other&lt;/em&gt; and again &lt;em&gt;Other&lt;/em&gt;. Select now &lt;em&gt;Interfaces&lt;/em&gt; and double-click on it. Go back to the main window.&lt;/p&gt;
+
+&lt;p&gt;Now, in the left panel, unfold the &lt;em&gt;robocomp&lt;/em&gt; directory down to &lt;em&gt;robocomp/components/&lt;/em&gt; and then click on it with the right button. Select &lt;em&gt;New Folder&lt;/em&gt; and enter &lt;em&gt;mycomponents&lt;/em&gt; in the folder name. Do it again to create a new folder inside &lt;em&gt;mycomponents&lt;/em&gt; named &lt;em&gt;myfirstcomp&lt;/em&gt;. Select &lt;em&gt;myfirstcomp&lt;/em&gt; and then click on the &lt;em&gt;RoboComp&lt;/em&gt; tab in the upper bar of the main window. Select &lt;em&gt;Create CDSL file&lt;/em&gt; and fill the requested name with &lt;em&gt;MyFirstComp.cdsl&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;The new file will open inside a syntax-sensitive editor in the central panel. Ctrl-space gives you syntactically correct options. You can see the skeleton of a new empty component. Look for the tab &lt;em&gt;Interfaces&lt;/em&gt; in the lower bar and select &lt;em&gt;DifferentialRobot.idsl&lt;/em&gt;. Click on the green cross at the right of the bar to include it and accept when prompted in a pop-up window. You will see something like:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;import &amp;quot;/robocomp/interfaces/IDSLs/DifferentialRobot.idsl&amp;quot;;
+Component PFLocalizerComp{
+    Communications{
+        };
+        language Cpp;
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Repeat the same steps to include &lt;em&gt;Laser.idsl&lt;/em&gt; and then add a &lt;em&gt;requires&lt;/em&gt; statement inside de &lt;em&gt;Communications&lt;/em&gt; section. The file now should look like this:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;import &amp;quot;/robocomp/interfaces/IDSLs/DifferentialRobot.idsl&amp;quot;;
+import &amp;quot;/robocomp/interfaces/IDSLs/Laser.idsl&amp;quot;;
+Component MyFirstComp{
+    Communications{
+        requires DifferentialRobot, Laser;
+    };
+language Cpp;
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Save the file and click in the upper bar on the &lt;em&gt;RoboComp&lt;/em&gt; tab. Select &lt;em&gt;Generate Code&lt;/em&gt;. After a little while the new source tree for your &lt;em&gt;MyFirstComp&lt;/em&gt; component will be created. You can go back now to Yakuake and create a new tab to compile it. Then:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cd ~/robocomp/components/mycomponents/myfirstcomp
+cmake .
+make
+bin/myfirstcomp --Ice.Config=etc/generic_config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;and there it is! your component is running. &lt;/p&gt;
+
+&lt;p&gt;What! Dissapointed? Yeah, I know it does nothing, but it runs and it is yours! Now let&amp;#39;s do some real programming.&lt;/p&gt;
+
+&lt;p&gt;Stop the component with Ctrl Z and then type:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;killall -9 myfirstcomp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now start your favorite IDE. KDevelop will do it just fine and you have it already installed. Open it in another tab, from Ubuntu menu or with Alt-F2. Then:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Click the *Project* tab in the upper bar
+Select *Open/Import Project*
+Navigate to ~/robocomp/components/mycomponents/myfirstcomp
+Select *Makefile* and open the project
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In the &lt;em&gt;Project&lt;/em&gt; panel to the left of the screen, navigate to &lt;em&gt;src&lt;/em&gt; and there select &lt;em&gt;specificworker.cpp&lt;/em&gt; and open it. Open also &lt;em&gt;specificworker.h&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Now replace the empty &lt;em&gt;void compute()&lt;/em&gt; method with this compact version of the classic AVOID-FORWARD-STOP architecture proposed by R. Brooks in the late 80&amp;#39;s:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;void SpecificWorker::compute( )
+{
+    static  float rot = 0.1f;           // rads/sec
+    static float adv = 100.f;           // mm/sec
+    static float turnSwitch = 1;
+    const float advIncLow = 0.8;        // mm/sec
+    const float advIncHigh = 2.f;       // mm/sec
+    const float rotInc = 0.25;          // rads/sec
+    const float rotMax = 0.4;           // rads/sec
+    const float advMax = 200;           // milimetres/sec
+    const float distThreshold = 500;    // milimetres
+try
+{
+    RoboCompLaser::TLaserData ldata = laser_proxy-&amp;gt;getLaserData();
+    std::sort( ldata.begin(), ldata.end(), [](RoboCompLaser::TData a, RoboCompLaser::TData b){ return     a.dist &amp;lt; b.dist; }) ;
+    if( ldata.front().dist &amp;lt; distThreshold) 
+    {
+        adv = adv * advIncLow; 
+        rot = rot + turnSwitch * rotInc;
+        if( rot &amp;lt; -rotMax) rot = -rotMax;
+        if( rot &amp;gt; rotMax) rot = rotMax;
+        differentialrobot_proxy-&amp;gt;setSpeedBase(adv, rot);
+    }
+    else
+    {
+        adv = adv * advIncHigh; 
+        if( adv &amp;gt; advMax) adv = advMax;
+        rot = 0.f;
+        differentialrobot_proxy-&amp;gt;setSpeedBase(adv, 0.f);        
+        turnSwitch = -turnSwitch;
+    }   
+}
+catch(const Ice::Exception &amp;amp;ex)
+{
+    std::cout &amp;lt;&amp;lt; ex &amp;lt;&amp;lt; std::endl;
+}
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To compile the fancy version of &lt;em&gt;std::sort&lt;/em&gt; you will have to first add this line at the end of the file &lt;em&gt;CMakeListsSpecific.txt&lt;/em&gt; located in the same &lt;em&gt;src&lt;/em&gt; directory:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;ADD_DEFINITIONS( -std=c++11 )
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;and then type:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cmake .
+make
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Hereafter, Press F8 in KDevelop to compile and link. Then, go to Yakuake and restart the component. &lt;/p&gt;
+
+&lt;p&gt;Let us take InnerModel &lt;em&gt;simpleworld.xml&lt;/em&gt; as an example. Open a new tab in Yakuake and execute&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cd robocomp/files/innermodel
+rcis simpleworld.xml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now you should see 2 windows. Now in Yakuake go back to tab where you had compiled &lt;em&gt;myfirstcomp&lt;/em&gt; and run&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;bin/myfirstcomp --Ice.Config=etc/generic_config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You should see the robot maneouvring aroung the box. Now is when Robotics begin! Try to modify the code to let the robot go pass the blocking boxes.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>aprilTagsComp, Tutorial to simulate virtual apriltags</title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/05/23/apritagstutorial/"/>
+   <updated>2015-05-23T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/05/23/apritagstutorial</id>
+   <content type="html">&lt;p&gt;If you haven&amp;#39;t already, Then do read about aprilTagsComp &lt;a href=&quot;apriltags.md&quot;&gt;here&lt;/a&gt; for better understanding. In this tutorial you will learn the actual functionality of apriltags.&lt;/p&gt;
+
+&lt;p&gt;First make sure you have installed apriltags. Please follow the steps that is given in &lt;em&gt;INSTALL&lt;em&gt;APRILTAGS&lt;/em&gt;LIB.TXT&lt;/em&gt;. Then move to the apriltagscomp folder&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cd ~/robocomp/components/robocomp-robolab/components/apriltagsComp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Compile by executing&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cmake.
+make
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now that you have compiled the component and have the binary generated. Open a new tab in yakuake or terminal and execute&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cd robocomp/files/innermodel
+rcis simpleworld.xml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here we will considering &lt;em&gt;simpleworld.xml&lt;/em&gt; as an example since it has virtual apriltags and a robot with a camera is present for simulation. After execution you should now see two windows, One showing the robot camera&amp;#39;s view pointing at one of the apriltags and the other with the site map showing the robot and two virtual apriltags.&lt;/p&gt;
+
+&lt;p&gt;Now go back to the terminal where you had compiled the apriltagsComp and execute&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;bin/apriltagscomp --Ice.Config=etc/generic_config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You should now see the following output.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;user@username:~/robocomp/components/robocomp-robolab/components/apriltagsComp$ bin/apriltagscomp --Ice.Config=etc/generic_config
+[/home/username/robocomp/classes/rapplication/rapplication.cpp]: Loading [camera:tcp -h localhost -p 10001] proxy at &amp;#39;CameraProxy&amp;#39;...
+18:20:19:421::Info::apriltagscomp.cpp::139::/home/username/robocomp/components/robocomp-robolab/components/apriltagsComp/src/apriltagscomp.cpp::run::CameraProxy initialized Ok!
+[/home/username/robocomp/classes/rapplication/rapplication.cpp]: Loading [rgbd:tcp -h localhost -p 10096] proxy at &amp;#39;RGBDProxy&amp;#39;...
+18:20:19:421::Info::apriltagscomp.cpp::150::/home/username/robocomp/components/robocomp-robolab/components/apriltagsComp/src/apriltagscomp.cpp::run::RGBDProxy initialized Ok!
+[/home/username/robocomp/classes/rapplication/rapplication.cpp]: Loading [rgbdbus:tcp -h localhost -p 10239] proxy at &amp;#39;RGBDBusProxy&amp;#39;...
+18:20:19:421::Info::apriltagscomp.cpp::161::/home/username/robocomp/components/robocomp-robolab/components/apriltagsComp/src/apriltagscomp.cpp::run::RGBDBusProxy initialized Ok!
+18:20:19:423::Debug::genericworker.cpp::53::/home/username/robocomp/components/robocomp-robolab/components/apriltagsComp/src/genericworker.cpp::setPeriod::Period changed100
+18:20:19:423::Info::specificmonitor.cpp::56::/home/username/robocomp/components/robocomp-robolab/components/apriltagsComp/src/specificmonitor.cpp::initialize::Starting monitor ...
+InputInterface RGBD
+AprilTagsFamily tagCodes36h11
+ID:0-10 0.17
+ID:11-20 0.17
+ID:21-30 0.17
+InnerModelPath /home/robocomp/robocomp/files/innermodel/simpleworld.xml
+RoboCompAprilTagsComp::AprilTagsComp started
+InnerModelReader: reading /home/robocomp/robocomp/files/innermodel/simpleworld.xml
+InnerModelRGBD: 0.000000 {10096}
+&amp;quot;/home/robocomp/robocomp/files/innermodel/simpleworld.xml&amp;quot;   &amp;quot;rgbd&amp;quot; 
+FOCAL LENGHT: 480 
+  6.45862 fps
+  7.17213 fps
+  7.09036 fps
+  6.94859 fps
+  7.09561 fps
+  7.01433 fps
+  7.09569 fps
+  7.02332 fps
+  7.24122 fps
+  7.17631 fps
+  6.85862 fps
+  7.00415 fps
+  7.14883 fps
+  6.92038 fps
+  7.03233 fps
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>aprilTagsComp, Wrapping E. Olson's AprilTags in RoboComp</title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/05/23/apriltags/"/>
+   <updated>2015-05-23T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/05/23/apriltags</id>
+   <content type="html">&lt;p&gt;AprilTags is an augmented reality tag system developed by E. Olson at the U. of Michigan, USA. A complete explanation and related papers can be found &lt;a href=&quot;http://april.eecs.umich.edu/wiki/index.php/AprilTags&quot;&gt;here&lt;/a&gt;. There is a C++ version written
+ by Michael Kaes &lt;a href=&quot;http://people.csail.mit.edu/kaess/apriltags/&quot;&gt;here&lt;/a&gt; which is the one we use.&lt;/p&gt;
+
+&lt;p&gt;April tags are AR tags designed to be easily detected by (robot) cameras. Understand them as a visual fiducial (artificial features) system that uses a 2D bar code style “tag”, allowing full 6 DOF localization of features from a single image. It is designed to encode smaller data (between 4 and 12 bits) and also these tags can be detected by the camera even at odd conditions. When the tag is seen by the camera, the algorithm computes the tag&amp;#39;s complete pose defining its own reference system relative to the camera (i.e Location of the tag is known with high accuracy). This reference system is defined as follows: If we look perpendicularly to a non rotated tag, The Z+ axis comes out towards us from the center of the tag plane, The X+ axis points leftwards and the Y+ axis points upwards (a left-hand reference system). The values computed by &lt;em&gt;apriltagsComp&lt;/em&gt; are the translation vector from the camera to the center of the tag&amp;#39;s reference system, and the three Euler angles that encode the relative orientation of the tag&amp;#39;s reference system wrt to the camera reference system.&lt;/p&gt;
+
+&lt;p&gt;The &lt;em&gt;AprilTags.cdsl&lt;/em&gt; file specifies how &lt;em&gt;apriltagsComp&lt;/em&gt; has been generated and how it can be re-generated:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;import &amp;quot;/robocomp/interfaces/IDSLs/GetAprilTags.idsl&amp;quot;;
+import &amp;quot;/robocomp/interfaces/IDSLs/AprilTags.idsl&amp;quot;;
+import &amp;quot;/robocomp/interfaces/IDSLs/RGBD.idsl&amp;quot;;
+import &amp;quot;/robocomp/interfaces/IDSLs/RGBDBus.idsl&amp;quot;;
+import &amp;quot;/robocomp/interfaces/IDSLs/Camera.idsl&amp;quot;;
+Component AprilTagsComp{
+    Communications{
+            requires Camera, RGBDBus, RGBD;
+            publishes AprilTags;
+            implements GetAprilTags;
+    };
+    language Cpp;
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This files tells us that the component requires -will be calling- three RoboComp interfaces: Camera, RGBDBus y RGBD, which are normal and depth camera&amp;#39;s interfaces written in RoboComp&amp;#39;s IDSL language. You can find those files in &lt;em&gt;~/robocomp/interfaces/IDSLs&lt;/em&gt;. Also, the component will publish the data defined in the &lt;em&gt;AprilTags&lt;/em&gt; interface and will implement the &lt;em&gt;GetAprilTags&lt;/em&gt; interface. This means that using images provided by a component implementing the camera or RGBD interfaces, it will try to detect any tags in them and compute their 6D pose. Finally, it will publish a vector with all the tags id&amp;#39;s and poses to the Ice&amp;#39;s STORM broker, and also it will attend any direct requests (remote procedure calls) received from other components through the &lt;em&gt;GetAprilTags&lt;/em&gt; interface. So it is a rather serviceable and handy component!&lt;/p&gt;
+
+&lt;p&gt;To access &lt;strong&gt;apriltagsComp&lt;/strong&gt; you need to install from &lt;em&gt;http://github.org/robocomp&lt;/em&gt; the repository named &lt;em&gt;robocomp-robolab&lt;/em&gt;. &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cd ~/robocomp/components
+git clone https://github.com/robocomp/robocomp-robolab.git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Once downloaded, &lt;em&gt;apriltagsComp&lt;/em&gt; can be found in:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;~/robocomp/components/robocomp-robolab/components/apriltagsComp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;First, read the &lt;em&gt;INSTALL&lt;em&gt;APRILTAGS&lt;/em&gt;LIB.TXT&lt;/em&gt; file and follow instructions thereby. Once the library has been installed in /usr/local, we can proceed to compile the component:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cd ~/robocomp/components/robocomp-robolab/components/apriltagsComp
+cmake .
+make
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We should have a binary now:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;~/robocomp/components/robocomp-robolab/components/apriltagsComp/bin/apriltagscomp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Configuration parameters&lt;/h2&gt;
+
+&lt;p&gt;As any other component, &lt;em&gt;apriltagsComp&lt;/em&gt; needs a &lt;em&gt;config&lt;/em&gt; file to start. In&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;~/robocomp/components/robocomp-robolab/components/apriltagsComp/etc/generic_config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;you can find an example of a configuration file. We can find there the following lines:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;GetAprilTagsComp.Endpoints=tcp -p 12210                     //Port where GetAprilTags iface is served
+CommonBehavior.Endpoints=tcp -p 11258                       //Not of use for the user now
+CameraProxy = camera:tcp -h localhost -p 10001              //Port where a camera is located
+RGBDProxy = rgbd:tcp -h localhost -p 10096                  //Port where a RGBD camera is located
+RGBDBusProxy = rgbdbus:tcp -h localhost -p 10239            //Port where a bus of RGBDs is located
+AprilTagsProxy = apriltags:tcp -h localhost -p 10261        //Not of use for the user
+TopicManager.Proxy=IceStorm/TopicManager:default -p 9999    //Port where STROM broker is located
+InnerModelPath=/home/robocomp/robocomp/files/innermodel/simpleworld.xml
+
+
+InputInterface = RGBD                                       //Current input iface to be used
+AprilTagsFamily = tagCodes36h11                             //Tags family. See AprilTags paper
+AprilTagsSize = 0.17                                        //Tag default real size in meters
+ID:0-10 = 0.17   #tag size in meters                        //Tags numbers 1-10 real size in meters
+ID:11-20 = 0.17   #tag size in meters                       //Tags numbers 11-20 real size in meters
+ID:21-30 = 0.17   #tag size in meters                       //Tags numbers 21-30 real size in meters
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;AprilTagsFamily is a set of tags, There are different families like 36h10,25h9,16h5 however &lt;em&gt;tagCodes36h11&lt;/em&gt; is recommended. Each tag has an ID that is printed inside the surrounding square using Hamming code. Instructions to print tags and other tag families can be found &lt;a href=&quot;http://april.eecs.umich.edu/wiki/index.php/AprilTags&quot;&gt;here&lt;/a&gt;. The algorithm needs the real size of the tag to estimate its position and orientation in space. We can give the component tags of different sizes, As long as they correspond to different ranges of IDs, as specified in the configuration file above.&lt;/p&gt;
+
+&lt;h2&gt;Starting the component&lt;/h2&gt;
+
+&lt;p&gt;To start the component we need a real camera connected to the cameraV4lComp component or the RCIS simulator started with a file that includes virtual tags, such as &lt;em&gt;simpleworld.xml&lt;/em&gt;, Tutorial can be found &lt;a href=&quot;virtualapriltagstutorial.md&quot;&gt;here&lt;/a&gt;. Once RCIS is up and running, It will provide the RGBD.idsl interface (not Camera.idsl for now) at port 10096, which is what the configuration file states. To avoid changing the &lt;em&gt;generic_config&lt;/em&gt; file in the repository, We can copy it to the component&amp;#39;s home directory, So changes will remain untouched by future git pulls:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cp ~/robocomp/components/robocomp-robolab/components/apriltagsComp
+cp /etc/generic_config config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So, to begin we type:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cd ~/robocomp/components/robocomp-robolab/components/apriltagsComp
+bin/apriltagscomp --Ice.Config=config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If the robot&amp;#39;s camera is pointing towards one of the tags, You should see in the terminal lines showing the ID and pose of each visible tag.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Tutorials Directory</title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/05/23/README/"/>
+   <updated>2015-05-23T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/05/23/README</id>
+   <content type="html">&lt;p&gt;&lt;a href=&quot;components.md&quot;&gt;A Brief introduction to Components&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;component_creation_with_DSLEditor.md&quot;&gt;Creation of a new component using RoboComp&amp;#39;s Eclipse based DSLEditor&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;using_github.md&quot;&gt;Maintaining your own repository of components&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;contribute/contribute.md&quot;&gt;How to contribute to RoboComp using the GitHub branching mechanism&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;robocompdsl.md&quot;&gt;Using the new &lt;strong&gt;robocompdsl&lt;/strong&gt; component generation command line tool&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/robocomp/robocomp-robolab/blob/master/components/apriltagsComp/README.md&quot;&gt;The E. Olson&amp;#39;s AprilTags component&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;robocompdsl_python.md&quot;&gt;Creating a Python component using &lt;strong&gt;robocompdsl&lt;/strong&gt; that subscribes to &lt;em&gt;apriltagsComp&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;[InnerModel, RoboComp&amp;#39;s internal representation of reality]&lt;/p&gt;
+
+&lt;p&gt;[RoboComp&amp;#39;s robots: Ursus, Loki and the others]&lt;/p&gt;
+
+&lt;p&gt;[&lt;strong&gt;robocomp-robolab&lt;/strong&gt; components]&lt;/p&gt;
+
+&lt;p&gt;[The BodyInverseKinematics (BIK) component]&lt;/p&gt;
+
+&lt;p&gt;[The Navigation (TRAJ) component]&lt;/p&gt;
+
+&lt;p&gt;[RoboCog, a Cognitive Architecture built with RoboComp]&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Chroot environment</title>
+   <link href="http://rajathkumarmp.github.io/rcwebsite2/2015/05/23/How_To_Make_Chroot_Environment/"/>
+   <updated>2015-05-23T00:00:00+05:30</updated>
+   <id>http://rajathkumarmp.github.io/2015/05/23/How_To_Make_Chroot_Environment</id>
+   <content type="html">&lt;p&gt;A chroot is a way of isolating applications from the rest of your computer, by putting them in a jail. This is particularly useful if you are testing an application which could potentially alter important system files, or which may be insecure.
+A chroot is basically a special directory on your computer which prevents applications, if run from inside that directory, from accessing files outside the directory. In many ways, a chroot is like installing another operating system inside your existing operating system. 
+The following are some possible uses of chroots:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Isolating insecure and unstable applications&lt;/li&gt;
+&lt;li&gt;Running 32-bit applications on 64-bit systems&lt;/li&gt;
+&lt;li&gt;Testing new packages before installing them on the production system&lt;/li&gt;
+&lt;li&gt;Running older versions of applications on more modern versions of Ubuntu&lt;/li&gt;
+&lt;li&gt;Building new packages, allowing careful control over the dependency packages which are installed &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This manual will follow the steps specified in the &lt;a href=&quot;https://help.ubuntu.com/community/BasicChroot&quot;&gt;official page of Ubuntu&lt;/a&gt;. And the system we will install as tutorial is Ubuntu 14.04 Trusty amd64.&lt;/p&gt;
+
+&lt;h2&gt;Brief Explanation&lt;/h2&gt;
+
+&lt;p&gt;Imagine you have your Robocomp version well installed and working really fine in your system (i.e. Ubuntu 14.04 amd64), but you need to upgrade your ICE or OpenCV or PCL or whatever third-party library to a new version. You don&amp;#39;t want to risk your well functional version of Robocomp and it&amp;#39;s dependencies removing the current version and installing the new one (this usually affects other packages and libraries), and you don&amp;#39;t have time enough to make a whole fresh installation in other partition or virtual machine, so the fastest solution is to create a jail containing the same distribution of your main system (Ubuntu 14.04 amd64) with chroot and test Robocomp with the new version of the library you need without touching your fine Robocomp installation.
+Realize that creating a chrooted environment in your machine makes your system believe that your root directory (&amp;quot;/&amp;quot;) is in another place than the actual root of the system (like I explain on the wiki, the process in which you launch chroot believes that the root directory is in / while actually it is in /var/chroot/trusty_x64/, not letting you touch anything outside that directory and therefore not risking your current installation).
+Another practical use for chroot is to test an especific program or library in a different distribution or architecture. For example, if you are working in Ubuntu 14.04 amd64 and you want to test if a library that you are using works fine in Debian Wheezy or Ubuntu 14.10 or Ubuntu 14.04 i386.&lt;/p&gt;
+
+&lt;h2&gt;Creating a chroot&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;First of all we need to install the tools to make a chroot in out system.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo apt-get install debootstrap schroot&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Create a folder where the chroot is going to be installed. You need to make the folder using administrator permission (with &lt;em&gt;sudo&lt;/em&gt; i.e). We will put the chroot up in &lt;em&gt;/var/chroot/trusty&lt;/em&gt;x64_&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo mkdir /var/chroot &amp;amp;&amp;amp; sudo mkdir /var/chroot/trusty_x64&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Create a configuration file for schroot. For our example, we will create a file named trusty&lt;em&gt;x64.conf in _/etc/schroot/chroot.d/&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo gedit /etc/schroot/chroot.d/trusty_x64.conf&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;And write the following inside: (Change the &lt;USERNAME&gt; to actual username, example &amp;quot;root-users=abhi&amp;quot;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;[trusty_x64]
+description=Ubuntu trusty 14.04 for amd64
+directory=/var/chroot/trusty_x64
+root-users=&amp;lt;USERNAME&amp;gt;
+type=directory
+users=testuser
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;The first line is the name of the chroot thatis going to be created.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;description&lt;/strong&gt; is a short description of the chroot.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;directory&lt;/strong&gt; the path where the chroot is going to be installed. Note that is the same path that we specified in step 2.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;root-users&lt;/strong&gt; list of users that are allowed in our chroot without password.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;type&lt;/strong&gt;  The type of the chroot. Valid types are ‘plain’, ‘directory’, ‘file’, ‘block-device’ and ‘lvm-snapshot’. If empty or omitted, the default type is ‘plain’.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;users&lt;/strong&gt; list of users that are allowed access to the chroot.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;see &lt;a href=&quot;http://manpages.ubuntu.com/manpages/hardy/man5/schroot.conf.5.html&quot;&gt;schroot.config&lt;/a&gt; for further information.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Run Debootstrap. This step will download and unpack a basic ubuntu or debian system to the chroot directory we created in step 2.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo debootstrap --variant=buildd --arch amd64 trusty /var/chroot/trusty_x64 http://archive.ubuntu.com/ubuntu&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;In our example, we are creating a chroot of an Ubuntu 14.04 64-bit distribution, but this command allows some different commands that can satisfy our needs, for instance, if we want to install the same distribution but the 32-bit version, we have to type:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo debootstrap --variant=buildd --arch i386 trusty /var/chroot/trusty http://archive.ubuntu.com/ubuntu&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that we have to do the proper changes creating a different schroot configuration file (i.e. &lt;em&gt;/etc/schroot/chroot.d/trusty&lt;/em&gt;) and a different folder for the new chroot (i.e. &lt;em&gt;/var/chroot/trusty&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;If we want to create a chroot for a Debian version (i.e. Debian Wheezy (stable)) we have to type:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo debootstrap --variant=buildd --arch amd64 wheezy /var/chroot/wheezy_x64 http://ftp.debian.org/debian&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Checking the chroot. To be sure that everything went ok, we can type the following command, that will list all the available chroot enviroments in out system.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;schroot -l&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;If trusty_x64 appears, we can start working in our chrooted environment typing:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;schroot -c trusty_x64 -u root&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The prompt of the chrooted environment should be like:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;(trusty_x64)root@abhi-Inspiron-7520:/home/abhi#&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt; This step is not mandatory.
+&lt;strong&gt;NOTE&lt;/strong&gt; For convenience, the default schroot configuration rebinds the /home directory on the host system so that it appears in the chroot system. This could be unexpected because it means that you can accidentally delete or otherwise damage things in /home on the host system. To change this behaviour we can run the following command in the host system:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo gedit /etc/schroot/default/fstab&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;And comment the /home line:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;# fstab: static file system information for chroots.
+# Note that the mount point will be prefixed by the chroot path
+# (CHROOT_PATH)
+#
+# &amp;lt;file system&amp;gt; &amp;lt;mount point&amp;gt;   &amp;lt;type&amp;gt;  &amp;lt;options&amp;gt;       &amp;lt;dump&amp;gt;  &amp;lt;pass&amp;gt;
+/proc           /proc           none    rw,bind        0       0
+/sys            /sys            none    rw,bind        0       0
+/dev            /dev            none    rw,bind         0       0
+/dev/pts        /dev/pts        none    rw,bind         0       0
+#/home          /home           none    rw,bind         0       0
+/tmp            /tmp            none    rw,bind         0       0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;And that&amp;#39;s it! Now we have a whole very basic system in which we can test out programs and libraries. &lt;/p&gt;
+
+&lt;h2&gt;Troubleshooting&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;If you get locale warnings in the chroot like &lt;strong&gt;&amp;quot;Locale not supported by C library.&amp;quot;&lt;/strong&gt; or &lt;strong&gt;&amp;quot;perl: warning: Setting locale failed.&amp;quot;&lt;/strong&gt;, then try one or more of these commands:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;    sudo dpkg-reconfigure locales
+    sudo apt-get install language-pack-en
+    sudo locale-gen en_US.UTF-8
+    sudo dpkg-reconfigure locales
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;if the problem persist check out this &lt;a href=&quot;http://perlgeek.de/en/article/set-up-a-clean-utf8-environment&quot;&gt;page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;To get access to the intertet within the chroot, you have to type:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo cp /etc/resolv.conf /var/chroot/trusty_x64/etc/resolv.conf&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;You might want to have the proper sources.list in order to be able to install packages from Ubuntu official repositories like universe or multiverse, and the security updates. If you make a chroot installation, the sources.list will be the most basic one, like:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;deb http://archive.ubuntu.com/ubuntu trusty main&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You can generate a more complete sources.list file in this pages &lt;a href=&quot;http://repogen.simplylinux.ch/&quot;&gt;Ubuntu&lt;/a&gt; and &lt;a href=&quot;http://debgen.simplylinux.ch/&quot;&gt;Debian&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;External Links&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://help.ubuntu.com/community/BasicChroot&quot;&gt;Ubuntu official chroot manual&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://help.ubuntu.com/community/DebootstrapChroot&quot;&gt;Ubuntu official deboostrap manual&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://perlgeek.de/en/article/set-up-a-clean-utf8-environment&quot;&gt;PerlGeek troubleshooting&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://manpages.ubuntu.com/manpages/hardy/man5/schroot.conf.5.html&quot;&gt;Schroot conf manual&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://manpages.ubuntu.com/manpages/trusty/en/man8/debootstrap.8.html&quot;&gt;Debootstap manual&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://repogen.simplylinux.ch/&quot;&gt;Sources.list for Ubuntu&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://debgen.simplylinux.ch/&quot;&gt;Sources.list for Debian&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>

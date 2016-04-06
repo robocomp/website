@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      RoboComp &middot; 
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/rcwebsite2/public/css/poole.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/syntax.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/rcwebsite2public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/rcwebsite2public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/rcwebsite2">
+          RoboComp
+        </a>
+      </h1>
+      <p class="lead">A simple robotics framework.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/rcwebsite2">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/Blog/">Blog</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/GSoC/">GSoC</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/projects/">Projects</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/Tutorials/">Tutorials</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/contact/">Contact</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/rcwebsite2/install/">Install</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
+      <span class="sidebar-nav-item">Currently v1.0.0</span>
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <i><b>RoboComp</b> is an open-source Robotics framework providing the tools to create and modify software components that communicate through public interfaces. Components may require, subscribe, implement or publish interfaces in a seamless way. Building new components is done using two domain specific languages, IDSL and CDSL. With IDSL you define an interface and with CDSL you specify how the component will communicate with the world. With this information, a code generator creates C++ and/or Python sources, based on CMake, that compile and execute flawlessly. When some of these features have to be changed, the component can be easily regenerated and all the user specific code is preserved thanks to a simple inheritance mechanism.</i>
+
+
+<hr>
+
+<div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/rcwebsite2/2015/05/23/apritagstutorial/">
+        aprilTagsComp, Tutorial to simulate virtual apriltags
+      </a>
+    </h1>
+
+    <span class="post-date">23 May 2015</span>
+
+    <p>If you haven&#39;t already, Then do read about aprilTagsComp <a href="apriltags.md">here</a> for better understanding. In this tutorial you will learn the actual functionality of apriltags.</p>
+
+<p>First make sure you have installed apriltags. Please follow the steps that is given in <em>INSTALL<em>APRILTAGS</em>LIB.TXT</em>. Then move to the apriltagscomp folder</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp/components/robocomp-robolab/components/apriltagsComp
+</code></pre></div>
+<p>Compile by executing</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cmake.
+make
+</code></pre></div>
+<p>Now that you have compiled the component and have the binary generated. Open a new tab in yakuake or terminal and execute</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cd robocomp/files/innermodel
+rcis simpleworld.xml
+</code></pre></div>
+<p>Here we will considering <em>simpleworld.xml</em> as an example since it has virtual apriltags and a robot with a camera is present for simulation. After execution you should now see two windows, One showing the robot camera&#39;s view pointing at one of the apriltags and the other with the site map showing the robot and two virtual apriltags.</p>
+
+<p>Now go back to the terminal where you had compiled the apriltagsComp and execute</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">bin/apriltagscomp --Ice.Config=etc/generic_config
+</code></pre></div>
+<p>You should now see the following output.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">user@username:~/robocomp/components/robocomp-robolab/components/apriltagsComp$ bin/apriltagscomp --Ice.Config=etc/generic_config
+[/home/username/robocomp/classes/rapplication/rapplication.cpp]: Loading [camera:tcp -h localhost -p 10001] proxy at &#39;CameraProxy&#39;...
+18:20:19:421::Info::apriltagscomp.cpp::139::/home/username/robocomp/components/robocomp-robolab/components/apriltagsComp/src/apriltagscomp.cpp::run::CameraProxy initialized Ok!
+[/home/username/robocomp/classes/rapplication/rapplication.cpp]: Loading [rgbd:tcp -h localhost -p 10096] proxy at &#39;RGBDProxy&#39;...
+18:20:19:421::Info::apriltagscomp.cpp::150::/home/username/robocomp/components/robocomp-robolab/components/apriltagsComp/src/apriltagscomp.cpp::run::RGBDProxy initialized Ok!
+[/home/username/robocomp/classes/rapplication/rapplication.cpp]: Loading [rgbdbus:tcp -h localhost -p 10239] proxy at &#39;RGBDBusProxy&#39;...
+18:20:19:421::Info::apriltagscomp.cpp::161::/home/username/robocomp/components/robocomp-robolab/components/apriltagsComp/src/apriltagscomp.cpp::run::RGBDBusProxy initialized Ok!
+18:20:19:423::Debug::genericworker.cpp::53::/home/username/robocomp/components/robocomp-robolab/components/apriltagsComp/src/genericworker.cpp::setPeriod::Period changed100
+18:20:19:423::Info::specificmonitor.cpp::56::/home/username/robocomp/components/robocomp-robolab/components/apriltagsComp/src/specificmonitor.cpp::initialize::Starting monitor ...
+InputInterface RGBD
+AprilTagsFamily tagCodes36h11
+ID:0-10 0.17
+ID:11-20 0.17
+ID:21-30 0.17
+InnerModelPath /home/robocomp/robocomp/files/innermodel/simpleworld.xml
+RoboCompAprilTagsComp::AprilTagsComp started
+InnerModelReader: reading /home/robocomp/robocomp/files/innermodel/simpleworld.xml
+InnerModelRGBD: 0.000000 {10096}
+&quot;/home/robocomp/robocomp/files/innermodel/simpleworld.xml&quot;   &quot;rgbd&quot; 
+FOCAL LENGHT: 480 
+  6.45862 fps
+  7.17213 fps
+  7.09036 fps
+  6.94859 fps
+  7.09561 fps
+  7.01433 fps
+  7.09569 fps
+  7.02332 fps
+  7.24122 fps
+  7.17631 fps
+  6.85862 fps
+  7.00415 fps
+  7.14883 fps
+  6.92038 fps
+  7.03233 fps
+</code></pre></div>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/rcwebsite2/2015/05/23/apriltags/">
+        aprilTagsComp, Wrapping E. Olson's AprilTags in RoboComp
+      </a>
+    </h1>
+
+    <span class="post-date">23 May 2015</span>
+
+    <p>AprilTags is an augmented reality tag system developed by E. Olson at the U. of Michigan, USA. A complete explanation and related papers can be found <a href="http://april.eecs.umich.edu/wiki/index.php/AprilTags">here</a>. There is a C++ version written
+ by Michael Kaes <a href="http://people.csail.mit.edu/kaess/apriltags/">here</a> which is the one we use.</p>
+
+<p>April tags are AR tags designed to be easily detected by (robot) cameras. Understand them as a visual fiducial (artificial features) system that uses a 2D bar code style “tag”, allowing full 6 DOF localization of features from a single image. It is designed to encode smaller data (between 4 and 12 bits) and also these tags can be detected by the camera even at odd conditions. When the tag is seen by the camera, the algorithm computes the tag&#39;s complete pose defining its own reference system relative to the camera (i.e Location of the tag is known with high accuracy). This reference system is defined as follows: If we look perpendicularly to a non rotated tag, The Z+ axis comes out towards us from the center of the tag plane, The X+ axis points leftwards and the Y+ axis points upwards (a left-hand reference system). The values computed by <em>apriltagsComp</em> are the translation vector from the camera to the center of the tag&#39;s reference system, and the three Euler angles that encode the relative orientation of the tag&#39;s reference system wrt to the camera reference system.</p>
+
+<p>The <em>AprilTags.cdsl</em> file specifies how <em>apriltagsComp</em> has been generated and how it can be re-generated:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">import &quot;/robocomp/interfaces/IDSLs/GetAprilTags.idsl&quot;;
+import &quot;/robocomp/interfaces/IDSLs/AprilTags.idsl&quot;;
+import &quot;/robocomp/interfaces/IDSLs/RGBD.idsl&quot;;
+import &quot;/robocomp/interfaces/IDSLs/RGBDBus.idsl&quot;;
+import &quot;/robocomp/interfaces/IDSLs/Camera.idsl&quot;;
+Component AprilTagsComp{
+    Communications{
+            requires Camera, RGBDBus, RGBD;
+            publishes AprilTags;
+            implements GetAprilTags;
+    };
+    language Cpp;
+};
+</code></pre></div>
+<p>This files tells us that the component requires -will be calling- three RoboComp interfaces: Camera, RGBDBus y RGBD, which are normal and depth camera&#39;s interfaces written in RoboComp&#39;s IDSL language. You can find those files in <em>~/robocomp/interfaces/IDSLs</em>. Also, the component will publish the data defined in the <em>AprilTags</em> interface and will implement the <em>GetAprilTags</em> interface. This means that using images provided by a component implementing the camera or RGBD interfaces, it will try to detect any tags in them and compute their 6D pose. Finally, it will publish a vector with all the tags id&#39;s and poses to the Ice&#39;s STORM broker, and also it will attend any direct requests (remote procedure calls) received from other components through the <em>GetAprilTags</em> interface. So it is a rather serviceable and handy component!</p>
+
+<p>To access <strong>apriltagsComp</strong> you need to install from <em>http://github.org/robocomp</em> the repository named <em>robocomp-robolab</em>. </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp/components
+git clone https://github.com/robocomp/robocomp-robolab.git
+</code></pre></div>
+<p>Once downloaded, <em>apriltagsComp</em> can be found in:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">~/robocomp/components/robocomp-robolab/components/apriltagsComp
+</code></pre></div>
+<p>First, read the <em>INSTALL<em>APRILTAGS</em>LIB.TXT</em> file and follow instructions thereby. Once the library has been installed in /usr/local, we can proceed to compile the component:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp/components/robocomp-robolab/components/apriltagsComp
+cmake .
+make
+</code></pre></div>
+<p>We should have a binary now:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">~/robocomp/components/robocomp-robolab/components/apriltagsComp/bin/apriltagscomp
+</code></pre></div>
+<h2>Configuration parameters</h2>
+
+<p>As any other component, <em>apriltagsComp</em> needs a <em>config</em> file to start. In</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">~/robocomp/components/robocomp-robolab/components/apriltagsComp/etc/generic_config
+</code></pre></div>
+<p>you can find an example of a configuration file. We can find there the following lines:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">GetAprilTagsComp.Endpoints=tcp -p 12210                     //Port where GetAprilTags iface is served
+CommonBehavior.Endpoints=tcp -p 11258                       //Not of use for the user now
+CameraProxy = camera:tcp -h localhost -p 10001              //Port where a camera is located
+RGBDProxy = rgbd:tcp -h localhost -p 10096                  //Port where a RGBD camera is located
+RGBDBusProxy = rgbdbus:tcp -h localhost -p 10239            //Port where a bus of RGBDs is located
+AprilTagsProxy = apriltags:tcp -h localhost -p 10261        //Not of use for the user
+TopicManager.Proxy=IceStorm/TopicManager:default -p 9999    //Port where STROM broker is located
+InnerModelPath=/home/robocomp/robocomp/files/innermodel/simpleworld.xml
+
+
+InputInterface = RGBD                                       //Current input iface to be used
+AprilTagsFamily = tagCodes36h11                             //Tags family. See AprilTags paper
+AprilTagsSize = 0.17                                        //Tag default real size in meters
+ID:0-10 = 0.17   #tag size in meters                        //Tags numbers 1-10 real size in meters
+ID:11-20 = 0.17   #tag size in meters                       //Tags numbers 11-20 real size in meters
+ID:21-30 = 0.17   #tag size in meters                       //Tags numbers 21-30 real size in meters
+</code></pre></div>
+<p>AprilTagsFamily is a set of tags, There are different families like 36h10,25h9,16h5 however <em>tagCodes36h11</em> is recommended. Each tag has an ID that is printed inside the surrounding square using Hamming code. Instructions to print tags and other tag families can be found <a href="http://april.eecs.umich.edu/wiki/index.php/AprilTags">here</a>. The algorithm needs the real size of the tag to estimate its position and orientation in space. We can give the component tags of different sizes, As long as they correspond to different ranges of IDs, as specified in the configuration file above.</p>
+
+<h2>Starting the component</h2>
+
+<p>To start the component we need a real camera connected to the cameraV4lComp component or the RCIS simulator started with a file that includes virtual tags, such as <em>simpleworld.xml</em>, Tutorial can be found <a href="virtualapriltagstutorial.md">here</a>. Once RCIS is up and running, It will provide the RGBD.idsl interface (not Camera.idsl for now) at port 10096, which is what the configuration file states. To avoid changing the <em>generic_config</em> file in the repository, We can copy it to the component&#39;s home directory, So changes will remain untouched by future git pulls:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cp ~/robocomp/components/robocomp-robolab/components/apriltagsComp
+cp /etc/generic_config config
+</code></pre></div>
+<p>So, to begin we type:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp/components/robocomp-robolab/components/apriltagsComp
+bin/apriltagscomp --Ice.Config=config
+</code></pre></div>
+<p>If the robot&#39;s camera is pointing towards one of the tags, You should see in the terminal lines showing the ID and pose of each visible tag.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/rcwebsite2/2015/05/23/README/">
+        Tutorials Directory
+      </a>
+    </h1>
+
+    <span class="post-date">23 May 2015</span>
+
+    <p><a href="components.md">A Brief introduction to Components</a></p>
+
+<p><a href="component_creation_with_DSLEditor.md">Creation of a new component using RoboComp&#39;s Eclipse based DSLEditor</a></p>
+
+<p><a href="using_github.md">Maintaining your own repository of components</a></p>
+
+<p><a href="contribute/contribute.md">How to contribute to RoboComp using the GitHub branching mechanism</a></p>
+
+<p><a href="robocompdsl.md">Using the new <strong>robocompdsl</strong> component generation command line tool</a></p>
+
+<p><a href="https://github.com/robocomp/robocomp-robolab/blob/master/components/apriltagsComp/README.md">The E. Olson&#39;s AprilTags component</a></p>
+
+<p><a href="robocompdsl_python.md">Creating a Python component using <strong>robocompdsl</strong> that subscribes to <em>apriltagsComp</em></a></p>
+
+<p>[InnerModel, RoboComp&#39;s internal representation of reality]</p>
+
+<p>[RoboComp&#39;s robots: Ursus, Loki and the others]</p>
+
+<p>[<strong>robocomp-robolab</strong> components]</p>
+
+<p>[The BodyInverseKinematics (BIK) component]</p>
+
+<p>[The Navigation (TRAJ) component]</p>
+
+<p>[RoboCog, a Cognitive Architecture built with RoboComp]</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/rcwebsite2/2015/05/23/How_To_Make_Chroot_Environment/">
+        Chroot environment
+      </a>
+    </h1>
+
+    <span class="post-date">23 May 2015</span>
+
+    <p>A chroot is a way of isolating applications from the rest of your computer, by putting them in a jail. This is particularly useful if you are testing an application which could potentially alter important system files, or which may be insecure.
+A chroot is basically a special directory on your computer which prevents applications, if run from inside that directory, from accessing files outside the directory. In many ways, a chroot is like installing another operating system inside your existing operating system. 
+The following are some possible uses of chroots:</p>
+
+<ol>
+<li>Isolating insecure and unstable applications</li>
+<li>Running 32-bit applications on 64-bit systems</li>
+<li>Testing new packages before installing them on the production system</li>
+<li>Running older versions of applications on more modern versions of Ubuntu</li>
+<li>Building new packages, allowing careful control over the dependency packages which are installed </li>
+</ol>
+
+<p>This manual will follow the steps specified in the <a href="https://help.ubuntu.com/community/BasicChroot">official page of Ubuntu</a>. And the system we will install as tutorial is Ubuntu 14.04 Trusty amd64.</p>
+
+<h2>Brief Explanation</h2>
+
+<p>Imagine you have your Robocomp version well installed and working really fine in your system (i.e. Ubuntu 14.04 amd64), but you need to upgrade your ICE or OpenCV or PCL or whatever third-party library to a new version. You don&#39;t want to risk your well functional version of Robocomp and it&#39;s dependencies removing the current version and installing the new one (this usually affects other packages and libraries), and you don&#39;t have time enough to make a whole fresh installation in other partition or virtual machine, so the fastest solution is to create a jail containing the same distribution of your main system (Ubuntu 14.04 amd64) with chroot and test Robocomp with the new version of the library you need without touching your fine Robocomp installation.
+Realize that creating a chrooted environment in your machine makes your system believe that your root directory (&quot;/&quot;) is in another place than the actual root of the system (like I explain on the wiki, the process in which you launch chroot believes that the root directory is in / while actually it is in /var/chroot/trusty_x64/, not letting you touch anything outside that directory and therefore not risking your current installation).
+Another practical use for chroot is to test an especific program or library in a different distribution or architecture. For example, if you are working in Ubuntu 14.04 amd64 and you want to test if a library that you are using works fine in Debian Wheezy or Ubuntu 14.10 or Ubuntu 14.04 i386.</p>
+
+<h2>Creating a chroot</h2>
+
+<ol>
+<li><p>First of all we need to install the tools to make a chroot in out system.</p>
+
+<p><code>sudo apt-get install debootstrap schroot</code></p></li>
+<li><p>Create a folder where the chroot is going to be installed. You need to make the folder using administrator permission (with <em>sudo</em> i.e). We will put the chroot up in <em>/var/chroot/trusty</em>x64_</p>
+
+<p><code>sudo mkdir /var/chroot &amp;&amp; sudo mkdir /var/chroot/trusty_x64</code></p></li>
+<li><p>Create a configuration file for schroot. For our example, we will create a file named trusty<em>x64.conf in _/etc/schroot/chroot.d/</em></p>
+
+<p><code>sudo gedit /etc/schroot/chroot.d/trusty_x64.conf</code></p>
+
+<p>And write the following inside: (Change the <USERNAME> to actual username, example &quot;root-users=abhi&quot;</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">[trusty_x64]
+description=Ubuntu trusty 14.04 for amd64
+directory=/var/chroot/trusty_x64
+root-users=&lt;USERNAME&gt;
+type=directory
+users=testuser
+</code></pre></div>
+<ul>
+<li>The first line is the name of the chroot thatis going to be created.</li>
+<li><strong>description</strong> is a short description of the chroot.</li>
+<li><strong>directory</strong> the path where the chroot is going to be installed. Note that is the same path that we specified in step 2.</li>
+<li><strong>root-users</strong> list of users that are allowed in our chroot without password.</li>
+<li><strong>type</strong>  The type of the chroot. Valid types are ‘plain’, ‘directory’, ‘file’, ‘block-device’ and ‘lvm-snapshot’. If empty or omitted, the default type is ‘plain’.</li>
+<li><strong>users</strong> list of users that are allowed access to the chroot.</li>
+</ul>
+
+<p>see <a href="http://manpages.ubuntu.com/manpages/hardy/man5/schroot.conf.5.html">schroot.config</a> for further information.</p></li>
+<li><p>Run Debootstrap. This step will download and unpack a basic ubuntu or debian system to the chroot directory we created in step 2.</p>
+
+<p><code>sudo debootstrap --variant=buildd --arch amd64 trusty /var/chroot/trusty_x64 http://archive.ubuntu.com/ubuntu</code></p>
+
+<p>In our example, we are creating a chroot of an Ubuntu 14.04 64-bit distribution, but this command allows some different commands that can satisfy our needs, for instance, if we want to install the same distribution but the 32-bit version, we have to type:</p>
+
+<p><code>sudo debootstrap --variant=buildd --arch i386 trusty /var/chroot/trusty http://archive.ubuntu.com/ubuntu</code></p>
+
+<p>Note that we have to do the proper changes creating a different schroot configuration file (i.e. <em>/etc/schroot/chroot.d/trusty</em>) and a different folder for the new chroot (i.e. <em>/var/chroot/trusty</em>)</p>
+
+<p>If we want to create a chroot for a Debian version (i.e. Debian Wheezy (stable)) we have to type:</p>
+
+<p><code>sudo debootstrap --variant=buildd --arch amd64 wheezy /var/chroot/wheezy_x64 http://ftp.debian.org/debian</code></p></li>
+<li><p>Checking the chroot. To be sure that everything went ok, we can type the following command, that will list all the available chroot enviroments in out system.</p>
+
+<p><code>schroot -l</code></p>
+
+<p>If trusty_x64 appears, we can start working in our chrooted environment typing:</p>
+
+<p><code>schroot -c trusty_x64 -u root</code></p>
+
+<p>The prompt of the chrooted environment should be like:</p>
+
+<p><code>(trusty_x64)root@abhi-Inspiron-7520:/home/abhi#</code></p>
+
+<p><strong>NOTE</strong> This step is not mandatory.
+<strong>NOTE</strong> For convenience, the default schroot configuration rebinds the /home directory on the host system so that it appears in the chroot system. This could be unexpected because it means that you can accidentally delete or otherwise damage things in /home on the host system. To change this behaviour we can run the following command in the host system:</p>
+
+<p><code>sudo gedit /etc/schroot/default/fstab</code></p>
+
+<p>And comment the /home line:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"># fstab: static file system information for chroots.
+# Note that the mount point will be prefixed by the chroot path
+# (CHROOT_PATH)
+#
+# &lt;file system&gt; &lt;mount point&gt;   &lt;type&gt;  &lt;options&gt;       &lt;dump&gt;  &lt;pass&gt;
+/proc           /proc           none    rw,bind        0       0
+/sys            /sys            none    rw,bind        0       0
+/dev            /dev            none    rw,bind         0       0
+/dev/pts        /dev/pts        none    rw,bind         0       0
+#/home          /home           none    rw,bind         0       0
+/tmp            /tmp            none    rw,bind         0       0
+</code></pre></div></li>
+</ol>
+
+<p>And that&#39;s it! Now we have a whole very basic system in which we can test out programs and libraries. </p>
+
+<h2>Troubleshooting</h2>
+
+<ul>
+<li>If you get locale warnings in the chroot like <strong>&quot;Locale not supported by C library.&quot;</strong> or <strong>&quot;perl: warning: Setting locale failed.&quot;</strong>, then try one or more of these commands:</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    sudo dpkg-reconfigure locales
+    sudo apt-get install language-pack-en
+    sudo locale-gen en_US.UTF-8
+    sudo dpkg-reconfigure locales
+</code></pre></div>
+<p>if the problem persist check out this <a href="http://perlgeek.de/en/article/set-up-a-clean-utf8-environment">page</a>.</p>
+
+<ul>
+<li><p>To get access to the intertet within the chroot, you have to type:</p>
+
+<p><code>sudo cp /etc/resolv.conf /var/chroot/trusty_x64/etc/resolv.conf</code></p></li>
+<li><p>You might want to have the proper sources.list in order to be able to install packages from Ubuntu official repositories like universe or multiverse, and the security updates. If you make a chroot installation, the sources.list will be the most basic one, like:</p>
+
+<p><code>deb http://archive.ubuntu.com/ubuntu trusty main</code></p></li>
+</ul>
+
+<p>You can generate a more complete sources.list file in this pages <a href="http://repogen.simplylinux.ch/">Ubuntu</a> and <a href="http://debgen.simplylinux.ch/">Debian</a></p>
+
+<h2>External Links</h2>
+
+<p><a href="https://help.ubuntu.com/community/BasicChroot">Ubuntu official chroot manual</a></p>
+
+<p><a href="https://help.ubuntu.com/community/DebootstrapChroot">Ubuntu official deboostrap manual</a></p>
+
+<p><a href="http://perlgeek.de/en/article/set-up-a-clean-utf8-environment">PerlGeek troubleshooting</a></p>
+
+<p><a href="http://manpages.ubuntu.com/manpages/hardy/man5/schroot.conf.5.html">Schroot conf manual</a></p>
+
+<p><a href="http://manpages.ubuntu.com/manpages/trusty/en/man8/debootstrap.8.html">Debootstap manual</a></p>
+
+<p><a href="http://repogen.simplylinux.ch/">Sources.list for Ubuntu</a></p>
+
+<p><a href="http://debgen.simplylinux.ch/">Sources.list for Debian</a></p>
+
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
+  
+    
+      <a class="pagination-item newer" href="/rcwebsite2page4">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>
