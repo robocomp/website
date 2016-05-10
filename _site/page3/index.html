@@ -16,14 +16,14 @@
   </title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/rcwebsite2/public/css/poole.css">
-  <link rel="stylesheet" href="/rcwebsite2/public/css/syntax.css">
-  <link rel="stylesheet" href="/rcwebsite2/public/css/hyde.css">
+  <link rel="stylesheet" href="/website/public/css/poole.css">
+  <link rel="stylesheet" href="/website/public/css/syntax.css">
+  <link rel="stylesheet" href="/website/public/css/hyde.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/rcwebsite2public/apple-touch-icon-144-precomposed.png">
-                                 <link rel="shortcut icon" href="/rcwebsite2public/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/websitepublic/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/websitepublic/favicon.ico">
 
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
@@ -36,7 +36,7 @@
   <div class="container">
     <div class="sidebar-about">
       <h1>
-        <a href="/rcwebsite2">
+        <a href="/website">
           RoboComp
         </a>
       </h1>
@@ -44,7 +44,7 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a class="sidebar-nav-item" href="/rcwebsite2">Home</a>
+      <a class="sidebar-nav-item" href="/website">Home</a>
 
       
 
@@ -56,31 +56,31 @@
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/Blog/">Blog</a>
+            <a class="sidebar-nav-item" href="/website/Blog/">Blog</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/GSoC/">GSoC</a>
+            <a class="sidebar-nav-item" href="/website/GSoC15/">GSoC'15</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/projects/">Projects</a>
+            <a class="sidebar-nav-item" href="/website/GSoC16/">GSoC'16</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/Tutorials/">Tutorials</a>
+            <a class="sidebar-nav-item" href="/website/projects/">Projects</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/about/">About</a>
+            <a class="sidebar-nav-item" href="/website/about/">About</a>
           
         
       
@@ -88,7 +88,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/contact/">Contact</a>
+            <a class="sidebar-nav-item" href="/website/contact/">Contact</a>
           
         
       
@@ -98,11 +98,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/install/">Install</a>
-          
-        
-      
-        
+            <a class="sidebar-nav-item" href="/website/install/">Install</a>
           
         
       
@@ -118,11 +114,25 @@
           
         
       
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <a class="sidebar-nav-item" href="http://robocomp.readthedocs.org">Tutorials</a>
       <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
+      
       <span class="sidebar-nav-item">Currently v1.0.0</span>
     </nav>
 
-    <p>&copy; 2015. All rights reserved.</p>
+    <p>&copy; 2016. All rights reserved.</p>
   </div>
 </div>
 
@@ -137,26 +147,167 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="/rcwebsite2/2015/06/12/nithin8/">
-        Debian Packaging <p>#1</p>
+      <a href="/website/2015/07/02/Kripa2/">
+        <i>GSoC,</i> Computer vision components and libraries management <p>#2</p>
       </a>
     </h1>
 
-    <span class="post-date">12 Jun 2015</span>
+    <span class="post-date">02 Jul 2015</span>
 
-    <h2>What is a binary package?</h2>
-
-<p>A binary package in a is an application package which contains (pre-built) executables, as opposed to source code. Basically a binary package is an archive which contains executables some other info like rules on how to install them, dependencies etc. debian binary package is also a type of binary package. You can use a package manger to install these packages.I have explained I have explained it in tutorial <a href="http://robocomp.github.io/website/2015/05/23/nithin1.html">Debian packaging</a>.</p>
-
-<h2>Implementation in Robocomp</h2>
-
-<p>For binary packages i was left with two options. whether i could use the same cmake script i used for creating source packages or i could use the <code>CPACK</code> packaging tool. Finally i decided to go with CPACK because - 1)less code , that means less messing up 2)its an well known tool so is expected to perform better than a script i am writing. CPACK has so many configuration options so i made a seperate cmake file <code>package_details.cmake</code> for configuring cpack so that its easier for users to change any configuration. CPACK will add a target <code>package</code> for generating binary package. so you could run <code>make package</code> for generating the package. </p>
-
-<h3>NB</h3>
+    <p><strong>Open Detection:</strong> Following the idea that it is better to have an independent library for Object Detection than contributing directly to Robocomp, I created the new library &#39;Open Detection&#39;. It is available now in the following links</p>
 
 <ul>
-<li>Unfortunately CPACK has a bug in it, its not changing the control files permission correctly which throws a warning during installation. so i have create a bash script which will fix the control file permissions.</li>
+<li><p>Github link: https://github.com/krips89/opendetection</p></li>
+<li><p>Documentation link: http://krips89.github.io/opendetection_docs/index.html</p></li>
 </ul>
+
+<p>I have tried to document/provide tutorial inside the library whenever possible. So instead of writing everything here in the blog I&#39;ll just post links to the tutorials/documentations.</p>
+
+<h3>Installation Instructions</h3>
+
+<ul>
+<li>Link: https://github.com/krips89/opendetection/blob/master/doc/tutorials/content/installation_instruction.rst</li>
+</ul>
+
+<h3>Library Design</h3>
+
+<p>The basic idea was to have a library with common and simple interface giving access to varies detection methods available here. After some thinking I came up with the design explained in the following tutorial:</p>
+
+<ul>
+<li>https://github.com/krips89/opendetection/blob/master/doc/tutorials/content/basic_structures.rst</li>
+</ul>
+
+<p>The class diagrams providing a good reference is provided here:</p>
+
+<ul>
+<li>http://krips89.github.io/opendetection_docs/inherits.html</li>
+</ul>
+
+<h3>Documentation</h3>
+
+<p>I did not document extensively till now as building an independent library from the scratch took a long time. The other very important reason is that the design is till little vulnerable to changes.
+I would wait little bit more for the design to be more concrete before I start documenting extensively. </p>
+
+<h2>Things finished</h2>
+
+<p>Within this time frame I could finish the following tasks:</p>
+
+<ol>
+<li><p>Design of the library.</p></li>
+<li><p>Complete CMake infrastructure for modular building of the library from scratch.</p></li>
+<li><p>2D feature based object detection (both Training and Detection phase) with demo.</p></li>
+<li><p>Global feature based object detection (both training and detection phase) with demo.</p></li>
+<li><p>Auto generated Documentation using Doxygen (http://krips89.github.io/opendetection_docs/index.html).</p></li>
+<li><p>Sphinx based tutorial section to generate nice pages for tutorials and blogs like that of PCL.</p></li>
+<li><p>Few other Utility classes which fits the needs and design for the library.</p></li>
+</ol>
+
+<h3>Milestones and things learnt:</h3>
+
+<p>In the next blog I&#39;ll add the different sources I used to design and implement the above tasks and the things I learnt in this process.</p>
+
+<hr>
+
+<p>Kripasandhu Sarkar</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/website/2015/06/26/nithin6/">
+        Build tools
+      </a>
+    </h1>
+
+    <span class="post-date">26 Jun 2015</span>
+
+    <h3>rc<em>init</em>ws</h3>
+
+<p>This will initialize a Robocomp workspace in the current/specified directory.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">rc_init_ws [path]
+</code></pre></div>
+<h3>rcbuild</h3>
+
+<p>When invoked form workspace without any arguments if not inside source path, it will build all the non-ignored components inside the workspace,  if inside any component source directory it will build only that component. But if a component is specified it will build it.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"> rcbuild [-h] [-i | --doc | --installdoc] [component]
+</code></pre></div>
+<p>The <code>doc</code> will generate documentation, <code>installdoc</code> will install the docs to install path, <code>install</code> will build and install the components. currently you can only generate docs for one component at a time.</p>
+
+<h3>rccomp</h3>
+
+<p>This dosent have much functions as of now. <code>rccomp list</code> will list all the components.</p>
+
+<h3>rced</h3>
+
+<p>when invoked as component-name file-name. it will open the the file in the component. if multiple files with same name exists, it will give choices and will ask you to choose one. It uses the editor specified in $EDITOR by default, if not present it will use <code>vim</code>.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">rced [-h] component file
+</code></pre></div>
+<h3>rcrun</h3>
+
+<p>Using rcrun you can start, stop or force stop any component from anywhere. You can also start a component in debug mode, given you have the required <em>config file</em> in the <em>etc</em> directory. If you have specified a config file then rcrun will use it to start the component. By default rcrun will use the <code>config</code> config file in <code>etc</code> directory, if not found it will search for <code>generic_config</code> if not found it will use any of config files present.If the debug flag is set, it will search for a config file that ends with <em>.debug</em>.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">rcrun [-h] [-s START |-st STOP | -fst FSTOP] [-d | -cf CFILE | -c CONFIG] [-is] [component]
+</code></pre></div>
+<h3>rccd</h3>
+
+<p>Using this you can cd into the component directory given the component name.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">rccd component
+</code></pre></div>
+<hr>
+
+<p>Nithin Murali</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/website/2015/06/25/rajath1/">
+        <i>GSoC,</i> Till Now..., (Before Midterms)
+      </a>
+    </h1>
+
+    <span class="post-date">25 Jun 2015</span>
+
+    <p><strong>Summary:</strong> Built a website for robocomp using jekyll. </p>
+
+<p><strong>Progress:</strong> Took the task of building a website for documenting the open source project <em>RoboComp</em> for the first 4 weeks of Google Summer of Code 2015. The website should be able to segregate the posts into categories, Make it easy for users to post content and most importantly have a proper flow among the posts so that a new users will find it easy to learn the framework.</p>
+
+<p>Started building the website by using the <a href="https://github.com/dbtek/dbyll">dbyll theme</a>. Messed around with the code a bit and had the website up for robocomp. Website <a href="https://rajathkumar.github.io/robocomp">link</a>. After a few iterations the website was all good. While exploring on the same topic stumbled upon <a href="https://rohanchandra.github.io/project/type/">Type theme</a>. Which was a jekyll based them more clean and elegant than the first one. Ported the entire website to the type theme and currently have shifted the <a href="http://robocomp.github.io/website/">website</a> to the <a href="https://github.com/robocomp">robocomp organization on github</a>. Currently have tweaked the website based on the suggetsions recieved by the mentors.</p>
+
+<p>Version-1 : https://github.com/robocomp/website/tree/version-1</p>
+
+<p><strong>Future:</strong> Will implement automatic segregation of posts based on categories the user mention. Extend the features of the website and add analytics, comments for blog posts etc. Give the website its final iterations based on the suggestions recieved.</p>
+
+<hr>
+
+<p>Rajath Kumar M.P</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/website/2015/06/25/nithin5/">
+        New build system and workspace model in Robocomp <p>#2</p>
+      </a>
+    </h1>
+
+    <span class="post-date">25 Jun 2015</span>
+
+    <p>For managing these components we would need different utilities. So i started compiling a list of different utilities keeping a reference to other frameworks. Finally i have decide on my list</p>
+
+<ul>
+<li>rc<em>init</em>ws<br></li>
+<li>rcbuild<br></li>
+<li>rced<br></li>
+<li>rccd<br></li>
+<li>rcrun<br></li>
+<li>rccomp<br></li>
+</ul>
+
+<p>For more information about the utilities see the <a href="http://robocomp.github.io/website/2015/06/26/nithin6.html">tutorial</a> on build utilities. All the utilities are implemented using python except <code>rccd</code> which is implemented as a shell function, As a subprocess cant affect its parents environment. So i was thinking, as anyway we will need to source a bash script, we could move the exporting of the environment variables also into that script. </p>
+
+<h2>Future work</h2>
+
+<p>One useful feature that needs to be implemented is auto complete for the arguments. It would be a very useful feature as we don&#39;t need need to know the exact component name, etc. Also some work on the manifest.xml has to be done. It was planned to contain basic info on packages like name, maintainer, dependencies etc. I didn&#39;t do it right now because i was not really sure about the component dependencies, i will need to discuss about it a bit.</p>
 
 <hr>
 
@@ -166,193 +317,31 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="/rcwebsite2/2015/06/12/mercedes1/">
-        <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#1</p>
+      <a href="/website/2015/06/22/gsoc15/">
+        <i>GSoC,</i> 2015 ideas
       </a>
     </h1>
 
-    <span class="post-date">12 Jun 2015</span>
+    <span class="post-date">22 Jun 2015</span>
 
-    <p><strong>About Me</strong> : Hello! My name is Mercedes Paoletti Ávila, and I would like to introduce me a little in this first post. I&#39;m graduate in engineering from the University of Extremadura, and currently I study the Master in computer engineering and ICT management in the same University. Over the past two years I have been working in the Robotics Laboratory of the UEx, Robolab. There I developed my end grade work, &quot;inverse kinematics in social robots&quot;, using the robotic framework implemented by the laboratory, Robocomp, and now I&#39;m doing my Master&#39;s Thesis, that is about robots planners and is part of the project of LJ Manso, AGM. </p>
+    <p>1.- <strong>RoboComp tutorial, social management and documentation</strong>: RoboComp’ sources has been ported to GitHub and we are building a new documentation repository there. We are using GitHub markdown language (GFM) write new docs and turorials. We want to build a set of short tutorials that guide the new users along several interconnected topics, such as component oriented programming, robotics, computer vision, robotics software modules integrating heterogeneous sources, cognitive architectures and testing and validating, all from inside RoboComp. These new tutorials will be developed using RoboComp’s robotics simulator, RCIS, so interactive examples can be created and used in the explanations. This package also includes work on automated installation scripts using CMake. Generic knowledge of linux systems, website and wiki administration is needed. This is a key task for our project as it would bring more attention to it as it will open the development to new people interested in the field.</p>
 
-<p>And just following this course of action, this project combines the two concepts (planning and inverse kinematics) for recognizing and manipulating objects, using the framework Robocomp.</p>
+<p>Required student level: intermediate programming and systems administration.</p>
 
-<h2>Symbolic planning techniques for recognizing objects domestic</h2>
+<p>2.- <strong>Computer vision components and libraries management</strong>: RoboComp is being used to build a new cognitive architecture called RoboCog. Among the different modules already in progress, the object detection module is crucially important. We are pursuing an efficient 2D/3D vision pipeline that, working with the robot body control module, is able to localize, recognize, fit a pre-existing model and track a series of daily objects that the robot might encounter. Grasping would be one target of this pipeline, or even a means to complete recognition. There are currently many components implementing computer vision algorithms and intensive work done in pipeline construction. The key tasks on this idea would be to collaborate in the creation of high level tools to organize, document and test different pipelines for an specific task. These tools will be designed in collaboration with the mentors and tested in RoboComp’s RCIS simulator and real robots.</p>
 
-<p>The main object of this project is the application of symbolic techniques to build efficient pipelines in order to improve computer vision techniques, recognition and interpretation of domestic objects, to be finally executed on a domestic robot, so that the robot is able to move around a house and identify and interact with any objects located inside. The goal is that given a high-level task (eg. &quot;grab a mug&quot;), we can use symbolic planning techniques to build a pipeline of visual processing.</p>
+<p>Required student level: intermediate computer vision knowledge, C++ programming, basic CMake knowledge</p>
 
-<p>In order to reach this goal, we need some previous concepts:</p>
+<p>3.- <strong>RoboComp Building and deployment system design</strong>: Current CMake building system in RoboComp is limited only to the core libraries, the RCIS simulator and some additional tools. A very useful task would be to come up with a more complex CMake structure that could build the entire system, including all finished components, without breaking current dependencies. Also, a few scripts will have to be built to compile individual components, run tests, search and inspect the source tree efficiently, check dependencies and documentation requirements. This code needs also to take into account the dependencies between components that can be stored in xml-like files -i,e, manifestos- within the component itself.</p>
 
-<p>1) We need a planner to organize the sequence of commands to be executed by the robot. We will use the AGM planner [1].</p>
+<p>Required student level: intermediate CMake knowledge, programming in C++, basic knowledge of shell scripting</p>
 
-<p>2) We need a system to recognize marks or some objects. For now, we wil use the algorithm proposed by Edwin Olson, AprilTags [2]</p>
+<p>4.- <strong>Deployment generator and run-time monitoring</strong>: When creating a specific robot architecture, many components have to be brought into a common deployment environment. Each component has its runtime configuration and network parameters that have to be declared in a common deployment file, from where the complete system can be brought to life. This task proposes the design of a domain specific language to facilitate the creation of shellscript deployment files that are syntactically and semantically correct. Once a net of RoboComp components is up and running, additional tools are needed to monitorize their execution through an existing default interface called CommonBehavior.This tool will use the DSL as input and will show a graphical representation of the running system. It will be written in Python and will extend important efforts already made in this direction.</p>
 
-<p>3) We also need a system that controls the movement of the robot and corrects the calibration errors and gaps of the engines. We will use the inverse kinematics component developed in Robocomp, which will add techniques of trajectory planning and visual feedback.</p>
+<p>Required student level: intermediate programming with Python and introductory knowledge of formal languages</p>
 
-<p>All this provides a robust support that allows the robot to move freely within a given environment, such as a home, and interact with everyday objects that are in it.</p>
-
-<p>You can acces to the code of these components in the Robocomp repository: https://github.com/robocomp</p>
-
-<hr>
-
-<p>[1] AGM documentation: http://ljmanso.com/agm/</p>
-
-<p>[2] AprilTags: http://april.eecs.umich.edu/papers/details.php?name=olson2011tags</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/rcwebsite2/2015/05/23/using_github/">
-        Maintaining your own repository of components in GitHub
-      </a>
-    </h1>
-
-    <span class="post-date">23 May 2015</span>
-
-    <p>We recommend that you create a repository for your components (i.e. <em>mycomponents</em> directory in the example before) in your GitHub account (or other similar site) and pull/clone it in <em>~/robocomp/components</em> whenever yo need it. For example, if your GitHub account is <em>myaccount</em>, first log in with your browser and create a new repository named <em>mycomponents</em> following this instructions: </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">https://help.github.com/articles/create-a-repo/
-</code></pre></div>
-<p>Now is good time to write down a short description of what your component does in the README.md file.</p>
-
-<p>Then we need to clean up the binary and generated files in <em>myfirstcomp</em>. Note that this is not necessary if you upload the component to the repo just after creating it with DSLEditor and before you type <em>cmake .</em></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp/components/mycomponents/myfirstcomp
-make clean
-sudo rm -r CMakeFiles
-rm CMakeCache.txt
-rm cmake_install.cmake
-rm Makefile
-rm *.kd*
-rm src/moc*
-sudo rm -r src/CMakeFiles
-rm src/cmake_install.cmake
-rm src/Makefile
-</code></pre></div>
-<p>now we are ready:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp/components/mycomponents
-git init
-git remote add origin &quot;https://github.com/myaccount/mycomponents.git&quot;
-git add mycomponents
-git push -u origin master
-</code></pre></div>
-<p>You can go now to GitHub and chek that your sources are there!</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/rcwebsite2/2015/05/23/robocompdsl/">
-        Using robocompdsl, The command line component generator
-      </a>
-    </h1>
-
-    <span class="post-date">23 May 2015</span>
-
-    <p><strong>robocompdsl</strong> is the new tool used in RoboComp to automatically generate components and modify their main properties once they have been generated (e.g., communication requirements, UI type). It is one of the core tools of the framework so, if you installed RoboComp, you can start using it right away.</p>
-
-<p>This new version can only be used from the command line, but the languages used to define components and their interfaces remain mostly the same: <strong>CDSL</strong> to specify components and <strong>IDSL</strong> to specify interfaces. The only difference with the old RoboCompDSLEditor tool is that the reserved keywords (are now case independent). Take a look to the tutorial <a href="components.md">&quot;a brief introduction to Components&quot;</a> for an introduction to the concept of component generation and the languages involved.</p>
-
-<p>There are three tasks we can acomplish using <strong>robocompdsl</strong>: </p>
-
-<ul>
-<li>generating a CDSL template file</li>
-<li>generating the code for a previously existing CDSL file</li>
-<li>regenerating the code for an already generated component.</li>
-</ul>
-
-<h2>Generating a CDSL template file</h2>
-
-<p>Even tough writing CDSL files is easy --their structure is simple and the number of reserved words is very limited-- robocompdsl can generate template CDSL files to be used as a guide when writing CDSL files.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ robocompdsl path/to/mycomponent/mycomponent.cdsl
-</code></pre></div>
-<p>This will generate a CDSL file with the following content:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">import &quot;/robocomp/interfaces/IDSLs/import1.idsl&quot;;
-import &quot;/robocomp/interfaces/IDSLs/import2.idsl&quot;;
-
-Component CHANGETHECOMPONENTNAME
-{
-    Communications
-    {
-        implements interfaceName;
-        requires otherName;
-        subscribesTo topicToSubscribeTo;
-        publishes topicToPublish;
-    };
-    language Cpp;
-    gui Qt(QWidget);
-};
-</code></pre></div>
-<p>The CDSL language is described in the tutorial <a href="components.md">&quot;A brief introduction to Components&quot;</a>. Just don&#39;t forget to change the name of the component.</p>
-
-<h2>Generating a component given a CDSL file</h2>
-
-<p>Once we have our CDSL file we can generate the component&#39;s source code running robocompdsl with the CDSL file as first argument and the directory where the code should be placed as the second argument.</p>
-
-<p>From the component&#39;s directory:
-    $ cd path/to/mycomponent
-    $ robocompdsl mycomponent.cdsl .</p>
-
-<p>Or somewhere else:
-    $ robocompdsl path/to/mycomponent/mycomponent.cdsl path/to/mycomponent</p>
-
-<p>These commands will generate the C++ or Python code in the specified directory.</p>
-
-<h2>Updating the source code of a component after modifying its CDSL file</h2>
-
-<p>Once we generated our component we might change our mind and decide to add a new connection to another interface or to publish a new topic. In these cases we can regenerate the code of the component just by changing the <em>.cdsl</em> file and executing again the command.</p>
-
-<p>As you might have learned from the tutorial <a href="components.md">&quot;A brief introduction to Components&quot;</a> RoboComp components are divided in specific code (files where you write your code) and generic code (autogenerated code which doesn&#39;t need to be edited). Running robocompdsl again on the same directory will ony overwrite these generic files. To ensure robocompdsl doesn&#39;t overwrite the changes you made to the specific files these are left unchanged, so the component might not compile after regeneration (e.g., you might need to add new methods).</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/rcwebsite2/2015/05/23/post_on_webpage/">
-        Write a post for robocomp, A step by step guide.
-      </a>
-    </h1>
-
-    <span class="post-date">23 May 2015</span>
-
-    <p>In this tutorial you will be learning about writing a post for robocomp. I assume that you are already familiar with contributing via Github if you are not then you can follow <a href="http://rajathkumarmp.github.io/robocomp/tutorial/2015/05/23/contribute.html">this article</a> and then come back here.</p>
-
-<p>By now you would have already forked the repository.
-Now switch to <code>gh-pages</code> branch
-You can do this via github client or on the command line by navigating to the directory and executing the command</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">`git checkout gh-pages`
-</code></pre></div>
-<p>After checking out to the github pages branch in your navigate to the <code>_posts</code> directory. Here you will find all the posts.</p>
-
-<p>To write a new post. Create a new file and save it as <code>XYZ.md</code></p>
-
-<p>Note that you will be using Github markdown language.</p>
-
-<p>Once you save the file as <code>XYZ.md</code>. It will be saved as draft and not published on to the website.</p>
-
-<p>At the header of every article/post you write. Always add this</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">---
-layout:
-title: 
-categories:
-tags:
-description:
----
-</code></pre></div>
-<p>Layout can be <code>post</code>, <code>page</code> or <code>default</code>. Always set the layout as <code>post</code>. The title is the title of the post. Categories and Tags should be set accoridingly whichever is applicable. This is helpful in navigating or finding posts on same topic. Description is a short explanation or gist of the entire post.</p>
-
-<p>A sample header looks like this.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">---
-layout: post
-title: Write a post for robocomp, A step by step guide.
-categories: [Tutorial]
-tags: [General]
-description: In detail explanation as to how to write  a post for robocomp
----
-</code></pre></div>
-<p>After adding the header you can proceed writing the post by using Github Markdown language. Now for the most important step. To publish the post or to change the post from draft to final you will have to rename the file to</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">`YYYY-MM-DD-XYZ.md`
-</code></pre></div>
-<p>That&#39;s it and you would successfully published a post on to the robocomp&#39;s website.</p>
+<p>For any questions, proposals, or comments please contact RoboComp&#39;s org admin at:
+marcogunex.es</p>
 
   </div>
   
@@ -360,11 +349,11 @@ description: In detail explanation as to how to write  a post for robocomp
 
 <div class="pagination">
   
-    <a class="pagination-item older" href="/rcwebsite2page4">Older</a>
+    <a class="pagination-item older" href="/website/page4">Older</a>
   
   
     
-      <a class="pagination-item newer" href="/rcwebsite2page2">Newer</a>
+      <a class="pagination-item newer" href="/website/page2">Newer</a>
     
   
 </div>

@@ -16,14 +16,14 @@
   </title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/rcwebsite2/public/css/poole.css">
-  <link rel="stylesheet" href="/rcwebsite2/public/css/syntax.css">
-  <link rel="stylesheet" href="/rcwebsite2/public/css/hyde.css">
+  <link rel="stylesheet" href="/website/public/css/poole.css">
+  <link rel="stylesheet" href="/website/public/css/syntax.css">
+  <link rel="stylesheet" href="/website/public/css/hyde.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/rcwebsite2public/apple-touch-icon-144-precomposed.png">
-                                 <link rel="shortcut icon" href="/rcwebsite2public/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/websitepublic/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/websitepublic/favicon.ico">
 
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
@@ -36,7 +36,7 @@
   <div class="container">
     <div class="sidebar-about">
       <h1>
-        <a href="/rcwebsite2">
+        <a href="/website">
           RoboComp
         </a>
       </h1>
@@ -44,7 +44,7 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a class="sidebar-nav-item" href="/rcwebsite2">Home</a>
+      <a class="sidebar-nav-item" href="/website">Home</a>
 
       
 
@@ -56,31 +56,31 @@
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/Blog/">Blog</a>
+            <a class="sidebar-nav-item" href="/website/Blog/">Blog</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/GSoC/">GSoC</a>
+            <a class="sidebar-nav-item" href="/website/GSoC15/">GSoC'15</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/projects/">Projects</a>
+            <a class="sidebar-nav-item" href="/website/GSoC16/">GSoC'16</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/Tutorials/">Tutorials</a>
+            <a class="sidebar-nav-item" href="/website/projects/">Projects</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/about/">About</a>
+            <a class="sidebar-nav-item" href="/website/about/">About</a>
           
         
       
@@ -88,7 +88,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/contact/">Contact</a>
+            <a class="sidebar-nav-item" href="/website/contact/">Contact</a>
           
         
       
@@ -98,11 +98,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/install/">Install</a>
-          
-        
-      
-        
+            <a class="sidebar-nav-item" href="/website/install/">Install</a>
           
         
       
@@ -118,11 +114,25 @@
           
         
       
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <a class="sidebar-nav-item" href="http://robocomp.readthedocs.org">Tutorials</a>
       <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
+      
       <span class="sidebar-nav-item">Currently v1.0.0</span>
     </nav>
 
-    <p>&copy; 2015. All rights reserved.</p>
+    <p>&copy; 2016. All rights reserved.</p>
   </div>
 </div>
 
@@ -137,121 +147,52 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="/rcwebsite2/2015/05/23/nithin3/">
-        Packaging RoboComp
+      <a href="/website/2015/06/20/nithin4/">
+        Robocomp Workspace Model
       </a>
     </h1>
 
-    <span class="post-date">23 May 2015</span>
+    <span class="post-date">20 Jun 2015</span>
 
-    <h3>deb packages</h3>
+    <p>The Robocomp workspace is for those who are developing components rather than the framework itself. The main advantage of having a workspace is that it will make the work-flow much easier. Workspace basically organizes the development. For example, currently for building or running a component you have to go to its directory, create a build directory and then use cmake, while by using workspace and build tools you could achieve the same in a single command.</p>
 
-<p>For creating a robocomp debian package :</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp
-mkdir build
-cmake ..
-make package
-</code></pre></div>
-<p>will create a .deb package in the build directory, which we can install using any packaging application like dpkg. To install the created package, just double click on it(open with Software Center) or in terminal type</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">sudo dpkg -i &lt;packagename&gt;.deb
-</code></pre></div>
-<h3>source packages for ppa</h3>
-
-<p>Launchpad will only accept source packages and not binary.Launchpad will then build the packages. For building source packages we are using debuild which is a wrapper around the <em>dpkg-buildpackage + lintian</em>. so you will need to install debuild and dput on your system.The source_package.cmake script is used to create debian source package.</p>
-
-<p>The main CMakeLists.txt file defines a target <code>spackage</code> that builds the source package in build/Debian with <code>make spackage</code></p>
-
-<p>For uploading the package to ppa, First change the <strong>PPA_PGP_KEY</strong> in <a href="../cmake/package_details.cmake#L26">package_details.cmake</a> to the contact of the PGP key  details registered with your ppa account.Then create a source package by building the target <em>spackage</em>.Once the Source package is build successfully, upload it to your ppa by:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd Debian/
-dput ppa:&lt;lp-username&gt;/&lt;ppa-name&gt; package-source.changes
-</code></pre></div>
-<p>building of source package can be tested with:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd Debian/robocomp-&lt;version&gt;
-debuild -i -us -uc
-</code></pre></div>
-<h4>Note:</h4>
-
-<p>If you want to upload another source package to ppa which doesn&#39;t have any changes in the source but maybe in the debian files. you can build the spackage after commenting out <code>set(DEB_SOURCE_CHANGES &quot;CHANGED&quot; CACHE STRING &quot;source changed since last upload&quot;)</code> in <a href="../cmake/package_details.cmake#L27">package_details.cmake</a> so that the the script will only increase the ppa version number and wont include the source package for uploading to ppa (which otherwise will give an error).</p>
-
-<hr>
-
-<p>Nithin Murali</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/rcwebsite2/2015/05/23/nithin2/">
-        <i>GSoC,</i> Building and deployment system design
-      </a>
-    </h1>
-
-    <span class="post-date">23 May 2015</span>
-
-    <h3>About Me:</h3>
-
-<p>Hi all , I am Nithin Murali and i would like to introduce me a little in this post. I am pursuing my engineering degree on Electrical Engineering from Indian Institute of Technology Bombay. I am working on an Autonomous Underwater Vehicle which we are developing for the RObosub competition. We are developing in ROS framework. That was my first introduction to robotic frameworks. I have read about Robocomop before but a real chance to contribute to this ambitious framework was brought to me by GSOC 2015. I have Chosen the project <em>RoboComp Building and deployment system design</em>.</p>
-
-<h3>About the project</h3>
-
-<p>Currently the the build system in Robocomp is not very efficient. It is limited only to the core libraries and some additional tools. So we will have to seprately build all the components one by one. Also as the number of component increases it will be more difficult to manage all of them. So I am planning to come up with an workspace model for Robocomp. It would accompany with various tools which will ease handling of components.</p>
-
-<p>As of now the users have to build robocomp from source for using it. But there may be users who dont want to work on the framework but is only interested in developing new components. For such users it is important that that we should supply an compiled package (preferably debian package). Also package would be more accessible if we could provide an ppa for robocomp. So i am planning to package robocomp and also create a ppa for robocomp.</p>
-
-<p>Currently Robocomp dosent have any tests written nor is it using any testinf framework. So one of my task would be decide on a testing framework/stragery and write tests for existing framework.</p>
-
-<hr>
-
-<p>Nithin Murali</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/rcwebsite2/2015/05/23/nithin1/">
-        Introduction to debian packaging
-      </a>
-    </h1>
-
-    <span class="post-date">23 May 2015</span>
-
-    <h2>What is a package</h2>
-
-<p>By definition <em>Debian packages are standard Unix ar archives that include two tar archives optionally compressed with gzip (zlib), Bzip2, lzma, or xz (lzma2): one archive holds the control information and another contains the program data.</em>
-All debain packages should follow certain conventions. The root source directory should contain a directory named <em>debian</em>. This directory contains files which stores info about the package.
-These are the required files under the debian directory</p>
+<p>I have started the workspace model design keeping in mind the following points.</p>
 
 <ul>
-<li><p><strong>rules</strong><br>
-This is the maintainer script for the package building. This script is run by the packaging application to build and install the source into a <em>tmp</em> directory in the debian folder. It has the following Targets</p>
-
-<ul>
-<li><em>clean target</em> : to clean all compiled, generated, and useless files in the build-tree.</li>
-<li><em>build target</em> : to build the source into compiled programs and formatted documents in the build-tree.</li>
-<li><em>build-arch target</em> : to build the source into arch-dependent compiled programs in the build-tree.</li>
-<li><em>build-indep target</em> : to build the source into arch-independent formatted documents in the build-tree.</li>
-<li><em>binary target</em> : to create all binary packages (effectively a combination of binary-arch and binary-indep targets)</li>
-<li><em>binary-arch target</em> : to create arch-dependent (Architecture: any) binary packages in the parent directory.</li>
-<li><em>binary-indep target</em>: to create arch-independent (Architecture: all) binary packages in the parent directory.</li>
-</ul></li>
-<li><p><strong>changelog</strong><br>
-This file contains the project changelog along with the project name , version and distribution and urgency of your package.</p></li>
-<li><p><strong>compact</strong><br>
-The compact file defines the debhelper compatibility level.</p></li>
-<li><p><strong>debian/control</strong><br>
-This file contains various values which dpkg, dselect, apt-get, apt-cache, aptitude, and other package management tools will use to manage the package. The control file describes the source and binary package, and gives some information about them, such as their names, who the package maintainer is, build and run dependencies and so on.</p></li>
-<li><p><strong>copyright</strong><br>
-This file contains information about the copyright and license of the upstream sources</p></li>
-<li><p><strong>(pre/post)(inst/rm)</strong><br>
-This are the scipts which are run before or after installation or removal of package.</p></li>
+<li>you should be able to build all components at once, if necessary and also separately<br></li>
+<li>the source tree should be kept clean<br></li>
+<li>It should scalable and also existing components should be easily moved in<br></li>
+<li>dependencies should be easily handled<br></li>
 </ul>
 
-<p>Now once you have the source directory in the prescribed format. you will need a <em>.tar.gz</em> archive of the source in the same folder.Then we can create a debian binary package using </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">debuild -i -us -uc -b
-</code></pre></div>
-<p>Or a debian source package using</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">debuild -i -us -uc -S
-</code></pre></div>
+<p>Referring to other similar workspace models i came up with the following model.</p>
+
+<h3>The recommended layout for development is as follows:</h3>
+
+<p><img src="https://raw.githubusercontent.com/robocomp/website/gh-pages/img/workspace_model.png" alt=" Robocomp workspace model" title="Robocomp workspace model"></p>
+
+<h2>Elements of workspace</h2>
+
+<h3>Workspace</h3>
+
+<p>The workspace is the folder inside which you are going to be actively developing components. Keeping things in a folder with connected development helps keep separation of development models. In simple words, a workspace can be thought of as a group different components, for example Robocomp has some default components, you may as well create some components so in this case you Robocomp&#39;s components can be in a workspace while your components in another. The config file in ~/.config/RoboComp/rc_worksapce.config maintains a list of all the registered workspaces.</p>
+
+<h3>Source space</h3>
+
+<p>The source space (a folder inside workspace) contains the source code of all the components in the workspace or this is where you will be developing. The source space is the folder where build tools will look for components. This folder is easily identified as it is where the toplevel.cmake is linked Robocomp installed folder and the name <code>src</code>. Each component should be in a direct subdirectory. If the directory contains a file named <em>IGNORE_COMP</em> the component will be ignored while building the workspace.</p>
+
+<h3>Build Space</h3>
+
+<p>The build space is the folder in which cmake is invoked and generates artifacts such as the CMakeCache. This need not be a direct sub directory of workspace, it can be any where. This is basically an <em>build</em> directory of all the components.</p>
+
+<h3>Development Space</h3>
+
+<p>The development space is where build system generates the binaries and config files which are executable before installation.It will have a septate directory for each components. Each component directory contains a folder <code>bin</code> which has the build binaries and a <code>etc</code> directory which contain config files. This should be a direct subdirectory of workspace. Currently the <code>devel space is merged with the source space</code> as you can seen in the layout graph.</p>
+
+<h3>Install Space</h3>
+
+<p>This is the default directory in to which the components in current workspace will get installed along with generated docs. This directory contains a file named <em>.rc_install</em> which marks this as an install space. Please note that the robocomp install path <em>/opt/robocomp</em> is also an install space by default.</p>
+
 <hr>
 
 <p>Nithin Murali</p>
@@ -260,166 +201,291 @@ This are the scipts which are run before or after installation or removal of pac
   
   <div class="post">
     <h1 class="post-title">
-      <a href="/rcwebsite2/2015/05/23/components/">
-        Software components in RoboComp, A brief introduction
+      <a href="/website/2015/06/17/mercedes3/">
+        <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#3</p>, Visual Inverse Kinematics
       </a>
     </h1>
 
-    <span class="post-date">23 May 2015</span>
+    <span class="post-date">17 Jun 2015</span>
 
-    <p>Two major problems encountered when creating large, complex software are scalability and reusability. These problems become especially acute when it comes to writing the software that controls today robots. Robotics is the mixed bag of technology, where almost everything finds its way through. Also, Robotics is the place where our dreams of intelligent machines meet, in an endless attempt to build a truly useful tool for our daily lives. Because of this, we organize the software for our robots in big architectures that try to reproduce whatever we understand by intelligent behavior. The most audacious architectures are called <em>cognitive architectures</em> and try to integrate all levels of behavior and reasoning needed to achieve intelligence. Some of them have been with us for more than 30 years, <a href="http://soar.eecs.umich.edu/">SOAR.</a></p>
+    <p><strong>Visual inverse kinematics, Basic understanding :</strong> In the previous post we anticipate the problems caused by the gaps and inaccuracies of motors in the inverse kinematics of the robot. Now, in this third post we will talk about the solution implemented during the GSoC15 project.</p>
 
-<p>The problem with building these little monsters is that you need a very powerful underlying infrastructure that lets you build and modify software created by many people and that has to execute on real, moving machines. Also, everybody expect robots to be smarter than they really are and that is a lot of preassure. Components provide a new, developing technology that can be very helpful here. Components are <em>programs that communicate</em> and as such, they are built with everything at hand, libraries, objects, threads, sockets, lambda functions and any other thing you can come up with to code a program. Also, components need a way to communicate among them and here is where communication middlewares get in. If you want to communicate programs written in different languages, running across the internet, executing on different hardware architectures -even browsers- then you cannot get along with a socket. You really need a middleware. Putting together these to elements, programs and a communication middleware, you almost come up with a component. One more thing is needed, a model for your components. You need to define what is a generic component and consequently how its internal structure is going to be, its directory and building ecosystem, how it has to be documented, its default behavior, how it will be deployed and its modes of communicating. There are several proposals that do exactly this, being the most famous <a href="http://www.corba.org">CORBA.</a></p>
+<p>So, with the inverse kinematics component that we have implemented in Robocomp, we had the problem of inaccuracies and gaps in the robotic arm motors, problems that made the robot believed reach the target position without having actually achieved it. To solve this problem it was decided to implement a solution inside the visual field (which is what concerns us throughout this project), whose aim is to provide the inverse kinematics component a visual feedback that allows correct its mistakes. The operation of the algorithm is very simple and takes as its starting point the investigations of Seth Hutchinson, Greg Hager and Peter Corke, collected in <code>A Tutorial on Visual Servo Control</code> [1].</p>
 
-<p>In RoboComp (2005-) we have created our own component model, inspired by the <a href="http://orca-robotics.sourceforge.net/">ORCA</a> model and making it evolve to fit our needs along these years. As a middleware, RoboComp primarily uses <a href="www.zeroc.com">Ice</a> and there is ongoing experimental work to make RoboComp middleware agnostic, so its components can be re-generated to use other middlewares such as <a href="http://portals.omg.org/dds/">DDS</a>.</p>
+<h2>&#39;Looking&#39;, then &#39;moving&#39;</h2>
 
-<p>RoboComp&#39;s components model is quite simple and we always try to simplify it even more. It can be best explained through two Domain Specific Languages (DSLs) that have been created to define a component at a very high level of abstraction. <strong>IDSL</strong> stands for &quot;Interface Definition Specific Language&quot; and currently is a subset of Ice&#39;s Slice interface language. With IDSL you write the data structures and functions that a component can implement, require, subscribe to or publish. A component can implement several interfaces, offering different views of its internal functioning. Also, the same interface can be implemented by many components. This is an example of a simple interface written in IDSL:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">module RoboCompSpeech
-{
-  interface Speech
-  {
-     bool say(string text,bool overwrite);
-     bool isBusy();
-  };
-};
-</code></pre></div>
-<p><strong>CDSL</strong> stands for &quot;Component Definition Specific Language&quot; and allows the user to specifiy its name, accesible interfaces, communication connections, target language and other available modules or libraries that you want to include in the building scripts.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">import &quot;/robocomp/interfaces/IDSLs/DifferentialRobot.idsl&quot;;
-import &quot;/robocomp/interfaces/IDSLs/Laser.idsl&quot;;
-Component prueba
-{
-    Communications
-    {
-      requires DifferentialRobot, Laser;
-    };
-    language cpp;
-    gui Qt(QWidget);
-};
-</code></pre></div>
-<p>Using these two DSLs, RoboComp can generate the source code of the component using a tool designed to this end. The complete, functioning code of a component is created ready to be compiled and executed. We use a smart inheritance mechanism to separate the generic stuff from the user specific stuff and, based on it, the next time you generate a component, your code will remain untouched but access to new defined proxies will be there.</p>
+<p>As Hutchinson, Hager and Corke reflect in their work:</p>
+
+<blockquote>
+<p>Vision is a useful robotic sensor since it mimics the human sense of vision and allows for non-contact measurement of the environment. [...] Typically visual sensing and manipulation are combined in a open-loop fashion, &#39;looking&#39; then &#39;moving&#39;.</p>
+</blockquote>
+
+<p>So the goal of <code>Visual servo control</code> is to control the movement and location of the robot using visual techniques (detection and recognition of objects in an image). To get an idea how it works, we must have clear some fundamental concepts in this field</p>
+
+<h3>Kinematics of a robot</h3>
+
+<p>We need to know what a kinematic chain is, what reference system and transformation coordinate are anda what algorithm is executed inside the robot kinematic. These concepts were explained in the second post of this collection. If you have doubts, consult it.</p>
+
+<p>If we link the kinematic chains concept with visual techniques (ie, now, in addition to the chain formed by the motors of the robotic arm, we have a camera in the chain looking one of the chain ends), we have two types of systems:</p>
+
+<ol>
+<li>Endpoint open-loop (EOL): Systems which only observed the target object. These systems don&#39;t need to look at his end effector so normally the camera is on the end effector (hand-eye).</li>
+<li>Endpoint closed-loop (ECL): Systems which observed the target object and the end effector of the arm.</li>
+</ol>
+
+<p>The visual inverse kinematics that we implemented in Robocomp uses this last configuration because is independent of hand-eye calibration errors (precisely, the clearances errors and inaccuracies that bother us in the inverse kinematics), although often requires solution of a more demanding vision problem, because we need to track the end effector.</p>
+
+<h3>Camera Projection Models</h3>
+
+<p>We need to understand the geometric aspects of the imaging process if we want to understand how the information provided by the vision system is used to control the movement of the robot. The first thing to consider is that an image taken by a camera is always in 2D, so we&#39;re losing spatial information (the depth of the scene). </p>
+
+<p><img src="http://masters.donntu.org/2012/etf/nikitin/library/article10.files/image10.01.png" alt="Alt text"></p>
+
+<p>To resolve this issue we have several options:
+1. We can use multiple cameras that capture the studio space from different positions.
+2. We can obtain multiple views with a single camera.
+3. We can have previously stored the geometric relationship between certain characteristics of the target or the elements in the studio space.</p>
+
+<p>In any case, we must keep in mind certain things common to all cameras. For example the system of axes: the <code>X</code> and <code>Y</code> axes form the basis of the image plane and the <code>Z</code> axis is perpendicular to the image plane, along the optical axis of the camera. The origin is located on the <code>Z</code> axis at a distance <code>λ</code> of the image plane. That distance <code>λ</code> is what we call focal length.</p>
+
+<p><img src="http://www.hitl.washington.edu/artoolkit/documentation/images/ch03-17.gif" alt="ALt text"></p>
+
+<p>We can map the position and the orientation of the end effector in space calculating the projective geometry of the camera. But this method, complicated in itself, increases their difficulty because we need <code>recognize</code> the end effector in the picture, in addition to deriving the speed from the changes observed in each frame that the camera capture. For these reasons, in our visual inverse kinematic component, we use the algorithm proposed by Edwin Olson, <code>Apriltags</code> [2] a visual fiducial system that uses a 2D barcode style <code>tag</code> (binary, black and white synthetic brands), allowing full 6 DOF localization of features from a single image. Thus, if we put a apriltag in the end effector, we can get its position and orientation in a very simple way. </p>
+
+<h2>visualBIK component</h2>
+
+<p>Having already some clear concepts, let us study how the component developed in this project, <code>visualBIK</code>, works.</p>
+
+<p>Our component implements a simple state machine where waits the reception of a target position (a vector with traslations and rotations: [tx, ty, tz,    rx, ry, rz]) through its interface. When a target is received, the visualBIK send it to the inverse kinematics component like a <code>POSE6D</code> target, and waits for him to finish running the target and placing the arm. As the end effector will be a little out of the target position (due to inaccuracies), the visualBIK will be prepared to correct this error:</p>
+
+<ol>
+<li>It calculates the visual pose of the end effector (through apriltags, visualBIK receives the position of the end effector mark that the camera head sees).</li>
+<li>After, it compute the error vector between the visual pose and the target pose.</li>
+<li>With this error vector, visualBIK corrects the target pose and sends the new position to the inverse kinematics component.</li>
+<li>This process is repeated until the error achieved in translation and rotation is less than a predetermined threshold.</li>
+</ol>
+
+<p>In this way we can correct the errors introduced by the inaccuracies of the joints.</p>
+
+<p>This component (like component inverse kinematics) is still in the testing phase and is more than likely suffer some changes that improve its operation.</p>
+
+<p>Bye!</p>
+
+<hr>
+
+<p>[1] Hutchinson, S., Hager, G., Corke, P. <code>A Tutorial on Visual Servo Control</code>, IEEE Trans. Robot. Automat., 12(5):651--670, Oct. 1996. Download in http://www-cvr.ai.uiuc.edu/~seth/ResPages/pdfs/HutHagCor96.pdf</p>
+
+<p>[2] OLson, E. <code>AprilTag: A robust and flexible visual fiducial system</code>, Robotics and Automation (ICRA), 2011 IEEE International Conference on, 3400-3407</p>
 
   </div>
   
   <div class="post">
     <h1 class="post-title">
-      <a href="/rcwebsite2/2015/05/23/component_creation_with_DSLEditor/">
-        Creating a new component with eclipse based RoboComp's DSLEditor
+      <a href="/website/2015/06/15/mercedes2/">
+        <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#2</p>, Inverse Kinematics
       </a>
     </h1>
 
-    <span class="post-date">23 May 2015</span>
+    <span class="post-date">15 Jun 2015</span>
 
-    <p>We will create now a new component that will connect to the RCIS simulator and run a simple controller for the robot, using the laser data. First we need to install the DSLEditor software that is runtime Eclipse application. </p>
+    <p><strong>What is inverse kinematics?</strong> : In this second post, although it may seem begin the house from the roof, let&#39;s talk about how a robot moves its arms and hands in order to manipulate daily objects.</p>
 
-<p>Create another terminal in Yakuake and type:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp/tools
-python fetch_DSLEditor.py
-</code></pre></div>
-<p>Select 32 or 64 bits according to your current linux installation. After a little while the DSLEditor will be installed under the <em>robocompDSL</em> directory:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd roboCompDSL/DSLEditor
-./DSLEditor
-</code></pre></div>
-<p>Check that you have a <em>RoboComp</em> tab in the upper bar of the DSLEditor window and that the <em>robocomp</em> directory appears in the Project Explorer (left panel). If it does not, right click inside the <em>Project Explorer</em> panel and select <em>import</em>. Then select <em>General</em> and then <em>Existing Projects into Workspace</em>. Then select your <em>robocomp</em> directory and push <em>Finish</em>. </p>
+<p>The ultimate goal of this work is make the robot to be able to recognize certain daily objects in a house (for example a mug), and to manipulate these objects with its effectors (hands). To do this, one of the things we need to implement is the inverse kinematics of the robot. Although this is the last step, we start by inverse kinematics to be easier and more intuitive than object recognition (besides that we have almost finalized the cinematic component in Robocomp).</p>
 
-<p>Now we need to bring up some handy tabs in the lower pane. Select the <em>Window</em> tab in the upper bar, then <em>Show View</em>, then <em>Other</em> and again <em>Other</em>. Select now <em>Interfaces</em> and double-click on it. Go back to the main window.</p>
+<h3>What does the inverse kinematics?</h3>
 
-<p>Now, in the left panel, unfold the <em>robocomp</em> directory down to <em>robocomp/components/</em> and then click on it with the right button. Select <em>New Folder</em> and enter <em>mycomponents</em> in the folder name. Do it again to create a new folder inside <em>mycomponents</em> named <em>myfirstcomp</em>. Select <em>myfirstcomp</em> and then click on the <em>RoboComp</em> tab in the upper bar of the main window. Select <em>Create CDSL file</em> and fill the requested name with <em>MyFirstComp.cdsl</em></p>
+<p>A recurring problem in robotics is to give to robots a certain autonomy in terms of movement. Focusing on a practical and realistic example, as is the trajectory of a robotic arm from an initial position to a target point, the question is how does the robot move its arm from the starting pose to the final pose? or what values take its engines arm to reach the final position? This is the typical problem of inverse kinematics, which is responsible for calculating the angular values of a kinematic chain composed engines (joints) of the arm to reach a target position. </p>
 
-<p>The new file will open inside a syntax-sensitive editor in the central panel. Ctrl-space gives you syntactically correct options. You can see the skeleton of a new empty component. Look for the tab <em>Interfaces</em> in the lower bar and select <em>DifferentialRobot.idsl</em>. Click on the green cross at the right of the bar to include it and accept when prompted in a pop-up window. You will see something like:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">import &quot;/robocomp/interfaces/IDSLs/DifferentialRobot.idsl&quot;;
-Component PFLocalizerComp{
-    Communications{
-        };
-        language Cpp;
-};
-</code></pre></div>
-<p>Repeat the same steps to include <em>Laser.idsl</em> and then add a <em>requires</em> statement inside de <em>Communications</em> section. The file now should look like this:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">import &quot;/robocomp/interfaces/IDSLs/DifferentialRobot.idsl&quot;;
-import &quot;/robocomp/interfaces/IDSLs/Laser.idsl&quot;;
-Component MyFirstComp{
-    Communications{
-        requires DifferentialRobot, Laser;
-    };
-language Cpp;
-};
-</code></pre></div>
-<p>Save the file and click in the upper bar on the <em>RoboComp</em> tab. Select <em>Generate Code</em>. After a little while the new source tree for your <em>MyFirstComp</em> component will be created. You can go back now to Yakuake and create a new tab to compile it. Then:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp/components/mycomponents/myfirstcomp
-cmake .
-make
-bin/myfirstcomp --Ice.Config=etc/generic_config
-</code></pre></div>
-<p>and there it is! your component is running. </p>
+<p>But before we get down to work, we need to review a few concepts.</p>
 
-<p>What! Dissapointed? Yeah, I know it does nothing, but it runs and it is yours! Now let&#39;s do some real programming.</p>
+<h3>Previous concepts</h3>
 
-<p>Stop the component with Ctrl Z and then type:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">killall -9 myfirstcomp
-</code></pre></div>
-<p>Now start your favorite IDE. KDevelop will do it just fine and you have it already installed. Open it in another tab, from Ubuntu menu or with Alt-F2. Then:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">Click the *Project* tab in the upper bar
-Select *Open/Import Project*
-Navigate to ~/robocomp/components/mycomponents/myfirstcomp
-Select *Makefile* and open the project
-</code></pre></div>
-<p>In the <em>Project</em> panel to the left of the screen, navigate to <em>src</em> and there select <em>specificworker.cpp</em> and open it. Open also <em>specificworker.h</em></p>
+<h4>kinematic chains</h4>
 
-<p>Now replace the empty <em>void compute()</em> method with this compact version of the classic AVOID-FORWARD-STOP architecture proposed by R. Brooks in the late 80&#39;s:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">void SpecificWorker::compute( )
-{
-    static  float rot = 0.1f;           // rads/sec
-    static float adv = 100.f;           // mm/sec
-    static float turnSwitch = 1;
-    const float advIncLow = 0.8;        // mm/sec
-    const float advIncHigh = 2.f;       // mm/sec
-    const float rotInc = 0.25;          // rads/sec
-    const float rotMax = 0.4;           // rads/sec
-    const float advMax = 200;           // milimetres/sec
-    const float distThreshold = 500;    // milimetres
-try
-{
-    RoboCompLaser::TLaserData ldata = laser_proxy-&gt;getLaserData();
-    std::sort( ldata.begin(), ldata.end(), [](RoboCompLaser::TData a, RoboCompLaser::TData b){ return     a.dist &lt; b.dist; }) ;
-    if( ldata.front().dist &lt; distThreshold) 
-    {
-        adv = adv * advIncLow; 
-        rot = rot + turnSwitch * rotInc;
-        if( rot &lt; -rotMax) rot = -rotMax;
-        if( rot &gt; rotMax) rot = rotMax;
-        differentialrobot_proxy-&gt;setSpeedBase(adv, rot);
-    }
-    else
-    {
-        adv = adv * advIncHigh; 
-        if( adv &gt; advMax) adv = advMax;
-        rot = 0.f;
-        differentialrobot_proxy-&gt;setSpeedBase(adv, 0.f);        
-        turnSwitch = -turnSwitch;
-    }   
-}
-catch(const Ice::Exception &amp;ex)
-{
-    std::cout &lt;&lt; ex &lt;&lt; std::endl;
-}
-}
-</code></pre></div>
-<p>To compile the fancy version of <em>std::sort</em> you will have to first add this line at the end of the file <em>CMakeListsSpecific.txt</em> located in the same <em>src</em> directory:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">ADD_DEFINITIONS( -std=c++11 )
-</code></pre></div>
-<p>and then type:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cmake .
-make
-</code></pre></div>
-<p>Hereafter, Press F8 in KDevelop to compile and link. Then, go to Yakuake and restart the component. </p>
+<p>The first concept that we should be clear is the <code>kinematic chain</code>. The kinematic chain is a set of elements that produce motion, deforming the chain to adapt it to movement. Kinematic chains are composed of two elements:</p>
 
-<p>Let us take InnerModel <em>simpleworld.xml</em> as an example. Open a new tab in Yakuake and execute</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd robocomp/files/innermodel
-rcis simpleworld.xml
+<ol>
+<li><code>joints</code>: joints or motors that produce the movement. Each joint gives a degree of freedom.</li>
+<li><code>links</code>: rigid segments that connect the joints together.</li>
+</ol>
+
+<p>An example of kinematic chain in robotic is the arm of the robot, that is composed by all the motors that the robot has and the segments that connect this motors in order to create the arm form.</p>
+
+<p><img src="http://www.sitenordeste.com/mecanica/images/cadena_cinematica.JPG" alt="Alt text"></p>
+
+<h4>Reference systems and Transformation coordinate.</h4>
+
+<p>One of the problems of robot manipulators is to know where their structural elements are arranged in the space in which they move. We therefore need a referral system that puts or position the elements of the robot in the workspace. So, a <code>reference system</code> is a set of agreements or conventions used by an observer to measure positions, rotations and other physical parameters of the system being studied. In our case, the arm of the robot is into the three-dimensional workspace (R³, with the axis X, Y and Z), where each components (for example, each joint) has one traslation (tx, ty, tz) and one rotation (rx, ry, rz). Therefore, the position of each component is given by a vector of six elements: <code>P=[tx, ty, tz,   rx, ry, rz]</code> (the first three translational and three rotational recent). Normally, we represent the poses by homogeneous trasnformation matrices, which are of the form:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    | R  T |
+P = | 0  1 |
 </code></pre></div>
-<p>Now you should see 2 windows. Now in Yakuake go back to tab where you had compiled <em>myfirstcomp</em> and run</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">bin/myfirstcomp --Ice.Config=etc/generic_config
+<p>where <code>R</code> is the rotation matrix and <code>T</code> the traslation coordenates.</p>
+
+<p>One of the kinematic problems is that each motor (which can be moved and/or rotated with respect to the previous motor of the chain) has his own reference system, so if we want to calculate the position of a particular point or joint, we will have to make a number of changes (<code>transformations</code>) to move from one reference system to another. For example, if we have the newt arm:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">X_1--------------X_2--------X_3-----O
+       M_1&gt;2          M_2&gt;3    M_3&gt;O
 </code></pre></div>
-<p>You should see the robot maneouvring aroung the box. Now is when Robotics begin! Try to modify the code to let the robot go pass the blocking boxes.</p>
+<p>where <code>X_n</code> represents the position of the joints, <code>-</code> is the link that connects the joints, <code>o</code> is the end effector of the arm and <code>M_n&gt;m</code> are the transformation matrices to change the reference system n to the system m, and we want to calculate the position of the end effector in the reference system of the joint X_1, we have to calculate this equation:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Po_inX_1 = M_2&gt;1 * M_3&gt;2 * M_o&gt;3 * Po_inO.
+</code></pre></div>
+<h3>Problems to solve the inverse kinematics.</h3>
+
+<p>If the forward kinematics is responsible for calculating the position of the end effector in a kinematic chain, given some angular values for the joints, the inverse kinematics is just the opposite: it is responsible for calculating the angle values of the joints so the end effector reaches a position. This last problem is much more difficult to solve. So difficult that we are forced to use generic mathematical methods that try to approach an optimal solution iteratively within a reasonable time. We have opted for an iterative method known as the <code>Levenberg-Marquardt</code> or <code>damped least squares</code> algorithm. This method is used for solving nonlinear least squares problems where a solution to decrease an error function is sought.</p>
+
+<h3>Inverse kinematics in Robocomp</h3>
+
+<p>As a result of the TFG, <code>Inverse kinematics in Social Robots</code> [1], since 2014 Robocomp has a component [2] that is responsible for calculating the inverse kinematics of the social robot Ursus [3], developed by Robolab. This component has undergone a big evolution, since it was created last year to now, and is more than likely to continue evolving to achieve inverse kinematics each finer and in less time. </p>
+
+<p>Originally, this component receives three types of targets:</p>
+
+<ol>
+<li>POSE6D: It is the typical target with translations and rotations in the X, Y and Z axis. The end effector has to be positioned at coordinates (tx, ty, tz) of the target and align their rotation axes with the target, specified in (rx, ry, rz).</li>
+<li>ADVANCEAXIS: its goal is to move the end effector of the robot along a vector. This is useful for improving the outcome of the above problem, for example, imagine that the hand has been a bit away from a mug. With this feature we can calculate the error vector between the end effector and the mug, and move the effector along the space to place it in an optimal position, near the mug.</li>
+<li>ALIGNAXIS: Its goal is that the end effector is pointing to target without moving to it but rotated as the target. It may be useful in certain cases where we are more interested in oriented the end effector with the same rotation of the target.</li>
+</ol>
+
+<p>To solve these various inverse kinematic problems, the component uses as main base the <code>Levenberg-Marquardt</code> algorithm proposed in the article <code>SBA: A Software Package for Generic Sparse Bundle Adjustment</code> by Lourakis and Argyros:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Input: A vector functon f: R^m → R^n with n≥m, a measurement vector x ∈ R^n and an initial parameters estimate p_0 ∈ R^m.
+Output: A vector p+ ∈ R^m minimizing ||x-f(p)||^2.
+Algorithm:
+    k:=0;                 v:=2;                     p:=p0;
+    A:=transposed(J)·J;   error:=x-f(p);            g:=transposed(J)·error;
+    stop:=(||g||∞ ≤ ε1);  μ:=t*max_i=1,...,m (Aii)
+
+    while(!stop) and (k&lt;k_max)
+         k:=k+1;
+         repeat
+               SOLVE (A+μ·I)·δ_p=g;
+               if(||δ_p||≤ ε2·(||p||+ε2))
+                    stop:=true;
+               else
+                    p_new:=p+δ_p
+                    ρ:=(||error||^2-||x-f(p_new)||^2)/(transposed(δ_p)·(μ·δ_p+g));
+                    if ρ&gt;0
+                        stop:=(||error||-||x-f(p_new)||&lt;ε4·||error||);
+                        p:=p_new;
+                        A:=transposed(J)·J;    error:=x-f(p);    g:=transposed(J)·error;
+                        stop:=(stop) or (||g||∞ ≤ ε1);
+                        μ:=μ*max(1/3, 1-(2·ρ-1)^3);
+                        v:=2;
+                    else
+                        μ:=μ*v;
+                        v:=2*v;
+                    endif
+               endif
+         until(ρ&gt;0) or (stop)
+         stop:=(||error||≤ ε3);
+    endwhile
+    p+:=p;
+</code></pre></div>
+<p>Where <code>A</code> is the hessian matrix, <code>J</code> is the jacobian matrix, <code>g</code> is the gradient descent, <code>δ_p</code> is the increments, <code>ρ</code> is the ratio of profit that tells us if we are approaching a minimum or not, <code>μ</code> is the damping factor, and <code>t</code> and <code>ε1, ε2, ε3, ε4</code> are different thresholds. But the IK component of Robocomp adds several concepts to the original L-M algorithm, in order to complete the proper operation of the component: </p>
+
+<ol>
+<li>Weight matrix: that controls the relevance between the translations (in meters) and rotations (in radians) of the target. So, where <code>g</code> was calculated as <code>transposed(J)·error</code>, now <code>g</code> is <code>transposed(J)·(W·error)</code></li>
+<li>Motors lock: when a motor reachs its minimun or maximun limit, we modified the jacobian matrix.</li>
+</ol>
+
+<p>The new version of the inverse kinematics component simplifies the code of the old version and adds some more functionality:</p>
+
+<ol>
+<li>Executes more than once a target. The inverse kinematic result is not the same if the start point of the effector is the robot&#39;s home or a point B near tho the goal point.</li>
+<li>Executes the traslations without the motors of the wrisht (only for Ursus). This makes possible to move the arm with stiff wrist, and then we can rotate easely the wrist when the end effectos is near the target.</li>
+</ol>
+
+<p>Another improvement being studied is to include a small planner responsible for planning the trajectories of the robot arm, in order to facilitate the work of the IK component and reduce its execution time. However, one of the problems that the inverse kinematics can not solve by itself is the problem of gaps and imperfections of the robot. These gaps and inaccuracies make the robot move its arm toward the target position improperly, so that the robot &quot;thinks&quot; that the end effector has reached the target but in reality has fallen far short of the target pose.</p>
+
+<p>In order to solve this last problem, we need visual feedback to correct the errors and mistakes introduced for the gaps and inaccuracies in the kinematic chain. The visualBIK component, developed during this project, is responsible for solve this visual feedback and correct the inverse kinematic, but we&#39;ll talk about it in the next post. </p>
+
+<p>Bye!</p>
+
+<hr>
+
+<p>[1] Master Thesis, Universidad de Extremadura, Escuela Politécnica de Cáceres. Mercedes Paoletti Ávila. <code>Cinemática Inversa en Robots Sociales</code>. Directed by Pablo Bustos and Luis Vicente Calderita. July 2014. Download in https://robolab.unex.es/index.php?option=com_remository&amp;Itemid=53&amp;func=startdown&amp;id=143</p>
+
+<p>[2] inverse kinematics component repository: https://github.com/robocomp/robocomp-ursus/tree/master/components/inversekinematics</p>
+
+<p>[3] C. Suárez Mejías, C. Echevarría, P. Núñez, L. Manso, P. Bustos, S. Leal and C. Parra. <code>Ursus: A Robotic Assistant for Training of Patients with Motor Impairments</code>. Book, Converging Clinical and Engineering Research on Neurorehabilitation, Springer series on BioSystems and BioRobotics, Editors, J.L Pons, D. Torricelli and Marta Pajaro. Springer, ISBN 978-3-642-34545-6, pages 249-254. January 2012. Download in https://robolab.unex.es/index.php?option=com_remository&amp;Itemid=53&amp;func=startdown&amp;id=128</p>
+
+<p>[4] Lourakis, M. I., Argyros, A. (2009). <code>SBA: A Software Package for Generic Sparse Bundle Adjustment</code>. Article of ACM Transactions on Mathematical Software, volume 36, issue 1, pages 1-30. Download in http://doi.acm.org/10.1145/1486527</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/website/2015/06/12/nithin8/">
+        Debian Packaging 2
+      </a>
+    </h1>
+
+    <span class="post-date">12 Jun 2015</span>
+
+    <h2>What is a binary package?</h2>
+
+<p>A binary package in a is an application package which contains (pre-built) executables, as opposed to source code. Basically a binary package is an archive which contains executables some other info like rules on how to install them, dependencies etc. debian binary package is also a type of binary package. You can use a package manger to install these packages.I have explained I have explained it in tutorial <a href="http://robocomp.github.io/website/2015/05/23/nithin1.html">Debian packaging</a>.</p>
+
+<h2>Implementation in Robocomp</h2>
+
+<p>For binary packages i was left with two options. whether i could use the same cmake script i used for creating source packages or i could use the <code>CPACK</code> packaging tool. Finally i decided to go with CPACK because - 1)less code , that means less messing up 2)its an well known tool so is expected to perform better than a script i am writing. CPACK has so many configuration options so i made a seperate cmake file <code>package_details.cmake</code> for configuring cpack so that its easier for users to change any configuration. CPACK will add a target <code>package</code> for generating binary package. so you could run <code>make package</code> for generating the package. </p>
+
+<h2>Source packages and ppa</h2>
+
+<p>A Personal Package Archive (PPA) s a special software repository for uploading source packages to be built and published as an APT repository by Launchpad.So basically if a software has a ppa then users can just add the pa to their sources and they will be able to install the software package and will also get updates automatically. As alreasy mentioned we can only upload source packages into a ppa, by definition <em>Source packages provide you with all of the necessary files to compile or otherwise, build the desired piece of software.</em> now the next question is how can we create source packages. I have explained it in tutorial <a href="http://robocomp.github.io/website/2015/05/23/nithin1.html">Debian packaging</a>.</p>
+
+<h2>Implementation in Robocomp</h2>
+
+<p>For creating source package for robocomp i wrote a cmake module <em>source_package</em>.The module will basically copy the source in to another directory (currently <em>Debian</em> in build folder) and will create the source tar.Then it will create all debian/ files dynamically. The script will be executed when the target <code>spackage</code> is made.</p>
+
+<p>After creating the source packages one trouble i faces was in setting up (registering) the PGP keys. Once you have created a launchpad account you should sign the Ubuntu Code of Conduct.Then you can upload the package using <code>dput</code> utility.</p>
+
+<h3>NB</h3>
+
+<ul>
+<li><p>Unfortunately CPACK has a bug in it, its not changing the control files permission correctly which throws a warning during installation. so i have create a bash script which will fix the control file permissions.</p></li>
+<li><p>You cant upload a package with same name into same ppa again, launchpad will reject it. so you need to change the package name and hence the version, every time you upload. This is automatically taken care off by the script.  </p></li>
+<li><p>If there are any changes to the source, then you should upload the whole source into the ppa. Well, any changes to fies in <em>debian</em> folder is not considered a source change. In Robocomp its implemented in such a way that if there is any changes to the source, then you have to change the Robocomp version.  </p></li>
+<li><p>Right now we are not generating the changelog automatically. But that is a feature we could add, generating changelog from the git commit messages.  </p></li>
+</ul>
+
+<hr>
+
+<p>Nithin Murali</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/website/2015/06/12/mercedes1/">
+        <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#1</p>
+      </a>
+    </h1>
+
+    <span class="post-date">12 Jun 2015</span>
+
+    <p><strong>About Me</strong> : Hello! My name is Mercedes Paoletti Ávila, and I would like to introduce me a little in this first post. I&#39;m graduate in engineering from the University of Extremadura, and currently I study the Master in computer engineering and ICT management in the same University. Over the past two years I have been working in the Robotics Laboratory of the UEx, Robolab. There I developed my end grade work, &quot;inverse kinematics in social robots&quot;, using the robotic framework implemented by the laboratory, Robocomp, and now I&#39;m doing my Master&#39;s Thesis, that is about robots planners and is part of the project of LJ Manso, AGM. </p>
+
+<p>And just following this course of action, this project combines the two concepts (planning and inverse kinematics) for recognizing and manipulating objects, using the framework Robocomp.</p>
+
+<h2>Symbolic planning techniques for recognizing objects domestic</h2>
+
+<p>The main object of this project is the application of symbolic techniques to build efficient pipelines in order to improve computer vision techniques, recognition and interpretation of domestic objects, to be finally executed on a domestic robot, so that the robot is able to move around a house and identify and interact with any objects located inside. The goal is that given a high-level task (eg. &quot;grab a mug&quot;), we can use symbolic planning techniques to build a pipeline of visual processing.</p>
+
+<p>In order to reach this goal, we need some previous concepts:</p>
+
+<p>1) We need a planner to organize the sequence of commands to be executed by the robot. We will use the AGM planner [1].</p>
+
+<p>2) We need a system to recognize marks or some objects. For now, we wil use the algorithm proposed by Edwin Olson, AprilTags [2]</p>
+
+<p>3) We also need a system that controls the movement of the robot and corrects the calibration errors and gaps of the engines. We will use the inverse kinematics component developed in Robocomp, which will add techniques of trajectory planning and visual feedback.</p>
+
+<p>All this provides a robust support that allows the robot to move freely within a given environment, such as a home, and interact with everyday objects that are in it.</p>
+
+<p>You can acces to the code of these components in the Robocomp repository: https://github.com/robocomp</p>
+
+<hr>
+
+<p>[1] AGM documentation: http://ljmanso.com/agm/</p>
+
+<p>[2] AprilTags: http://april.eecs.umich.edu/papers/details.php?name=olson2011tags</p>
 
   </div>
   
@@ -427,11 +493,11 @@ rcis simpleworld.xml
 
 <div class="pagination">
   
-    <a class="pagination-item older" href="/rcwebsite2page5">Older</a>
+    <a class="pagination-item older" href="/website/page5">Older</a>
   
   
     
-      <a class="pagination-item newer" href="/rcwebsite2page3">Newer</a>
+      <a class="pagination-item newer" href="/website/page3">Newer</a>
     
   
 </div>

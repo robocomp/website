@@ -6,12 +6,14 @@ highlighter:      pygments
 permalink:        pretty
 relative_permalinks: false
 
+gems:             [jekyll-paginate]
+
 # Setup
 title:            RoboComp
 tagline:          ''
 description:      'A simple robotics framework.'
 url:              http://robocomp.github.io
-baseurl:          /website
+baseurl:          /website/
 
 author:
   name:           'RoboComp'

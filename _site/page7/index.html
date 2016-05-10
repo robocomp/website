@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      RoboComp &middot; 
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/website/public/css/poole.css">
+  <link rel="stylesheet" href="/website/public/css/syntax.css">
+  <link rel="stylesheet" href="/website/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/websitepublic/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/websitepublic/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/website">
+          RoboComp
+        </a>
+      </h1>
+      <p class="lead">A simple robotics framework.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/website">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/Blog/">Blog</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/GSoC15/">GSoC'15</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/GSoC16/">GSoC'16</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/projects/">Projects</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/contact/">Contact</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/install/">Install</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <a class="sidebar-nav-item" href="http://robocomp.readthedocs.org">Tutorials</a>
+      <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
+      
+      <span class="sidebar-nav-item">Currently v1.0.0</span>
+    </nav>
+
+    <p>&copy; 2016. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <i><b>RoboComp</b> is an open-source Robotics framework providing the tools to create and modify software components that communicate through public interfaces. Components may require, subscribe, implement or publish interfaces in a seamless way. Building new components is done using two domain specific languages, IDSL and CDSL. With IDSL you define an interface and with CDSL you specify how the component will communicate with the world. With this information, a code generator creates C++ and/or Python sources, based on CMake, that compile and execute flawlessly. When some of these features have to be changed, the component can be easily regenerated and all the user specific code is preserved thanks to a simple inheritance mechanism.</i>
+
+
+<hr>
+
+<div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/website/2015/05/23/nithin1/">
+        Debian Packaging 1
+      </a>
+    </h1>
+
+    <span class="post-date">23 May 2015</span>
+
+    <h2>What is a package</h2>
+
+<p>By definition <em>Debian packages are standard Unix ar archives that include two tar archives optionally compressed with gzip (zlib), Bzip2, lzma, or xz (lzma2): one archive holds the control information and another contains the program data.</em>
+All debain packages should follow certain conventions. The root source directory should contain a directory named <em>debian</em>. This directory contains files which stores info about the package.
+These are the required files under the debian directory</p>
+
+<ul>
+<li><p><strong>rules</strong><br>
+This is the maintainer script for the package building. This script is run by the packaging application to build and install the source into a <em>tmp</em> directory in the debian folder. It has the following Targets</p>
+
+<ul>
+<li><em>clean target</em> : to clean all compiled, generated, and useless files in the build-tree.</li>
+<li><em>build target</em> : to build the source into compiled programs and formatted documents in the build-tree.</li>
+<li><em>build-arch target</em> : to build the source into arch-dependent compiled programs in the build-tree.</li>
+<li><em>build-indep target</em> : to build the source into arch-independent formatted documents in the build-tree.</li>
+<li><em>binary target</em> : to create all binary packages (effectively a combination of binary-arch and binary-indep targets)</li>
+<li><em>binary-arch target</em> : to create arch-dependent (Architecture: any) binary packages in the parent directory.</li>
+<li><em>binary-indep target</em>: to create arch-independent (Architecture: all) binary packages in the parent directory.</li>
+</ul></li>
+<li><p><strong>changelog</strong><br>
+This file contains the project changelog along with the project name , version and distribution and urgency of your package.</p></li>
+<li><p><strong>compact</strong><br>
+The compact file defines the debhelper compatibility level.</p></li>
+<li><p><strong>debian/control</strong><br>
+This file contains various values which dpkg, dselect, apt-get, apt-cache, aptitude, and other package management tools will use to manage the package. The control file describes the source and binary package, and gives some information about them, such as their names, who the package maintainer is, build and run dependencies and so on.</p></li>
+<li><p><strong>copyright</strong><br>
+This file contains information about the copyright and license of the upstream sources</p></li>
+<li><p><strong>(pre/post)(inst/rm)</strong><br>
+This are the scipts which are run before or after installation or removal of package.</p></li>
+</ul>
+
+<p>Now once you have the source directory in the prescribed format. you will need a <em>.tar.gz</em> archive of the source in the same folder.Then we can create a debian binary package using </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">debuild -i -us -uc -b
+</code></pre></div>
+<p>Or a debian source package using</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">debuild -i -us -uc -S
+</code></pre></div>
+<hr>
+
+<p>Nithin Murali</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/website/2015/05/23/components/">
+        Software components in RoboComp, A brief introduction
+      </a>
+    </h1>
+
+    <span class="post-date">23 May 2015</span>
+
+    <p>Two major problems encountered when creating large, complex software are scalability and reusability. These problems become especially acute when it comes to writing the software that controls today robots. Robotics is the mixed bag of technology, where almost everything finds its way through. Also, Robotics is the place where our dreams of intelligent machines meet, in an endless attempt to build a truly useful tool for our daily lives. Because of this, we organize the software for our robots in big architectures that try to reproduce whatever we understand by intelligent behavior. The most audacious architectures are called <em>cognitive architectures</em> and try to integrate all levels of behavior and reasoning needed to achieve intelligence. Some of them have been with us for more than 30 years, <a href="http://soar.eecs.umich.edu/">SOAR.</a></p>
+
+<p>The problem with building these little monsters is that you need a very powerful underlying infrastructure that lets you build and modify software created by many people and that has to execute on real, moving machines. Also, everybody expect robots to be smarter than they really are and that is a lot of preassure. Components provide a new, developing technology that can be very helpful here. Components are <em>programs that communicate</em> and as such, they are built with everything at hand, libraries, objects, threads, sockets, lambda functions and any other thing you can come up with to code a program. Also, components need a way to communicate among them and here is where communication middlewares get in. If you want to communicate programs written in different languages, running across the internet, executing on different hardware architectures -even browsers- then you cannot get along with a socket. You really need a middleware. Putting together these to elements, programs and a communication middleware, you almost come up with a component. One more thing is needed, a model for your components. You need to define what is a generic component and consequently how its internal structure is going to be, its directory and building ecosystem, how it has to be documented, its default behavior, how it will be deployed and its modes of communicating. There are several proposals that do exactly this, being the most famous <a href="http://www.corba.org">CORBA.</a></p>
+
+<p>In RoboComp (2005-) we have created our own component model, inspired by the <a href="http://orca-robotics.sourceforge.net/">ORCA</a> model and making it evolve to fit our needs along these years. As a middleware, RoboComp primarily uses <a href="www.zeroc.com">Ice</a> and there is ongoing experimental work to make RoboComp middleware agnostic, so its components can be re-generated to use other middlewares such as <a href="http://portals.omg.org/dds/">DDS</a>.</p>
+
+<p>RoboComp&#39;s components model is quite simple and we always try to simplify it even more. It can be best explained through two Domain Specific Languages (DSLs) that have been created to define a component at a very high level of abstraction. <strong>IDSL</strong> stands for &quot;Interface Definition Specific Language&quot; and currently is a subset of Ice&#39;s Slice interface language. With IDSL you write the data structures and functions that a component can implement, require, subscribe to or publish. A component can implement several interfaces, offering different views of its internal functioning. Also, the same interface can be implemented by many components. This is an example of a simple interface written in IDSL:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">module RoboCompSpeech
+{
+  interface Speech
+  {
+     bool say(string text,bool overwrite);
+     bool isBusy();
+  };
+};
+</code></pre></div>
+<p><strong>CDSL</strong> stands for &quot;Component Definition Specific Language&quot; and allows the user to specifiy its name, accesible interfaces, communication connections, target language and other available modules or libraries that you want to include in the building scripts.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">import &quot;/robocomp/interfaces/IDSLs/DifferentialRobot.idsl&quot;;
+import &quot;/robocomp/interfaces/IDSLs/Laser.idsl&quot;;
+Component prueba
+{
+    Communications
+    {
+      requires DifferentialRobot, Laser;
+    };
+    language cpp;
+    gui Qt(QWidget);
+};
+</code></pre></div>
+<p>Using these two DSLs, RoboComp can generate the source code of the component using a tool designed to this end. The complete, functioning code of a component is created ready to be compiled and executed. We use a smart inheritance mechanism to separate the generic stuff from the user specific stuff and, based on it, the next time you generate a component, your code will remain untouched but access to new defined proxies will be there.</p>
+
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
+  
+    
+      <a class="pagination-item newer" href="/website/page6">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>
