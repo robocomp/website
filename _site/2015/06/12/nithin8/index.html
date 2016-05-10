@@ -141,35 +141,36 @@
       <div class="post">
   <h1 class="post-title">Debian Packaging 2</h1>
   <span class="post-date">12 Jun 2015</span>
-  <h2>What is a binary package?</h2>
+  <p>##What is a binary package?
+A binary package in a is an application package which contains (pre-built) executables, as opposed to source code. Basically a binary package is an archive which contains executables some other info like rules on how to install them, dependencies etc. debian binary package is also a type of binary package. You can use a package manger to install these packages.I have explained I have explained it in tutorial <a href="http://robocomp.github.io/website/2015/05/23/nithin1.html">Debian packaging</a>.</p>
 
-<p>A binary package in a is an application package which contains (pre-built) executables, as opposed to source code. Basically a binary package is an archive which contains executables some other info like rules on how to install them, dependencies etc. debian binary package is also a type of binary package. You can use a package manger to install these packages.I have explained I have explained it in tutorial <a href="http://robocomp.github.io/website/2015/05/23/nithin1.html">Debian packaging</a>.</p>
+<p>##Implementation in Robocomp
+For binary packages i was left with two options. whether i could use the same cmake script i used for creating source packages or i could use the <code class="highlighter-rouge">CPACK</code> packaging tool. Finally i decided to go with CPACK because - 1)less code , that means less messing up 2)its an well known tool so is expected to perform better than a script i am writing. CPACK has so many configuration options so i made a seperate cmake file <code class="highlighter-rouge">package_details.cmake</code> for configuring cpack so that its easier for users to change any configuration. CPACK will add a target <code class="highlighter-rouge">package</code> for generating binary package. so you could run <code class="highlighter-rouge">make package</code> for generating the package.</p>
 
-<h2>Implementation in Robocomp</h2>
+<p>##Source packages and ppa
+A Personal Package Archive (PPA) s a special software repository for uploading source packages to be built and published as an APT repository by Launchpad.So basically if a software has a ppa then users can just add the pa to their sources and they will be able to install the software package and will also get updates automatically. As alreasy mentioned we can only upload source packages into a ppa, by definition <em>Source packages provide you with all of the necessary files to compile or otherwise, build the desired piece of software.</em> now the next question is how can we create source packages. I have explained it in tutorial <a href="http://robocomp.github.io/website/2015/05/23/nithin1.html">Debian packaging</a>.</p>
 
-<p>For binary packages i was left with two options. whether i could use the same cmake script i used for creating source packages or i could use the <code>CPACK</code> packaging tool. Finally i decided to go with CPACK because - 1)less code , that means less messing up 2)its an well known tool so is expected to perform better than a script i am writing. CPACK has so many configuration options so i made a seperate cmake file <code>package_details.cmake</code> for configuring cpack so that its easier for users to change any configuration. CPACK will add a target <code>package</code> for generating binary package. so you could run <code>make package</code> for generating the package. </p>
+<p>##Implementation in Robocomp
+For creating source package for robocomp i wrote a cmake module <em>source_package</em>.The module will basically copy the source in to another directory (currently <em>Debian</em> in build folder) and will create the source tar.Then it will create all debian/ files dynamically. The script will be executed when the target <code class="highlighter-rouge">spackage</code> is made.</p>
 
-<h2>Source packages and ppa</h2>
+<p>After creating the source packages one trouble i faces was in setting up (registering) the PGP keys. Once you have created a launchpad account you should sign the Ubuntu Code of Conduct.Then you can upload the package using <code class="highlighter-rouge">dput</code> utility.</p>
 
-<p>A Personal Package Archive (PPA) s a special software repository for uploading source packages to be built and published as an APT repository by Launchpad.So basically if a software has a ppa then users can just add the pa to their sources and they will be able to install the software package and will also get updates automatically. As alreasy mentioned we can only upload source packages into a ppa, by definition <em>Source packages provide you with all of the necessary files to compile or otherwise, build the desired piece of software.</em> now the next question is how can we create source packages. I have explained it in tutorial <a href="http://robocomp.github.io/website/2015/05/23/nithin1.html">Debian packaging</a>.</p>
-
-<h2>Implementation in Robocomp</h2>
-
-<p>For creating source package for robocomp i wrote a cmake module <em>source_package</em>.The module will basically copy the source in to another directory (currently <em>Debian</em> in build folder) and will create the source tar.Then it will create all debian/ files dynamically. The script will be executed when the target <code>spackage</code> is made.</p>
-
-<p>After creating the source packages one trouble i faces was in setting up (registering) the PGP keys. Once you have created a launchpad account you should sign the Ubuntu Code of Conduct.Then you can upload the package using <code>dput</code> utility.</p>
-
-<h3>NB</h3>
+<p>###NB
+* Unfortunately CPACK has a bug in it, its not changing the control files permission correctly which throws a warning during installation. so i have create a bash script which will fix the control file permissions.</p>
 
 <ul>
-<li><p>Unfortunately CPACK has a bug in it, its not changing the control files permission correctly which throws a warning during installation. so i have create a bash script which will fix the control file permissions.</p></li>
-<li><p>You cant upload a package with same name into same ppa again, launchpad will reject it. so you need to change the package name and hence the version, every time you upload. This is automatically taken care off by the script.  </p></li>
-<li><p>If there are any changes to the source, then you should upload the whole source into the ppa. Well, any changes to fies in <em>debian</em> folder is not considered a source change. In Robocomp its implemented in such a way that if there is any changes to the source, then you have to change the Robocomp version.  </p></li>
-<li><p>Right now we are not generating the changelog automatically. But that is a feature we could add, generating changelog from the git commit messages.  </p></li>
+  <li>
+    <p>You cant upload a package with same name into same ppa again, launchpad will reject it. so you need to change the package name and hence the version, every time you upload. This is automatically taken care off by the script.</p>
+  </li>
+  <li>
+    <p>If there are any changes to the source, then you should upload the whole source into the ppa. Well, any changes to fies in <em>debian</em> folder is not considered a source change. In Robocomp its implemented in such a way that if there is any changes to the source, then you have to change the Robocomp version.</p>
+  </li>
+  <li>
+    <p>Right now we are not generating the changelog automatically. But that is a feature we could add, generating changelog from the git commit messages.</p>
+  </li>
 </ul>
 
-<hr>
-
+<hr />
 <p>Nithin Murali</p>
 
 </div>
@@ -177,6 +178,15 @@
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/website/2016/04/25/gsoc16ideas/">
+            GSoC 2016 Ideas
+            <small>25 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
@@ -191,15 +201,6 @@
         <h3>
           <a href="/website/2015/08/20/rajath3/">
             <i>GSoC,</i> After Midterms
-            <small>20 Aug 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/website/2015/08/20/mercedes6/">
-            <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#6</p> grasping object
             <small>20 Aug 2015</small>
           </a>
         </h3>

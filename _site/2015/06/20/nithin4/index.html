@@ -146,42 +146,36 @@
 <p>I have started the workspace model design keeping in mind the following points.</p>
 
 <ul>
-<li>you should be able to build all components at once, if necessary and also separately<br></li>
-<li>the source tree should be kept clean<br></li>
-<li>It should scalable and also existing components should be easily moved in<br></li>
-<li>dependencies should be easily handled<br></li>
+  <li>you should be able to build all components at once, if necessary and also separately</li>
+  <li>the source tree should be kept clean</li>
+  <li>It should scalable and also existing components should be easily moved in</li>
+  <li>dependencies should be easily handled</li>
 </ul>
 
 <p>Referring to other similar workspace models i came up with the following model.</p>
 
-<h3>The recommended layout for development is as follows:</h3>
+<p>###The recommended layout for development is as follows:</p>
 
-<p><img src="https://raw.githubusercontent.com/robocomp/website/gh-pages/img/workspace_model.png" alt=" Robocomp workspace model" title="Robocomp workspace model"></p>
+<p><img src="https://raw.githubusercontent.com/robocomp/website/gh-pages/img/workspace_model.png" alt=" Robocomp workspace model" title="Robocomp workspace model" /></p>
 
-<h2>Elements of workspace</h2>
+<p>##Elements of workspace</p>
 
-<h3>Workspace</h3>
+<p>###Workspace
+The workspace is the folder inside which you are going to be actively developing components. Keeping things in a folder with connected development helps keep separation of development models. In simple words, a workspace can be thought of as a group different components, for example Robocomp has some default components, you may as well create some components so in this case you Robocomp’s components can be in a workspace while your components in another. The config file in ~/.config/RoboComp/rc_worksapce.config maintains a list of all the registered workspaces.</p>
 
-<p>The workspace is the folder inside which you are going to be actively developing components. Keeping things in a folder with connected development helps keep separation of development models. In simple words, a workspace can be thought of as a group different components, for example Robocomp has some default components, you may as well create some components so in this case you Robocomp&#39;s components can be in a workspace while your components in another. The config file in ~/.config/RoboComp/rc_worksapce.config maintains a list of all the registered workspaces.</p>
+<p>###Source space
+The source space (a folder inside workspace) contains the source code of all the components in the workspace or this is where you will be developing. The source space is the folder where build tools will look for components. This folder is easily identified as it is where the toplevel.cmake is linked Robocomp installed folder and the name <code class="highlighter-rouge">src</code>. Each component should be in a direct subdirectory. If the directory contains a file named <em>IGNORE_COMP</em> the component will be ignored while building the workspace.</p>
 
-<h3>Source space</h3>
+<p>###Build Space
+The build space is the folder in which cmake is invoked and generates artifacts such as the CMakeCache. This need not be a direct sub directory of workspace, it can be any where. This is basically an <em>build</em> directory of all the components.</p>
 
-<p>The source space (a folder inside workspace) contains the source code of all the components in the workspace or this is where you will be developing. The source space is the folder where build tools will look for components. This folder is easily identified as it is where the toplevel.cmake is linked Robocomp installed folder and the name <code>src</code>. Each component should be in a direct subdirectory. If the directory contains a file named <em>IGNORE_COMP</em> the component will be ignored while building the workspace.</p>
+<p>###Development Space
+The development space is where build system generates the binaries and config files which are executable before installation.It will have a septate directory for each components. Each component directory contains a folder <code class="highlighter-rouge">bin</code> which has the build binaries and a <code class="highlighter-rouge">etc</code> directory which contain config files. This should be a direct subdirectory of workspace. Currently the <code class="highlighter-rouge">devel space is merged with the source space</code> as you can seen in the layout graph.</p>
 
-<h3>Build Space</h3>
+<p>###Install Space
+This is the default directory in to which the components in current workspace will get installed along with generated docs. This directory contains a file named <em>.rc_install</em> which marks this as an install space. Please note that the robocomp install path <em>/opt/robocomp</em> is also an install space by default.</p>
 
-<p>The build space is the folder in which cmake is invoked and generates artifacts such as the CMakeCache. This need not be a direct sub directory of workspace, it can be any where. This is basically an <em>build</em> directory of all the components.</p>
-
-<h3>Development Space</h3>
-
-<p>The development space is where build system generates the binaries and config files which are executable before installation.It will have a septate directory for each components. Each component directory contains a folder <code>bin</code> which has the build binaries and a <code>etc</code> directory which contain config files. This should be a direct subdirectory of workspace. Currently the <code>devel space is merged with the source space</code> as you can seen in the layout graph.</p>
-
-<h3>Install Space</h3>
-
-<p>This is the default directory in to which the components in current workspace will get installed along with generated docs. This directory contains a file named <em>.rc_install</em> which marks this as an install space. Please note that the robocomp install path <em>/opt/robocomp</em> is also an install space by default.</p>
-
-<hr>
-
+<hr />
 <p>Nithin Murali</p>
 
 </div>
@@ -189,6 +183,15 @@
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/website/2016/04/25/gsoc16ideas/">
+            GSoC 2016 Ideas
+            <small>25 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
@@ -203,15 +206,6 @@
         <h3>
           <a href="/website/2015/08/20/rajath3/">
             <i>GSoC,</i> After Midterms
-            <small>20 Aug 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/website/2015/08/20/mercedes6/">
-            <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#6</p> grasping object
             <small>20 Aug 2015</small>
           </a>
         </h3>

@@ -141,73 +141,95 @@
       <div class="post">
   <h1 class="post-title">Creating a new component with eclipse based RoboComp's DSLEditor</h1>
   <span class="post-date">23 May 2015</span>
-  <p>We will create now a new component that will connect to the RCIS simulator and run a simple controller for the robot, using the laser data. First we need to install the DSLEditor software that is runtime Eclipse application. </p>
+  <p>We will create now a new component that will connect to the RCIS simulator and run a simple controller for the robot, using the laser data. First we need to install the DSLEditor software that is runtime Eclipse application.</p>
 
 <p>Create another terminal in Yakuake and type:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp/tools
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cd ~/robocomp/tools
 python fetch_DSLEditor.py
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>Select 32 or 64 bits according to your current linux installation. After a little while the DSLEditor will be installed under the <em>robocompDSL</em> directory:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd roboCompDSL/DSLEditor
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cd roboCompDSL/DSLEditor
 ./DSLEditor
-</code></pre></div>
-<p>Check that you have a <em>RoboComp</em> tab in the upper bar of the DSLEditor window and that the <em>robocomp</em> directory appears in the Project Explorer (left panel). If it does not, right click inside the <em>Project Explorer</em> panel and select <em>import</em>. Then select <em>General</em> and then <em>Existing Projects into Workspace</em>. Then select your <em>robocomp</em> directory and push <em>Finish</em>. </p>
+</code></pre>
+</div>
+
+<p>Check that you have a <em>RoboComp</em> tab in the upper bar of the DSLEditor window and that the <em>robocomp</em> directory appears in the Project Explorer (left panel). If it does not, right click inside the <em>Project Explorer</em> panel and select <em>import</em>. Then select <em>General</em> and then <em>Existing Projects into Workspace</em>. Then select your <em>robocomp</em> directory and push <em>Finish</em>.</p>
 
 <p>Now we need to bring up some handy tabs in the lower pane. Select the <em>Window</em> tab in the upper bar, then <em>Show View</em>, then <em>Other</em> and again <em>Other</em>. Select now <em>Interfaces</em> and double-click on it. Go back to the main window.</p>
 
 <p>Now, in the left panel, unfold the <em>robocomp</em> directory down to <em>robocomp/components/</em> and then click on it with the right button. Select <em>New Folder</em> and enter <em>mycomponents</em> in the folder name. Do it again to create a new folder inside <em>mycomponents</em> named <em>myfirstcomp</em>. Select <em>myfirstcomp</em> and then click on the <em>RoboComp</em> tab in the upper bar of the main window. Select <em>Create CDSL file</em> and fill the requested name with <em>MyFirstComp.cdsl</em></p>
 
 <p>The new file will open inside a syntax-sensitive editor in the central panel. Ctrl-space gives you syntactically correct options. You can see the skeleton of a new empty component. Look for the tab <em>Interfaces</em> in the lower bar and select <em>DifferentialRobot.idsl</em>. Click on the green cross at the right of the bar to include it and accept when prompted in a pop-up window. You will see something like:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">import &quot;/robocomp/interfaces/IDSLs/DifferentialRobot.idsl&quot;;
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import "/robocomp/interfaces/IDSLs/DifferentialRobot.idsl";
 Component PFLocalizerComp{
     Communications{
         };
         language Cpp;
 };
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>Repeat the same steps to include <em>Laser.idsl</em> and then add a <em>requires</em> statement inside de <em>Communications</em> section. The file now should look like this:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">import &quot;/robocomp/interfaces/IDSLs/DifferentialRobot.idsl&quot;;
-import &quot;/robocomp/interfaces/IDSLs/Laser.idsl&quot;;
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import "/robocomp/interfaces/IDSLs/DifferentialRobot.idsl";
+import "/robocomp/interfaces/IDSLs/Laser.idsl";
 Component MyFirstComp{
     Communications{
         requires DifferentialRobot, Laser;
     };
 language Cpp;
 };
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>Save the file and click in the upper bar on the <em>RoboComp</em> tab. Select <em>Generate Code</em>. After a little while the new source tree for your <em>MyFirstComp</em> component will be created. You can go back now to Yakuake and create a new tab to compile it. Then:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp/components/mycomponents/myfirstcomp
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cd ~/robocomp/components/mycomponents/myfirstcomp
 cmake .
 make
 bin/myfirstcomp --Ice.Config=etc/generic_config
-</code></pre></div>
-<p>and there it is! your component is running. </p>
+</code></pre>
+</div>
 
-<p>What! Dissapointed? Yeah, I know it does nothing, but it runs and it is yours! Now let&#39;s do some real programming.</p>
+<p>and there it is! your component is running.</p>
+
+<p>What! Dissapointed? Yeah, I know it does nothing, but it runs and it is yours! Now let’s do some real programming.</p>
 
 <p>Stop the component with Ctrl Z and then type:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">killall -9 myfirstcomp
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>killall -9 myfirstcomp
+</code></pre>
+</div>
+
 <p>Now start your favorite IDE. KDevelop will do it just fine and you have it already installed. Open it in another tab, from Ubuntu menu or with Alt-F2. Then:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">Click the *Project* tab in the upper bar
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Click the *Project* tab in the upper bar
 Select *Open/Import Project*
 Navigate to ~/robocomp/components/mycomponents/myfirstcomp
 Select *Makefile* and open the project
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>In the <em>Project</em> panel to the left of the screen, navigate to <em>src</em> and there select <em>specificworker.cpp</em> and open it. Open also <em>specificworker.h</em></p>
 
-<p>Now replace the empty <em>void compute()</em> method with this compact version of the classic AVOID-FORWARD-STOP architecture proposed by R. Brooks in the late 80&#39;s:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">void SpecificWorker::compute( )
+<p>Now replace the empty <em>void compute()</em> method with this compact version of the classic AVOID-FORWARD-STOP architecture proposed by R. Brooks in the late 80’s:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>void SpecificWorker::compute( )
 {
-    static  float rot = 0.1f;           // rads/sec
-    static float adv = 100.f;           // mm/sec
+    static	float rot = 0.1f;			// rads/sec
+    static float adv = 100.f;			// mm/sec
     static float turnSwitch = 1;
-    const float advIncLow = 0.8;        // mm/sec
-    const float advIncHigh = 2.f;       // mm/sec
-    const float rotInc = 0.25;          // rads/sec
-    const float rotMax = 0.4;           // rads/sec
-    const float advMax = 200;           // milimetres/sec
-    const float distThreshold = 500;    // milimetres
+    const float advIncLow = 0.8;		// mm/sec
+    const float advIncHigh = 2.f;		// mm/sec
+    const float rotInc = 0.25;			// rads/sec
+    const float rotMax = 0.4;			// rads/sec
+    const float advMax = 200;			// milimetres/sec
+    const float distThreshold = 500; 	// milimetres
 try
 {
     RoboCompLaser::TLaserData ldata = laser_proxy-&gt;getLaserData();
@@ -225,32 +247,46 @@ try
         adv = adv * advIncHigh; 
         if( adv &gt; advMax) adv = advMax;
         rot = 0.f;
-        differentialrobot_proxy-&gt;setSpeedBase(adv, 0.f);        
+        differentialrobot_proxy-&gt;setSpeedBase(adv, 0.f);		
         turnSwitch = -turnSwitch;
-    }   
+    }	
 }
 catch(const Ice::Exception &amp;ex)
 {
     std::cout &lt;&lt; ex &lt;&lt; std::endl;
 }
 }
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>To compile the fancy version of <em>std::sort</em> you will have to first add this line at the end of the file <em>CMakeListsSpecific.txt</em> located in the same <em>src</em> directory:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">ADD_DEFINITIONS( -std=c++11 )
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ADD_DEFINITIONS( -std=c++11 )
+</code></pre>
+</div>
+
 <p>and then type:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cmake .
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cmake .
 make
-</code></pre></div>
-<p>Hereafter, Press F8 in KDevelop to compile and link. Then, go to Yakuake and restart the component. </p>
+</code></pre>
+</div>
+
+<p>Hereafter, Press F8 in KDevelop to compile and link. Then, go to Yakuake and restart the component.</p>
 
 <p>Let us take InnerModel <em>simpleworld.xml</em> as an example. Open a new tab in Yakuake and execute</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd robocomp/files/innermodel
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cd robocomp/files/innermodel
 rcis simpleworld.xml
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>Now you should see 2 windows. Now in Yakuake go back to tab where you had compiled <em>myfirstcomp</em> and run</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">bin/myfirstcomp --Ice.Config=etc/generic_config
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>bin/myfirstcomp --Ice.Config=etc/generic_config
+</code></pre>
+</div>
+
 <p>You should see the robot maneouvring aroung the box. Now is when Robotics begin! Try to modify the code to let the robot go pass the blocking boxes.</p>
 
 </div>
@@ -258,6 +294,15 @@ rcis simpleworld.xml
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/website/2016/04/25/gsoc16ideas/">
+            GSoC 2016 Ideas
+            <small>25 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
@@ -272,15 +317,6 @@ rcis simpleworld.xml
         <h3>
           <a href="/website/2015/08/20/rajath3/">
             <i>GSoC,</i> After Midterms
-            <small>20 Aug 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/website/2015/08/20/mercedes6/">
-            <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#6</p> grasping object
             <small>20 Aug 2015</small>
           </a>
         </h3>

@@ -146,84 +146,94 @@ A chroot is basically a special directory on your computer which prevents applic
 The following are some possible uses of chroots:</p>
 
 <ol>
-<li>Isolating insecure and unstable applications</li>
-<li>Running 32-bit applications on 64-bit systems</li>
-<li>Testing new packages before installing them on the production system</li>
-<li>Running older versions of applications on more modern versions of Ubuntu</li>
-<li>Building new packages, allowing careful control over the dependency packages which are installed </li>
+  <li>Isolating insecure and unstable applications</li>
+  <li>Running 32-bit applications on 64-bit systems</li>
+  <li>Testing new packages before installing them on the production system</li>
+  <li>Running older versions of applications on more modern versions of Ubuntu</li>
+  <li>Building new packages, allowing careful control over the dependency packages which are installed</li>
 </ol>
 
 <p>This manual will follow the steps specified in the <a href="https://help.ubuntu.com/community/BasicChroot">official page of Ubuntu</a>. And the system we will install as tutorial is Ubuntu 14.04 Trusty amd64.</p>
 
-<h2>Brief Explanation</h2>
-
-<p>Imagine you have your Robocomp version well installed and working really fine in your system (i.e. Ubuntu 14.04 amd64), but you need to upgrade your ICE or OpenCV or PCL or whatever third-party library to a new version. You don&#39;t want to risk your well functional version of Robocomp and it&#39;s dependencies removing the current version and installing the new one (this usually affects other packages and libraries), and you don&#39;t have time enough to make a whole fresh installation in other partition or virtual machine, so the fastest solution is to create a jail containing the same distribution of your main system (Ubuntu 14.04 amd64) with chroot and test Robocomp with the new version of the library you need without touching your fine Robocomp installation.
-Realize that creating a chrooted environment in your machine makes your system believe that your root directory (&quot;/&quot;) is in another place than the actual root of the system (like I explain on the wiki, the process in which you launch chroot believes that the root directory is in / while actually it is in /var/chroot/trusty_x64/, not letting you touch anything outside that directory and therefore not risking your current installation).
+<p>##Brief Explanation
+Imagine you have your Robocomp version well installed and working really fine in your system (i.e. Ubuntu 14.04 amd64), but you need to upgrade your ICE or OpenCV or PCL or whatever third-party library to a new version. You don’t want to risk your well functional version of Robocomp and it’s dependencies removing the current version and installing the new one (this usually affects other packages and libraries), and you don’t have time enough to make a whole fresh installation in other partition or virtual machine, so the fastest solution is to create a jail containing the same distribution of your main system (Ubuntu 14.04 amd64) with chroot and test Robocomp with the new version of the library you need without touching your fine Robocomp installation.
+Realize that creating a chrooted environment in your machine makes your system believe that your root directory (“/”) is in another place than the actual root of the system (like I explain on the wiki, the process in which you launch chroot believes that the root directory is in / while actually it is in /var/chroot/trusty_x64/, not letting you touch anything outside that directory and therefore not risking your current installation).
 Another practical use for chroot is to test an especific program or library in a different distribution or architecture. For example, if you are working in Ubuntu 14.04 amd64 and you want to test if a library that you are using works fine in Debian Wheezy or Ubuntu 14.10 or Ubuntu 14.04 i386.</p>
 
-<h2>Creating a chroot</h2>
+<p>##Creating a chroot</p>
 
 <ol>
-<li><p>First of all we need to install the tools to make a chroot in out system.</p>
+  <li>
+    <p>First of all we need to install the tools to make a chroot in out system.</p>
 
-<p><code>sudo apt-get install debootstrap schroot</code></p></li>
-<li><p>Create a folder where the chroot is going to be installed. You need to make the folder using administrator permission (with <em>sudo</em> i.e). We will put the chroot up in <em>/var/chroot/trusty</em>x64_</p>
+    <p><code class="highlighter-rouge">sudo apt-get install debootstrap schroot</code></p>
+  </li>
+  <li>
+    <p>Create a folder where the chroot is going to be installed. You need to make the folder using administrator permission (with <em>sudo</em> i.e). We will put the chroot up in <em>/var/chroot/trusty_x64</em></p>
 
-<p><code>sudo mkdir /var/chroot &amp;&amp; sudo mkdir /var/chroot/trusty_x64</code></p></li>
-<li><p>Create a configuration file for schroot. For our example, we will create a file named trusty<em>x64.conf in _/etc/schroot/chroot.d/</em></p>
+    <p><code class="highlighter-rouge">sudo mkdir /var/chroot &amp;&amp; sudo mkdir /var/chroot/trusty_x64</code></p>
+  </li>
+  <li>
+    <p>Create a configuration file for schroot. For our example, we will create a file named trusty_x64.conf in <em>/etc/schroot/chroot.d/</em></p>
 
-<p><code>sudo gedit /etc/schroot/chroot.d/trusty_x64.conf</code></p>
+    <p><code class="highlighter-rouge">sudo gedit /etc/schroot/chroot.d/trusty_x64.conf</code></p>
 
-<p>And write the following inside: (Change the <USERNAME> to actual username, example &quot;root-users=abhi&quot;</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">[trusty_x64]
-description=Ubuntu trusty 14.04 for amd64
-directory=/var/chroot/trusty_x64
-root-users=&lt;USERNAME&gt;
-type=directory
-users=testuser
-</code></pre></div>
-<ul>
-<li>The first line is the name of the chroot thatis going to be created.</li>
-<li><strong>description</strong> is a short description of the chroot.</li>
-<li><strong>directory</strong> the path where the chroot is going to be installed. Note that is the same path that we specified in step 2.</li>
-<li><strong>root-users</strong> list of users that are allowed in our chroot without password.</li>
-<li><strong>type</strong>  The type of the chroot. Valid types are ‘plain’, ‘directory’, ‘file’, ‘block-device’ and ‘lvm-snapshot’. If empty or omitted, the default type is ‘plain’.</li>
-<li><strong>users</strong> list of users that are allowed access to the chroot.</li>
-</ul>
+    <p>And write the following inside: (Change the <USERNAME> to actual username, example "root-users=abhi"</USERNAME></p>
 
-<p>see <a href="http://manpages.ubuntu.com/manpages/hardy/man5/schroot.conf.5.html">schroot.config</a> for further information.</p></li>
-<li><p>Run Debootstrap. This step will download and unpack a basic ubuntu or debian system to the chroot directory we created in step 2.</p>
+    <p><code class="highlighter-rouge">
+ [trusty_x64]
+ description=Ubuntu trusty 14.04 for amd64
+ directory=/var/chroot/trusty_x64
+ root-users=&lt;USERNAME&gt;
+ type=directory
+ users=testuser
+</code>
+  - The first line is the name of the chroot thatis going to be created.
+  - <strong>description</strong> is a short description of the chroot.
+  - <strong>directory</strong> the path where the chroot is going to be installed. Note that is the same path that we specified in step 2.
+  - <strong>root-users</strong> list of users that are allowed in our chroot without password.
+  - <strong>type</strong>  The type of the chroot. Valid types are ‘plain’, ‘directory’, ‘file’, ‘block-device’ and ‘lvm-snapshot’. If empty or omitted, the default type is ‘plain’.
+  - <strong>users</strong> list of users that are allowed access to the chroot.</p>
 
-<p><code>sudo debootstrap --variant=buildd --arch amd64 trusty /var/chroot/trusty_x64 http://archive.ubuntu.com/ubuntu</code></p>
+    <p>see <a href="http://manpages.ubuntu.com/manpages/hardy/man5/schroot.conf.5.html">schroot.config</a> for further information.</p>
+  </li>
+  <li>
+    <p>Run Debootstrap. This step will download and unpack a basic ubuntu or debian system to the chroot directory we created in step 2.</p>
 
-<p>In our example, we are creating a chroot of an Ubuntu 14.04 64-bit distribution, but this command allows some different commands that can satisfy our needs, for instance, if we want to install the same distribution but the 32-bit version, we have to type:</p>
+    <p><code class="highlighter-rouge">sudo debootstrap --variant=buildd --arch amd64 trusty /var/chroot/trusty_x64 http://archive.ubuntu.com/ubuntu</code></p>
 
-<p><code>sudo debootstrap --variant=buildd --arch i386 trusty /var/chroot/trusty http://archive.ubuntu.com/ubuntu</code></p>
+    <p>In our example, we are creating a chroot of an Ubuntu 14.04 64-bit distribution, but this command allows some different commands that can satisfy our needs, for instance, if we want to install the same distribution but the 32-bit version, we have to type:</p>
 
-<p>Note that we have to do the proper changes creating a different schroot configuration file (i.e. <em>/etc/schroot/chroot.d/trusty</em>) and a different folder for the new chroot (i.e. <em>/var/chroot/trusty</em>)</p>
+    <p><code class="highlighter-rouge">sudo debootstrap --variant=buildd --arch i386 trusty /var/chroot/trusty http://archive.ubuntu.com/ubuntu</code></p>
 
-<p>If we want to create a chroot for a Debian version (i.e. Debian Wheezy (stable)) we have to type:</p>
+    <p>Note that we have to do the proper changes creating a different schroot configuration file (i.e. <em>/etc/schroot/chroot.d/trusty</em>) and a different folder for the new chroot (i.e. <em>/var/chroot/trusty</em>)</p>
 
-<p><code>sudo debootstrap --variant=buildd --arch amd64 wheezy /var/chroot/wheezy_x64 http://ftp.debian.org/debian</code></p></li>
-<li><p>Checking the chroot. To be sure that everything went ok, we can type the following command, that will list all the available chroot enviroments in out system.</p>
+    <p>If we want to create a chroot for a Debian version (i.e. Debian Wheezy (stable)) we have to type:</p>
 
-<p><code>schroot -l</code></p>
+    <p><code class="highlighter-rouge">sudo debootstrap --variant=buildd --arch amd64 wheezy /var/chroot/wheezy_x64 http://ftp.debian.org/debian</code></p>
+  </li>
+  <li>
+    <p>Checking the chroot. To be sure that everything went ok, we can type the following command, that will list all the available chroot enviroments in out system.</p>
 
-<p>If trusty_x64 appears, we can start working in our chrooted environment typing:</p>
+    <p><code class="highlighter-rouge">schroot -l</code></p>
 
-<p><code>schroot -c trusty_x64 -u root</code></p>
+    <p>If trusty_x64 appears, we can start working in our chrooted environment typing:</p>
 
-<p>The prompt of the chrooted environment should be like:</p>
+    <p><code class="highlighter-rouge">schroot -c trusty_x64 -u root</code></p>
 
-<p><code>(trusty_x64)root@abhi-Inspiron-7520:/home/abhi#</code></p>
+    <p>The prompt of the chrooted environment should be like:</p>
 
-<p><strong>NOTE</strong> This step is not mandatory.
-<strong>NOTE</strong> For convenience, the default schroot configuration rebinds the /home directory on the host system so that it appears in the chroot system. This could be unexpected because it means that you can accidentally delete or otherwise damage things in /home on the host system. To change this behaviour we can run the following command in the host system:</p>
+    <p><code class="highlighter-rouge">(trusty_x64)root@abhi-Inspiron-7520:/home/abhi#</code></p>
 
-<p><code>sudo gedit /etc/schroot/default/fstab</code></p>
+    <p><strong>NOTE</strong> This step is not mandatory.
+ <strong>NOTE</strong> For convenience, the default schroot configuration rebinds the /home directory on the host system so that it appears in the chroot system. This could be unexpected because it means that you can accidentally delete or otherwise damage things in /home on the host system. To change this behaviour we can run the following command in the host system:</p>
 
-<p>And comment the /home line:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"># fstab: static file system information for chroots.
+    <p><code class="highlighter-rouge">sudo gedit /etc/schroot/default/fstab</code></p>
+
+    <p>And comment the /home line:</p>
+
+    <p><code class="highlighter-rouge">
+# fstab: static file system information for chroots.
 # Note that the mount point will be prefixed by the chroot path
 # (CHROOT_PATH)
 #
@@ -234,35 +244,42 @@ users=testuser
 /dev/pts        /dev/pts        none    rw,bind         0       0
 #/home          /home           none    rw,bind         0       0
 /tmp            /tmp            none    rw,bind         0       0
-</code></pre></div></li>
+</code></p>
+  </li>
 </ol>
 
-<p>And that&#39;s it! Now we have a whole very basic system in which we can test out programs and libraries. </p>
+<p>And that’s it! Now we have a whole very basic system in which we can test out programs and libraries.</p>
 
-<h2>Troubleshooting</h2>
+<p>##Troubleshooting</p>
 
 <ul>
-<li>If you get locale warnings in the chroot like <strong>&quot;Locale not supported by C library.&quot;</strong> or <strong>&quot;perl: warning: Setting locale failed.&quot;</strong>, then try one or more of these commands:</li>
+  <li>If you get locale warnings in the chroot like <strong>“Locale not supported by C library.”</strong> or <strong>“perl: warning: Setting locale failed.”</strong>, then try one or more of these commands:</li>
 </ul>
-<div class="highlight"><pre><code class="language-text" data-lang="text">    sudo dpkg-reconfigure locales
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    sudo dpkg-reconfigure locales
     sudo apt-get install language-pack-en
     sudo locale-gen en_US.UTF-8
     sudo dpkg-reconfigure locales
-</code></pre></div>
+</code></pre>
+</div>
 <p>if the problem persist check out this <a href="http://perlgeek.de/en/article/set-up-a-clean-utf8-environment">page</a>.</p>
 
 <ul>
-<li><p>To get access to the intertet within the chroot, you have to type:</p>
+  <li>
+    <p>To get access to the intertet within the chroot, you have to type:</p>
 
-<p><code>sudo cp /etc/resolv.conf /var/chroot/trusty_x64/etc/resolv.conf</code></p></li>
-<li><p>You might want to have the proper sources.list in order to be able to install packages from Ubuntu official repositories like universe or multiverse, and the security updates. If you make a chroot installation, the sources.list will be the most basic one, like:</p>
+    <p><code class="highlighter-rouge">sudo cp /etc/resolv.conf /var/chroot/trusty_x64/etc/resolv.conf</code></p>
+  </li>
+  <li>
+    <p>You might want to have the proper sources.list in order to be able to install packages from Ubuntu official repositories like universe or multiverse, and the security updates. If you make a chroot installation, the sources.list will be the most basic one, like:</p>
 
-<p><code>deb http://archive.ubuntu.com/ubuntu trusty main</code></p></li>
+    <p><code class="highlighter-rouge">deb http://archive.ubuntu.com/ubuntu trusty main</code></p>
+
+    <p>You can generate a more complete sources.list file in this pages <a href="http://repogen.simplylinux.ch/">Ubuntu</a> and <a href="http://debgen.simplylinux.ch/">Debian</a></p>
+  </li>
 </ul>
 
-<p>You can generate a more complete sources.list file in this pages <a href="http://repogen.simplylinux.ch/">Ubuntu</a> and <a href="http://debgen.simplylinux.ch/">Debian</a></p>
-
-<h2>External Links</h2>
+<p>##External Links</p>
 
 <p><a href="https://help.ubuntu.com/community/BasicChroot">Ubuntu official chroot manual</a></p>
 
@@ -278,11 +295,21 @@ users=testuser
 
 <p><a href="http://debgen.simplylinux.ch/">Sources.list for Debian</a></p>
 
+
 </div>
 
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/website/2016/04/25/gsoc16ideas/">
+            GSoC 2016 Ideas
+            <small>25 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
@@ -297,15 +324,6 @@ users=testuser
         <h3>
           <a href="/website/2015/08/20/rajath3/">
             <i>GSoC,</i> After Midterms
-            <small>20 Aug 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/website/2015/08/20/mercedes6/">
-            <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#6</p> grasping object
             <small>20 Aug 2015</small>
           </a>
         </h3>

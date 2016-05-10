@@ -147,6 +147,200 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/website/2016/04/25/gsoc16ideas/">
+        GSoC 2016 Ideas
+      </a>
+    </h1>
+
+    <span class="post-date">25 Apr 2016</span>
+
+    <h2 id="robocomps-dsl-based-code-generator">RoboComp’s DSL based code generator</h2>
+
+<p>RoboComp’s components are automatically generated using a tool named robocompdsl which takes as input a text file written in a domain-specific language (DSL) named (Component Description Specific Language). These files describe several characteristics of the components such as the network connections to other components, the programming language in which it is going to be written (currently C++ and Python languages are supported), the kind of user interface it will have (if any) and other options such as if the component will make use of third-party libraries. Given a CDSL file and a path, robocompdsl generates a source code tree ready to be compiled for the component described in the file. In this source code tree there are files which the user will not need to modify (these are called generic files) and files in which the user is supposed to type the code (specific files). Once a component has been generated, only generic files are overwritten upon re-generation, new specific files are created with an additional ‘.new’ extension. This tool allows users to create components very quickly, avoids frequent errors and contributes to keep high quality coding standards.</p>
+
+<p>Despite the undeniable benefits brought by robocompdsl, there are some important updates to make and new features to introduce. This is one of the goals of this GSoC’16 proposal. In particular, we propose these first three new features:</p>
+
+<h2 id="qt5-and-ros-support">1. Qt5 and ROS support</h2>
+
+<p>Qt5 support. Currently only Qt4, both in C++ and Python, are supported. Supporting Qt5 would be interesting because the new version of the library is now quite mature, has new features and someday Qt4 will be outdated. Also, there is already support for Qt5 in Python through PyQt5. The work needed for this activity will deal with the necessary modifications in the DSL parsing and code generation.</p>
+
+<p>ROS support (currently underway). ROS support is a pressing issue mainly due to the high popularity of ROS and the possibility to access a number of robot hardware elements that provide ROS interfaces and other interesting packages provided by research groups and companies. Also, it is the usual way of talking to virtual referees in robotic competitions. Supporting ROS within our framework will allow users to use ROS and RoboComp components seamlessly.</p>
+
+<p>Technologies involved:  C++, Python, Qt5, ROS</p>
+
+<p>Mentor: Luis J. Manso
+Backup mentor: Marco A. Gutiérrez</p>
+
+<h2 id="javascript-support">2. Javascript support</h2>
+
+<p>NodeJS component code generation. An interesting diversion from current robotics technologies based on C++ and Python would be the use of Javascript as the language to code some highly concurrent components. Most components combine push-pull and RPC communication models to talk to other components in their graph of processes. Additionally, several more threads are normally used to handle the component’s internal workings. In this activity, the code generator will be extended to include Javascript running in a server as a new target language for components. The main restriction here is that ZeroC releases a version of the Ice middleware running on Node, since the web browser version is already out.</p>
+
+<p><em>Technologies involved:  C++, Python, Qt5, OSG</em></p>
+
+<p>Mentor: Luis J. Manso</p>
+
+<p>Backup mentor: Marco A. Gutiérrez</p>
+
+<h2 id="automatic-code-generation-for-state-machines">3. Automatic code generation for State Machines</h2>
+
+<p>Currently, the code generator only generates code for the generic part of the component, including the communications middleware and the binary building machinery. In this activity we want to extend  robocompdsl to allow for the specification of a state machine, as the computing model driving the specific functionality of the component. The component definition language will now include instructions to define a set of states and transitions between them, so a functioning machine using Qt State Machine Framework is automatically instantiated when generated.</p>
+
+<p><em>Technologies involved:  C++, Python, Qt</em></p>
+
+<p>Mentor: Pablo Bustos
+Backup mentor: Luis J. Manso</p>
+
+<h2 id="interesting-improvements-for-robocomps-inner-workings-dealing-with-installation-deployment-math-libraries-etc">Interesting improvements for RoboComp’s inner workings dealing with installation, deployment, math libraries, etc.</h2>
+
+<h2 id="facilitating-the-deployment-of-robocomp-on-different-platforms">4. Facilitating the deployment of RoboComp on different platforms</h2>
+
+<p>Deployment of a complex framework on different, heterogeneous platforms is always a difficult problem. Also, horizontally scaling the deployment of components when more computational resources are needed is also a complicated issue. The idea of this activity is to ease the deployment of the Robocomp framework within several different platforms and to provide tools to decouple the logical graph of processes from the underlying hardware. In order to achieve that the thing needed to be done are:</p>
+
+<ul>
+  <li>First, a refactoring of the CMake structure within RoboComp is needed so basic requirements for installation are reduced to a minimum. On the same page, this activity should ease the task for new developers to add new libraries, classes, tools or modules to the framework.</li>
+  <li>To facilitate the deployment on different operating systems, a fully functional Docker container for RoboComp will be developed so instant deployment will be available on heterogeneous platforms through the docker tool.</li>
+  <li>A semi-automatic procedure to update changes from the repository to the Docker container will be established.</li>
+  <li>To study and analyze virtual infrastructure solutions, such as Open Stack, to provide a virtualized infrastructure that can integrate the physical cluster onboard the robot and external servers for less responsive, but highly computationally demanding,  tasks.</li>
+</ul>
+
+<p><em>Technologies involved: cmake, docker, git</em></p>
+
+<p>Mentor: Marco A. Gutiérrez</p>
+
+<p>Backup Mentors: Luis J. Manso</p>
+
+<h2 id="automating-the-uploading-of-binary-files-for-git-annex">5. Automating the uploading of binary files for git-annex</h2>
+
+<p>The process of uploading binary files to git-annex is currently a tedious task and it ends up with developers trying to avoid the use of this tool and looking for alternatives to store binary files. A new alternative needs to be developed ether having a specific tool for that automates the addition of new bin files to git-annex or switching to a new tool that takes care of the binary files. First a tedious research in current alternatives and or proper solutions to the git-annex problem should be discussed. After the community selects one among the proposed solutions this must be implemented by the student and all previous binaries should be ported to the new solution.</p>
+
+<p>The final solution should basically be a command that would take the binary as an input upload it to the storage server and add the link to git-annex or the selected technology in charge of the binary files tracking.</p>
+
+<p><em>Technologies involved: git, git-annex, C++, cmake</em></p>
+
+<p>Mentors: Rajath Kumar</p>
+
+<p>Backup mentor: Felipe Cid</p>
+
+<h2 id="writing-a-name-and-port-service-for-running-components">6. Writing a name and port service for running components</h2>
+
+<p>This activity deals with writing a new component in RoboComp that will provide a naming and port service. When starting, components will now contact this new service to advertise its name, available interfaces and request a valid port. Other components starting later will be able to query the service for component names and interfaces, and therefore being able to establish their proxy connections in real time, eliminating the need for complex and tedious configuration files.
+Extensive tests with large networks of components will be performed and more advances query capabilities for the service will be explored.</p>
+
+<p>Technologies involved:  C++, Python, Qt</p>
+
+<p>Mentor: Luis J. Manso
+Backup mentor: Marco A. Gutiérrez</p>
+
+<h2 id="a-new-graphical-tool-for-deploying-components">7. A new graphical tool for deploying components</h2>
+
+<p>Building on the existing python-based Manager tool in RoboComp, this activity will improve the current Python based design with more features. The new tool will facilitate the creation and modification of deployment files and will allow a much better access to the management interfaces of the componets. It will be based on Qt’s Graphics View Framework. With this new tool we expect that larger component networks with more than 50 componentes, will be easy to deploy and monitor at run time.
+The current tool, Manager, reads an XML file with a description of all components involved in the deployment, their localization (IP and port) and configuration parameters. With this information the program starts all the processes and detaches from them once they are up and safe. From there on, the program’s UI displays a graph of the running components, their dependencies and some basic information about them. 
+We would like to improve this program in several ways:</p>
+
+<ul>
+  <li>Add a tools palette in the UI so new components can be created and dragged to the central canvas. Once there the XML file will be updated. Also, the components could be interconnected by the user as long as some basic syntactic and semantic rules are obeyed.</li>
+  <li>Add a new panel in the UI to allow the user to communicate with the components through the existing CommonBehavior interface. This interfaces is created for all components and provides a common way to query their running status, memory use, iteration main period, pause, resume, abort and to change in line some of the configuration parameters.</li>
+</ul>
+
+<p>Technologies involved:  Python, PySide, Qt</p>
+
+<p>Mentor: Pablo Bustos
+Backup mentor: Luis J. Manso</p>
+
+<h2 id="port-of-robocomps-math-library-qmat-to-eigen3">8. Port of RoboComp’s math library, QMat, to Eigen3</h2>
+<p>Long before Eigen was out there we wrote QMat, a linear algebra library written as a wrapper to other existing math libraries such as IPP or GSL or even our own code. QMat has a lot o nice methods and functions that we have written as we needed them and that are specially suited for our other core library InnerModel. InnerModel is class that holds and allows access to the kinematic tree used by most of the components in RoboComp. This tree represents the state of the robot and the world perceived by it. It can be displayed in 3D using OpenSceneGraph (see activity 11) and used to perform many importan calculations in robotics.
+In this activiy We would like to:</p>
+
+<ul>
+  <li>port QMat to Eigen</li>
+  <li>write a QMat/InnerModel without dependencies of RoboComp and that can be used as an independent piece of code for kinematic representations and calculations.</li>
+</ul>
+
+<p>Technologies involved:  C++, Eigen</p>
+
+<p>Mentor: Luis J. Manso
+Backup mentor: Pablo Bustos</p>
+
+<h2 id="and-finally-some-work-on-computer-vision-and-3d-graphics">And finally, some work on computer vision and 3D graphics</h2>
+
+<h2 id="object-detection-for-simulated-environments">9. Object detection for simulated environments</h2>
+
+<p>We have several algorithms that are trained with information from real environments. Making this algorithms work in our simulation environment is not the straightforward task it should be. We would like to have a tool that takes as input several 3D objects and generates the infrastructure needed to train these algorithms. As an example provided to users different algorithms must be trained so their effectivity can be tested with the robocomp simulation environment. Development of some Neural Networks Structures might be required to improve the algorithms results.</p>
+
+<p><em>Technologies involved: CNN, C++</em></p>
+
+<p>Mentors: Ramón Cintas, Felilpe Cid</p>
+
+<p>Backup Mentors: Marco A. Gutiérrez</p>
+
+<h2 id="computer-vision-components-and-integration-with-opendetection">10. Computer vision components and integration with openDetection</h2>
+
+<p>Open Detection is a library developed by a student during GSoC 2015. The idea was to develop a library to ease the development of computer vision tasks such as object recognition. This library is now a stand alone project but in robocomp we would like to keep a link with it and have some examples integrated in our components structure. An automated integration of this library should be performed such as it becomes transparent for the robocomp user. Also several components should be developed making use of the main features of this library so the computer vision algorithms from Open Detection can be used through different components interfaces.</p>
+
+<p>Along with this some extra components will be required to be developed as an abstraction for the main features of other Computer Vision Libraries such as OpenCV and the Point Cloud Library.</p>
+
+<p><em>Technologies involved:  C++, OpenCV, Pointcloud Library, cmake</em></p>
+
+<p>Mentor: Kripasindhu Sarkar</p>
+
+<p>Backup mentor: Marco A. Gutiérrez</p>
+
+<h2 id="d-visualization-of-internal-structures-in-real-time">11. 3D visualization of internal structures in real time</h2>
+
+<p>Current Model graphs used in RoboComp mainly for cognitive world modeling are not clear to understand, especially when they are big, which they usually are. Making these graphs easier to read and their information easier to access is a key task that will ease the task of debugging and understanding these graphs and in consequence a robot’s mind. Specific research and tests with roboticists should be performed in order to find a way of displaying this information that helps anyone understand the whole graph. Once specific key assets are detected they should be implemented one by one  and properly tested with some roboticists to ensure they are widely accepted as a proper enhancement. Several of these features should be developed until the graph becomes easily readable and can be easily managed through the graphical interface provided in robocomp.</p>
+
+<p><em>Techonolgies involved: python, Qt5, OSG, Active grammar-based Modeling (AGM)</em></p>
+
+<p>Mentors: Luis J. Manso, Pablo Bustos</p>
+
+<p>Backup mentor: Ramon Cintas, Marco A. Gutiérrez</p>
+
+<h2 id="gazebo-robocomp-integration">12. Gazebo-RoboComp integration</h2>
+
+<p>Currently RoboComps uses a lightweight non-physics simulator based on OpenSceneGraph. In order to work on more demanding robots such as hexapods and drones we need to write an adpatation layer to a physics-based simulator like Gazebo. The idea is to write a set of plugins for Gazebo, each one providing one or several of the RoboComp low-level hardware interfaces. To test the new functionality, two controllers will be written for two robots in the lab, one for a Phantom X Hexapod  and one for a Parrot drone.</p>
+
+<p><em>Techonologies involved: C++, Gazebo, RoboComp</em></p>
+
+<p>Mentors: Pablo Bustos, Luis Manso</p>
+
+<p>Backup mentor: Ramon Cintas</p>
+
+<h2 id="robocomp-and-rtab-map-integration">12. RoboComp and RTAB-Map Integration</h2>
+
+<p>The main objective of the proposal is to successfully incorporate within the RoboComp robotic framework RGB-D localization and mapping capabilities. Concretely, the proposal would take advantage of RTAB-Map (Real-Time Appearance-Based Mapping), a RGB-D Graph-Based SLAM solution. Taking into account that both RoboComp and RTAB-Map are coded in C++ and well documented, GSoC students are expected to carry out the integration after a small documentation stage with no explicit cross-platform drawbacks. RTAB-Map has been properly integrated in ROS, which can also serve as a reference for students.
+Objectives of the proposal
+Among all the functionalities offered by RTAB-Map, we are mainly interested on the mapping and localization based on RGB-D sensors such as Microsoft Kinect or Asus XTion. Generated maps should be stored using the file format of the Point Cloud Library, which would facilitate further developments relying on such interesting library including segmentation and recognition based on 3D features. Moreover, generated maps may serve for the generation of synthetic environments for the RCIS simulator. This process would allow RoboComp developers to perform more realistic simulations using scenes fully connected to real-world.</p>
+
+<p><strong>Expected results</strong>
+- Generation of RGB-D mapping RoboComp components 
+- Generation of RGB-D localization RoboComp components
+- Generation of maps stored in the PCL file format
+- Export RGB-D maps perceived in real-world to simulated RSIM environments.</p>
+
+<p><strong>Further developments</strong>
+While RTAB-Map algorithms mainly rely on visual descriptors, namely SIFT and SURF, this solution could be extended to include within its pipeline several 3D features already implemented in the PCL, such as SHOT or FPFH. This novelty would allow the SLAM algorithms to properly work under challenging situations with poor or even lack of illumination.
+Students desired skills
+- C++ programming
+- Localization and mapping
+- 3D graphics toolkits 
+- 3D processing libraries
+- RPC frameworks</p>
+
+<p><strong>Useful links</strong>
+RoboComp: https://github.com/robocomp/robocomp
+RTAB-MAP:http://introlab.github.io/rtabmap/
+Point Cloud Library (PCL): http://pointclouds.org/
+ICE:https://zeroc.com/products/ice
+Open Scene Graph: http://www.openscenegraph.org/</p>
+
+<p>Mentors: Jesús Martínez, Cristina Romero</p>
+
+<p>Backup mentor: Ismael García-Varea</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/website/2015/08/21/nithin11/">
         Packaging FCL and libccd
       </a>
@@ -158,36 +352,30 @@
 
 <p>Now lets assume that you are going to upload the package for the first time into a ppa.</p>
 
-<h3>Creating source package</h3>
+<p>###Creating source package
+* Rename  the source directory into <project_name>-<version> eg libccd-2.01
+* Crate a .tar.gz compressed file of the source directory, and place it outside source directory
+* Rename the compressed file into <project_name>_<version>.orig.tar.gz
+* Now run `debuild  -k<gpg_key> -S -sa ` if you want to include the whole source tar in upload
+* Or run `debuild  -k<gpg_key> -S -sd ` if you don't want to include the whole source tar in upload</gpg_key></gpg_key></version></project_name></version></project_name></p>
 
-<ul>
-<li>Rename  the source directory into <project_name>-<version> eg libccd-2.01</li>
-<li>Crate a .tar.gz compressed file of the source directory, and place it outside source directory</li>
-<li>Rename the compressed file into <project_name>_<version>.orig.tar.gz</li>
-<li>Now run <code>debuild  -k&lt;gpg_key&gt; -S -sa</code> if you want to include the whole source tar in upload</li>
-<li>Or run <code>debuild  -k&lt;gpg_key&gt; -S -sd</code> if you don&#39;t want to include the whole source tar in upload</li>
-</ul>
+<p>###So when should you upload the source? 
+when you are uploading for the first time (obviously) and whenever you make some changes to your source code. but as launchpad wont allow files with same name, you should increase your version number so that the source tar get a new name. For increasing the version number you should increase it in changelog for example in this case <code class="highlighter-rouge">fcl (1.0-0ppa0) vivid; urgency=low</code> increase 1.0-0ppa0 to 1.1-0ppa0 also remember to rename all names accordingly (source folder and source tar)</p>
 
-<h3>So when should you upload the source?</h3>
+<p>but if you have only changed some file in the debian directory. For example, edited changelog or added a dependency. In those cases you can skip the source upload but in such cases you have to increase your ppa number in your changelog  for example in this line  <code class="highlighter-rouge">fcl (1.0-0ppa0) vivid; urgency=low</code> change 0ppa0 to 0ppa1.</p>
 
-<p>when you are uploading for the first time (obviously) and whenever you make some changes to your source code. but as launchpad wont allow files with same name, you should increase your version number so that the source tar get a new name. For increasing the version number you should increase it in changelog for example in this case <code>fcl (1.0-0ppa0) vivid; urgency=low</code> increase 1.0-0ppa0 to 1.1-0ppa0 also remember to rename all names accordingly (source folder and source tar)</p>
+<p>###uploading
+Now once you have generated the .source_changes file use dput to upload</p>
 
-<p>but if you have only changed some file in the debian directory. For example, edited changelog or added a dependency. In those cases you can skip the source upload but in such cases you have to increase your ppa number in your changelog  for example in this line  <code>fcl (1.0-0ppa0) vivid; urgency=low</code> change 0ppa0 to 0ppa1.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>dput ppa:&lt;your-lp-id&gt;/&lt;name&gt; &lt;file_name&gt;.source_changes
+</code></pre>
+</div>
 
-<h3>uploading</h3>
+<p>###NB
+* if you want to add any dependency, edit the file debian/control add add it to <code class="highlighter-rouge">Depends</code> or <code class="highlighter-rouge">Build-Depends</code> field
+* if you want to change the target generation , edit the distribution name in first line of debian/changelog</p>
 
-<p>Now once you have generated the .source_changes file use dput to upload </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">dput ppa:&lt;your-lp-id&gt;/&lt;name&gt; &lt;file_name&gt;.source_changes
-</code></pre></div>
-<h3>NB</h3>
-
-<ul>
-<li>if you want to add any dependency, edit the file debian/control add add it to <code>Depends</code> or <code>Build-Depends</code> field</li>
-<li>if you want to change the target generation , edit the distribution name in first line of debian/changelog</li>
-</ul>
-
-<hr>
-
+<hr />
 <p>Nithin Murali</p>
 
   </div>
@@ -221,8 +409,7 @@
 
 <p>Future : I will be writing starter components for each of the available interface so that a new user can easily get started. After having executed most of the already available components in the robocomp organization, In the coming days I will be working on components using PCL and explore other possibilities with the framework. It has been a great learning experience so far and I am hungry for more. Cheers!</p>
 
-<hr>
-
+<hr />
 <p>Rajath Kumar M.P</p>
 
   </div>
@@ -236,31 +423,32 @@
 
     <span class="post-date">20 Aug 2015</span>
 
-    <p><strong>Grasping object</strong> : This post will describe the planning system that implements Robocomp in order to provide to the robot a full functionality. In order for a robot be able to carry out a mission as &quot;take the cup from the table and take it to the kitchen,&quot; it needs something that in robotics calls <code>planner</code>. In this post we move away the issue of inverse kinematics and we dive into the field of artificial intelligence, making a slight revision of existing planners and delving into the planner using robocomp.</p>
+    <p><strong>Grasping object</strong> : This post will describe the planning system that implements Robocomp in order to provide to the robot a full functionality. In order for a robot be able to carry out a mission as “take the cup from the table and take it to the kitchen,” it needs something that in robotics calls <code class="highlighter-rouge">planner</code>. In this post we move away the issue of inverse kinematics and we dive into the field of artificial intelligence, making a slight revision of existing planners and delving into the planner using robocomp.</p>
 
-<h3>Planning</h3>
+<p>###Planning</p>
 
 <p>As the name suggests, the planning is to generate plans. Plans to be executed by a robot in order to reach a goal. These objectives are often complex and require the execution of a series of steps that must be organized in the best possible manner to achieve the objective with an effort and within a reasonable time.</p>
 
-<p>In order for a planner can build a series of plans, it needs an initial state of the world, a desired end state (or several) and a set of rules. For example, take the objective of frying an egg. We start with an initial world consisting of a kitchen with the necessary elements: an egg with a dozen eggs, a can of oil, a frying pan, a slotted spoon, a plate and a stove. And we have a set of rules, like <code>to pour oil</code>, <code>to water plants</code>, <code>to crack egg</code>, <code>to stir</code>, <code>to serve</code>, <code>to light fire</code> and <code>to put the fire out</code>. The duty of the planner is to select and order those rules that allow us to go from the initial state of the world (with raw eggs) to the final state in which a fried egg is served  on a plate. Thus, the planner would eliminate the rule of &quot;to water plants&quot;, and would order the rest of rules as follows:</p>
+<p>In order for a planner can build a series of plans, it needs an initial state of the world, a desired end state (or several) and a set of rules. For example, take the objective of frying an egg. We start with an initial world consisting of a kitchen with the necessary elements: an egg with a dozen eggs, a can of oil, a frying pan, a slotted spoon, a plate and a stove. And we have a set of rules, like <code class="highlighter-rouge">to pour oil</code>, <code class="highlighter-rouge">to water plants</code>, <code class="highlighter-rouge">to crack egg</code>, <code class="highlighter-rouge">to stir</code>, <code class="highlighter-rouge">to serve</code>, <code class="highlighter-rouge">to light fire</code> and <code class="highlighter-rouge">to put the fire out</code>. The duty of the planner is to select and order those rules that allow us to go from the initial state of the world (with raw eggs) to the final state in which a fried egg is served  on a plate. Thus, the planner would eliminate the rule of “to water plants”, and would order the rest of rules as follows:</p>
 
 <ol>
-<li><code>to light fire</code>: in order to light the stove.</li>
-<li><code>to pour oil</code>: to pour oil into the pan</li>
-<li><code>to crack egg</code>: to crack the egg and throw it into the pan</li>
-<li><code>to stir</code>: to catch the slotted spoon and to go stirring the oil for frying the egg well.</li>
-<li><code>to put the fire out</code>: when the egg is fried the stove is turned off.</li>
-<li><code>to serve</code>: to serve the fried egg on the plate</li>
+  <li><code class="highlighter-rouge">to light fire</code>: in order to light the stove.</li>
+  <li><code class="highlighter-rouge">to pour oil</code>: to pour oil into the pan</li>
+  <li><code class="highlighter-rouge">to crack egg</code>: to crack the egg and throw it into the pan</li>
+  <li><code class="highlighter-rouge">to stir</code>: to catch the slotted spoon and to go stirring the oil for frying the egg well.</li>
+  <li><code class="highlighter-rouge">to put the fire out</code>: when the egg is fried the stove is turned off.</li>
+  <li><code class="highlighter-rouge">to serve</code>: to serve the fried egg on the plate</li>
 </ol>
 
-<p>With these steps (very simplified) we get that our robot prepares us a fried egg... Although the example is miserable, we can see that any action we do and that we find it easy to execute, for a robot is quite complicated. That is why planning is a very complex field of artificial intelligence.</p>
+<p>With these steps (very simplified) we get that our robot prepares us a fried egg… Although the example is miserable, we can see that any action we do and that we find it easy to execute, for a robot is quite complicated. That is why planning is a very complex field of artificial intelligence.</p>
 
-<h3>Planning Domain Definition Language (PDDL)</h3>
+<p>###Planning Domain Definition Language (PDDL)</p>
 
-<p>This section will introduce the reader slightly in the planning language more used in artificial intelligence: PDDL. It was created in 1998 by Drew McDermott and his team for use in that year&#39;s edition of International Planning Competition. The aim of PDDL is to standardize the planning languages for greater reuse of planning domains. Its operation is relatively simple:</p>
+<p>This section will introduce the reader slightly in the planning language more used in artificial intelligence: PDDL. It was created in 1998 by Drew McDermott and his team for use in that year’s edition of International Planning Competition. The aim of PDDL is to standardize the planning languages for greater reuse of planning domains. Its operation is relatively simple:</p>
 
-<p>Take for example, the following domain to create geometric shapes: We presume that in our initial world there is always a vertex node. The rules increase the number of vertices nodes to create geometric identities. For example, the <code>segment</code> rule creates from the initial node a line segment, the rule <code>triangle</code> creates from the line segment an equilateral triangle, the rule &quot;square&quot; creates from the equilateral triangle a square... and so on until an octagon. In the PDDL file, the rules would be:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">(define (domain AGGL)
+<p>Take for example, the following domain to create geometric shapes: We presume that in our initial world there is always a vertex node. The rules increase the number of vertices nodes to create geometric identities. For example, the <code class="highlighter-rouge">segment</code> rule creates from the initial node a line segment, the rule <code class="highlighter-rouge">triangle</code> creates from the line segment an equilateral triangle, the rule “square” creates from the equilateral triangle a square… and so on until an octagon. In the PDDL file, the rules would be:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(define (domain AGGL)
 (:predicates
             (firstunknown ?u)
             (unknownorder ?ua ?ub)
@@ -269,7 +457,7 @@
             (isB ?n)
             (isC ?n)
             (isD ?n)
-
+            
             (union ?u ?v) # TWO NODES ?u AND ?v are united?
     )
 
@@ -298,9 +486,12 @@
             )
     )
   )
-</code></pre></div>
-<p>To represent the initial world from which we start and the final world that we want to go, we should implement a file like this: </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">(define (problem myProblemPDDL)
+</code></pre>
+</div>
+
+<p>To represent the initial world from which we start and the final world that we want to go, we should implement a file like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(define (problem myProblemPDDL)
 
     (:domain AGGL ) # planning domain ---&gt; set of rules
     (:objects
@@ -336,15 +527,18 @@
     )
     (:metric minimize (total-cost))
   )
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>This language proves to be relatively intuitive, easy to develop and test. However, in Robocomp we opted to do our own planning language: AGM.</p>
 
-<h3>Active Grammar-based Modeling</h3>
+<p>###Active Grammar-based Modeling</p>
 
-<p>AGM is the result of Luis Manso&#39;s PhD thesis that &quot;dealt with making software systems for robots more scalable, flexible and easier to develop using software engineering for robotics [...] and enhancing active perception in robots using a grammar-based technique named active grammar-based modeling and a specially tailored novelty-detection algorithm named cognitive subtraction&quot;<a href="http://ljmanso.com/thesis.php">1</a>. To not extend much this post, you can check the working of the AGM on its <a href="http://ljmanso.com/agm/">official website</a>. We will target only that AGM proves to be a useful graphical tool to program rules and  to test domains and problems, and its grammar has a reminiscent of the PDDL language (has a AGM to PDDL converter). Let&#39;s look at the same example as before but now in AGM:</p>
+<p>AGM is the result of Luis Manso’s PhD thesis that “dealt with making software systems for robots more scalable, flexible and easier to develop using software engineering for robotics […] and enhancing active perception in robots using a grammar-based technique named active grammar-based modeling and a specially tailored novelty-detection algorithm named cognitive subtraction”<a href="http://ljmanso.com/thesis.php">1</a>. To not extend much this post, you can check the working of the AGM on its <a href="http://ljmanso.com/agm/">official website</a>. We will target only that AGM proves to be a useful graphical tool to program rules and  to test domains and problems, and its grammar has a reminiscent of the PDDL language (has a AGM to PDDL converter). Let’s look at the same example as before but now in AGM:</p>
 
 <p>This would be the set of rules in a .aggl file:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">// START OF THE FILE:
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// START OF THE FILE:
 segment : active(1)
 {
     {
@@ -398,47 +592,56 @@ square : active(1)
             d-&gt;a(union)
     }
 }
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>The initial world model is stored in a xml file:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;AGMModel&gt;
-    &lt;symbol id=&quot;1&quot; type=&quot;A&quot; /&gt;  #There is only a vertex node (symbol) with the identifier &quot;1&quot; and te type &quot;A&quot;
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;AGMModel&gt;
+    &lt;symbol id="1" type="A" /&gt;  #There is only a vertex node (symbol) with the identifier "1" and te type "A"
 &lt;/AGMModel&gt;
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>The goal or target world is stored in another xml file:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;AGMModel&gt;
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;AGMModel&gt;
     # NODES:
-    &lt;symbol id=&quot;a&quot; type=&quot;A&quot; /&gt;
-    &lt;symbol id=&quot;b&quot; type=&quot;B&quot; /&gt;
-    &lt;symbol id=&quot;c&quot; type=&quot;C&quot; /&gt;
-    &lt;symbol id=&quot;d&quot; type=&quot;D&quot; /&gt;
+    &lt;symbol id="a" type="A" /&gt;
+    &lt;symbol id="b" type="B" /&gt;
+    &lt;symbol id="c" type="C" /&gt;
+    &lt;symbol id="d" type="D" /&gt;
     # LINKS BETWEEN NODES (RELATIONSHIPS)
-    &lt;link src=&quot;a&quot; dst=&quot;b&quot; label=&quot;union&quot; /&gt;
-    &lt;link src=&quot;b&quot; dst=&quot;c&quot; label=&quot;union&quot; /&gt;
-    &lt;link src=&quot;c&quot; dst=&quot;d&quot; label=&quot;union&quot; /&gt;
-    &lt;link src=&quot;d&quot; dst=&quot;a&quot; label=&quot;union&quot; /&gt;
+    &lt;link src="a" dst="b" label="union" /&gt;
+    &lt;link src="b" dst="c" label="union" /&gt;
+    &lt;link src="c" dst="d" label="union" /&gt;
+    &lt;link src="d" dst="a" label="union" /&gt;
 &lt;/AGMModel&gt;
-</code></pre></div>
-<h3>Component architecture</h3>
+</code></pre>
+</div>
+
+<p>###Component architecture</p>
 
 <p>Explained more or less the planners, we will explain the architecture of components developed by robocomp for the robot to be able to carry out actions. Oversimplifying the question in order to that the reader make a clear idea of how the architecture works, we can say that this architecture is divided into three levels:</p>
 
-<p><img src="https://github.com/mercedes92/VisualIKExperiment/blob/master/images/Arquitectura.png?raw=true" alt="Alt text"></p>
+<p><img src="https://github.com/mercedes92/VisualIKExperiment/blob/master/images/Arquitectura.png?raw=true" alt="Alt text" /></p>
 
 <ol>
-<li>First we need a problem domain (a set of rules), like problems in a home environment and a representation of the environment (a model of the robot and its environment).</li>
-<li>In the top we have the AGM planner. Given an initial world and an objective world, it is in charge of generating a plan to reach the goal with the domain defined.</li>
-<li>In the second label, we have a special component, the <code>executive</code>. Basically he is responsible for transmitting the plan generated by the planner to the lower components. These components perform their actions and alter the representation of the environment. so the executive will have to call the scheduler to verify that these changes on the environment are correct and possible. If the changes are verified, the executive will update the representation.</li>
-<li>In the third label we have the agent components. These are the components that receive the orders of the executive. They uses the operations of the lower component to change the representation. When they finish their execution, they publish the changes in order to be analyzed by the executive.</li>
-<li>In the botton we have the basic components. They are those who perform basic calculations. For example, our <code>inversekinematic</code> component, our <code>visualik</code> component and our <code>ikGraphGenerator</code> component are in this level.</li>
+  <li>First we need a problem domain (a set of rules), like problems in a home environment and a representation of the environment (a model of the robot and its environment).</li>
+  <li>In the top we have the AGM planner. Given an initial world and an objective world, it is in charge of generating a plan to reach the goal with the domain defined.</li>
+  <li>In the second label, we have a special component, the <code class="highlighter-rouge">executive</code>. Basically he is responsible for transmitting the plan generated by the planner to the lower components. These components perform their actions and alter the representation of the environment. so the executive will have to call the scheduler to verify that these changes on the environment are correct and possible. If the changes are verified, the executive will update the representation.</li>
+  <li>In the third label we have the agent components. These are the components that receive the orders of the executive. They uses the operations of the lower component to change the representation. When they finish their execution, they publish the changes in order to be analyzed by the executive.</li>
+  <li>In the botton we have the basic components. They are those who perform basic calculations. For example, our <code class="highlighter-rouge">inversekinematic</code> component, our <code class="highlighter-rouge">visualik</code> component and our <code class="highlighter-rouge">ikGraphGenerator</code> component are in this level.</li>
 </ol>
 
-<p>So the challenge that we have to complete is to create an agent that uses our three inverse kinematics components in order to reach a goal: that the robot take a cup. This component is called <code>graspingAgent</code> and is currently being developed by the laboratory. I would like to delve into its operation, but we still needs to implement many things and GSoC is coming to an end :(</p>
+<p>So the challenge that we have to complete is to create an agent that uses our three inverse kinematics components in order to reach a goal: that the robot take a cup. This component is called <code class="highlighter-rouge">graspingAgent</code> and is currently being developed by the laboratory. I would like to delve into its operation, but we still needs to implement many things and GSoC is coming to an end :(</p>
 
-<p>It&#39;s a shame to have to say goodbye with the work so close to being finished. But it doesn&#39;t matters, the next year the robot will be serving coffee to Robolab guys XD.</p>
+<p>It’s a shame to have to say goodbye with the work so close to being finished. But it doesn’t matters, the next year the robot will be serving coffee to Robolab guys XD.</p>
 
 <p>Bye!</p>
 
-<p><img src="http://photos.gograph.com/thumbs/CSP/CSP705/k24410287.jpg" alt="Alt text"></p>
+<p><img src="http://photos.gograph.com/thumbs/CSP/CSP705/k24410287.jpg" alt="Alt text" /></p>
+
 
   </div>
   
@@ -452,80 +655,37 @@ square : active(1)
     <span class="post-date">19 Aug 2015</span>
 
     <p><strong>Experience</strong> 
-It has been a quite a ride through this Google Summer of Code. Writing a completely new library with complete building framework/rest framework for documentation or tutorial/and Doxygen framework for auto documentation-class diagrams was challenging. It was equally exciting as well. Because of this I believe that I have acquired quite a good &#39;library maintainer/admin&#39; skills. I will continue contributing into this library after the finish of this GSoC.</p>
+It has been a quite a ride through this Google Summer of Code. Writing a completely new library with complete building framework/rest framework for documentation or tutorial/and Doxygen framework for auto documentation-class diagrams was challenging. It was equally exciting as well. Because of this I believe that I have acquired quite a good ‘library maintainer/admin’ skills. I will continue contributing into this library after the finish of this GSoC.</p>
 
-<p>After the challenges in building library support tools, the next major challenge was library design. Since, there was no previous &#39;coding flavor/design&#39; I had to come up with the polymorphic and repeatable class design. There was so much confusion in choosing one alternative among the so many choices of good design. While the progress of the library I had to redesign the framework, and and remove structures, include namespaces and several things. I initially had thought that the design will be pretty much stable after the first month, which was not true. I still feel that the main design may need to be changed in the future to have a more logical structure. I hope this constant effort of keeping a good design will be helpful for the library users, and in the end, won&#39;t end up with an unstructured library like OpenCV. In the future I&#39;ll always keep an eye open for the design in general. </p>
+<p>After the challenges in building library support tools, the next major challenge was library design. Since, there was no previous ‘coding flavor/design’ I had to come up with the polymorphic and repeatable class design. There was so much confusion in choosing one alternative among the so many choices of good design. While the progress of the library I had to redesign the framework, and and remove structures, include namespaces and several things. I initially had thought that the design will be pretty much stable after the first month, which was not true. I still feel that the main design may need to be changed in the future to have a more logical structure. I hope this constant effort of keeping a good design will be helpful for the library users, and in the end, won’t end up with an unstructured library like OpenCV. In the future I’ll always keep an eye open for the design in general.</p>
 
-<p>Now coming to the actual work of implementing different algorithm, I had really good experience in getting my hands dirty with variety of popular object detection methods. This was exactly what I had thought from this project. Taking out three months and working on the popular methods of your research topic is probably important and I hope that I&#39;ll make a good us of this in the future.</p>
+<p>Now coming to the actual work of implementing different algorithm, I had really good experience in getting my hands dirty with variety of popular object detection methods. This was exactly what I had thought from this project. Taking out three months and working on the popular methods of your research topic is probably important and I hope that I’ll make a good us of this in the future.</p>
 
 <p><strong>Learning</strong> 
-Here I&#39;ll point out some of the tools and resources I have used while building the library.</p>
+Here I’ll point out some of the tools and resources I have used while building the library.</p>
 
-<h4>CMake building framework:</h4>
+<p>####CMake building framework:
+I read and used ideas from the CMakeLists files of <strong>VTK, pcl</strong> and <strong>OpenCV</strong> (not that much); and chose stuffs among them depending what I thought was interesting and also modified them according to my needs. But in general, I used PCL cmake framework as my major reference.</p>
 
-<p>I read and used ideas from the CMakeLists files of <strong>VTK, pcl</strong> and <strong>OpenCV</strong> (not that much); and chose stuffs among them depending what I thought was interesting and also modified them according to my needs. But in general, I used PCL cmake framework as my major reference.</p>
+<p>####Library design:
+I have always found the design of <strong>VTK</strong>, beautiful; so chose it to get the polymorphic design of the classes. Even though fully templated policy based design is faster than polymorphic classes, I chose the polymorphic one as it gives way more flexibility without cluttering the design (ideas taken from vtk). I still am not sure if the performance loss through this design will affect in the future.</p>
 
-<h4>Library design:</h4>
-
-<p>I have always found the design of <strong>VTK</strong>, beautiful; so chose it to get the polymorphic design of the classes. Even though fully templated policy based design is faster than polymorphic classes, I chose the polymorphic one as it gives way more flexibility without cluttering the design (ideas taken from vtk). I still am not sure if the performance loss through this design will affect in the future. </p>
-
-<h4>Algorithms:</h4>
-
-<p>I had a good background in PCL, so Point Cloud based detection was not difficult and used their wonderful 3d<em>recognition</em>framework in my backend. Detection based on 2D features is my own contribution and other 2D global detectors (like HOG) was pretty straightforward from OpenCV. 
+<p>####Algorithms:
+I had a good background in PCL, so Point Cloud based detection was not difficult and used their wonderful 3d_recognition_framework in my backend. Detection based on 2D features is my own contribution and other 2D global detectors (like HOG) was pretty straightforward from OpenCV. 
 One good learning was the implementation of HOG Trainer which I worked on few open source code and modified them according to my own needs (like hard negative training etc).</p>
 
-<h2>Future</h2>
-
-<p>This project does not ends with the end of GSoC. I plan to do the following in the short term future:</p>
-
-<ul>
-<li>Host a website as a homepage and links to documentation/tutorials etc.</li>
-<li>Identify how is the website automatically updated with a push in previous libraries like PCL etc. They probably use some demon which runs everyday. Learn and implement it.</li>
-<li>Improve the documentations, write some descriptive tutorials. </li>
-<li>Properly launch the library, with its website; first among the colleagues of our lab; then in public blogs.</li>
-</ul>
-
-<hr>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/website/2015/08/19/kripasindhu_sarkar_blog_3/">
-        GSoC, Computer vision components and libraries management - Open Detction <p>#3</p>
-      </a>
-    </h1>
-
-    <span class="post-date">19 Aug 2015</span>
-
-    <p><strong>Contributions after Mid-term</strong>
-Following are the contributions towards the project <em>after</em> the mid-term evaluations:</p>
+<p>##Future
+This project does not ends with the end of GSoC. I plan to do the following in the short term future:</p>
 
 <ul>
-<li><p>HOG based detection (with demo).</p></li>
-<li><p>Face-recognition: training as well as recognition (with demo).</p></li>
-<li><p>Cascade based detection (with demo).</p></li>
-<li><p>Functionality for confidence in a detection (to handle uncertainty).</p></li>
+  <li>Host a website as a homepage and links to documentation/tutorials etc.</li>
+  <li>Identify how is the website automatically updated with a push in previous libraries like PCL etc. They probably use some demon which runs everyday. Learn and implement it.</li>
+  <li>Improve the documentations, write some descriptive tutorials.</li>
+  <li>Properly launch the library, with its website; first among the colleagues of our lab; then in public blogs.</li>
 </ul>
 
-<p>That concluded the functionality of whatever planned for this summer of code. Other than the planned work, I included some other new functionality which came in between and I thought was required. The other additions are: </p>
+<hr />
 
-<ul>
-<li><p>Addition of two types of detection functions for every detection class. </p>
-
-<p>a. <em>detectOmni</em> : This is the function whose purpose is to detect an object in an entire scene. Thus, other than the type of detection we also have information about the <em>location</em> of the detection w.r.t. the scene. This was the only function previously implemented.</p>
-
-<p>b. <em>detect</em> : The purpose of this function is to perform detection on a segmented scene or an &#39;object candidate&#39;. i.e. the entire scene is considered as an &#39;object&#39; or an detection. This function was an extra addition for most of the classes. For global descriptor based classes like ODHOGDetector this function came very naturally.</p></li>
-<li><p><strong>Standardized the training database</strong>:. Each detection class identifies its own database (which is a unique folder as of now). Training data of all classes are now put together under a single &#39;trained_data&#39; directory and the rest is resolved by the class automatically.</p></li>
-<li><p>The class <strong>ODDetectorMultiAlgo</strong>: This is one of the most interesting class and interesting contribution in this project. The idea is to run multiple detection algorithm on a same segmented or unsegmented scene (i.e. run both <em>detect</em> and <em>detectOmni</em> function) and provide the result. That is, using this class one can do object detection/recognition using multiple algorithms and provide outcome of detections (eg. people detected by HOG, face detected by Cascade, bottle detected PnPRansac in a same image). Because of the nice polymorphic design of the detection classes, one can use the concept easily with any number of detection classes with their own parameters, but with <em>ODDetectorMultiAlgo</em> one can only take benefit of the default parameters of the included classes.</p></li>
-<li><p>HOG training: There are no standard training module for training HOG (in OpenCV or in other standard library) and people are mostly confused in training svm with the HOG detector available from OpenCV. This formed a motivation for completing the HOG pipeline and provide a training module. The crucial contribution includes <em>hard negative</em> training mode where the training is repeated with hard examples or false positive windows as negative windows. I hope that this will be really a helpful contribution for the computer vision community. </p></li>
-</ul>
-
-<h2>Design changes, learning resources, and overall learning experiences:</h2>
-
-<p>In the next blog I&#39;ll add the different sources I used to design and implement the above tasks and the things I learnt in this process. </p>
-
-<hr>
 
   </div>
   

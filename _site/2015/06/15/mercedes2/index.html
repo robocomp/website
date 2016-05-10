@@ -141,70 +141,80 @@
       <div class="post">
   <h1 class="post-title"><i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#2</p>, Inverse Kinematics</h1>
   <span class="post-date">15 Jun 2015</span>
-  <p><strong>What is inverse kinematics?</strong> : In this second post, although it may seem begin the house from the roof, let&#39;s talk about how a robot moves its arms and hands in order to manipulate daily objects.</p>
+  <p><strong>What is inverse kinematics?</strong> : In this second post, although it may seem begin the house from the roof, let’s talk about how a robot moves its arms and hands in order to manipulate daily objects.</p>
 
 <p>The ultimate goal of this work is make the robot to be able to recognize certain daily objects in a house (for example a mug), and to manipulate these objects with its effectors (hands). To do this, one of the things we need to implement is the inverse kinematics of the robot. Although this is the last step, we start by inverse kinematics to be easier and more intuitive than object recognition (besides that we have almost finalized the cinematic component in Robocomp).</p>
 
-<h3>What does the inverse kinematics?</h3>
+<p>###What does the inverse kinematics?</p>
 
-<p>A recurring problem in robotics is to give to robots a certain autonomy in terms of movement. Focusing on a practical and realistic example, as is the trajectory of a robotic arm from an initial position to a target point, the question is how does the robot move its arm from the starting pose to the final pose? or what values take its engines arm to reach the final position? This is the typical problem of inverse kinematics, which is responsible for calculating the angular values of a kinematic chain composed engines (joints) of the arm to reach a target position. </p>
+<p>A recurring problem in robotics is to give to robots a certain autonomy in terms of movement. Focusing on a practical and realistic example, as is the trajectory of a robotic arm from an initial position to a target point, the question is how does the robot move its arm from the starting pose to the final pose? or what values take its engines arm to reach the final position? This is the typical problem of inverse kinematics, which is responsible for calculating the angular values of a kinematic chain composed engines (joints) of the arm to reach a target position.</p>
 
 <p>But before we get down to work, we need to review a few concepts.</p>
 
-<h3>Previous concepts</h3>
+<p>###Previous concepts</p>
 
-<h4>kinematic chains</h4>
+<p>####kinematic chains</p>
 
-<p>The first concept that we should be clear is the <code>kinematic chain</code>. The kinematic chain is a set of elements that produce motion, deforming the chain to adapt it to movement. Kinematic chains are composed of two elements:</p>
+<p>The first concept that we should be clear is the <code class="highlighter-rouge">kinematic chain</code>. The kinematic chain is a set of elements that produce motion, deforming the chain to adapt it to movement. Kinematic chains are composed of two elements:</p>
 
 <ol>
-<li><code>joints</code>: joints or motors that produce the movement. Each joint gives a degree of freedom.</li>
-<li><code>links</code>: rigid segments that connect the joints together.</li>
+  <li><code class="highlighter-rouge">joints</code>: joints or motors that produce the movement. Each joint gives a degree of freedom.</li>
+  <li><code class="highlighter-rouge">links</code>: rigid segments that connect the joints together.</li>
 </ol>
 
 <p>An example of kinematic chain in robotic is the arm of the robot, that is composed by all the motors that the robot has and the segments that connect this motors in order to create the arm form.</p>
 
-<p><img src="http://www.sitenordeste.com/mecanica/images/cadena_cinematica.JPG" alt="Alt text"></p>
+<p><img src="http://www.sitenordeste.com/mecanica/images/cadena_cinematica.JPG" alt="Alt text" /></p>
 
-<h4>Reference systems and Transformation coordinate.</h4>
+<p>####Reference systems and Transformation coordinate.</p>
 
-<p>One of the problems of robot manipulators is to know where their structural elements are arranged in the space in which they move. We therefore need a referral system that puts or position the elements of the robot in the workspace. So, a <code>reference system</code> is a set of agreements or conventions used by an observer to measure positions, rotations and other physical parameters of the system being studied. In our case, the arm of the robot is into the three-dimensional workspace (R³, with the axis X, Y and Z), where each components (for example, each joint) has one traslation (tx, ty, tz) and one rotation (rx, ry, rz). Therefore, the position of each component is given by a vector of six elements: <code>P=[tx, ty, tz,   rx, ry, rz]</code> (the first three translational and three rotational recent). Normally, we represent the poses by homogeneous trasnformation matrices, which are of the form:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">    | R  T |
+<p>One of the problems of robot manipulators is to know where their structural elements are arranged in the space in which they move. We therefore need a referral system that puts or position the elements of the robot in the workspace. So, a <code class="highlighter-rouge">reference system</code> is a set of agreements or conventions used by an observer to measure positions, rotations and other physical parameters of the system being studied. In our case, the arm of the robot is into the three-dimensional workspace (R³, with the axis X, Y and Z), where each components (for example, each joint) has one traslation (tx, ty, tz) and one rotation (rx, ry, rz). Therefore, the position of each component is given by a vector of six elements: <code class="highlighter-rouge">P=[tx, ty, tz,   rx, ry, rz]</code> (the first three translational and three rotational recent). Normally, we represent the poses by homogeneous trasnformation matrices, which are of the form:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    | R  T |
 P = | 0  1 |
-</code></pre></div>
-<p>where <code>R</code> is the rotation matrix and <code>T</code> the traslation coordenates.</p>
+</code></pre>
+</div>
 
-<p>One of the kinematic problems is that each motor (which can be moved and/or rotated with respect to the previous motor of the chain) has his own reference system, so if we want to calculate the position of a particular point or joint, we will have to make a number of changes (<code>transformations</code>) to move from one reference system to another. For example, if we have the newt arm:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">X_1--------------X_2--------X_3-----O
+<p>where <code class="highlighter-rouge">R</code> is the rotation matrix and <code class="highlighter-rouge">T</code> the traslation coordenates.</p>
+
+<p>One of the kinematic problems is that each motor (which can be moved and/or rotated with respect to the previous motor of the chain) has his own reference system, so if we want to calculate the position of a particular point or joint, we will have to make a number of changes (<code class="highlighter-rouge">transformations</code>) to move from one reference system to another. For example, if we have the newt arm:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>X_1--------------X_2--------X_3-----O
        M_1&gt;2          M_2&gt;3    M_3&gt;O
-</code></pre></div>
-<p>where <code>X_n</code> represents the position of the joints, <code>-</code> is the link that connects the joints, <code>o</code> is the end effector of the arm and <code>M_n&gt;m</code> are the transformation matrices to change the reference system n to the system m, and we want to calculate the position of the end effector in the reference system of the joint X_1, we have to calculate this equation:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">Po_inX_1 = M_2&gt;1 * M_3&gt;2 * M_o&gt;3 * Po_inO.
-</code></pre></div>
-<h3>Problems to solve the inverse kinematics.</h3>
+</code></pre>
+</div>
 
-<p>If the forward kinematics is responsible for calculating the position of the end effector in a kinematic chain, given some angular values for the joints, the inverse kinematics is just the opposite: it is responsible for calculating the angle values of the joints so the end effector reaches a position. This last problem is much more difficult to solve. So difficult that we are forced to use generic mathematical methods that try to approach an optimal solution iteratively within a reasonable time. We have opted for an iterative method known as the <code>Levenberg-Marquardt</code> or <code>damped least squares</code> algorithm. This method is used for solving nonlinear least squares problems where a solution to decrease an error function is sought.</p>
+<p>where <code class="highlighter-rouge">X_n</code> represents the position of the joints, <code class="highlighter-rouge">-</code> is the link that connects the joints, <code class="highlighter-rouge">o</code> is the end effector of the arm and <code class="highlighter-rouge">M_n&gt;m</code> are the transformation matrices to change the reference system n to the system m, and we want to calculate the position of the end effector in the reference system of the joint X_1, we have to calculate this equation:</p>
 
-<h3>Inverse kinematics in Robocomp</h3>
+<div class="highlighter-rouge"><pre class="highlight"><code>Po_inX_1 = M_2&gt;1 * M_3&gt;2 * M_o&gt;3 * Po_inO.
+</code></pre>
+</div>
 
-<p>As a result of the TFG, <code>Inverse kinematics in Social Robots</code> [1], since 2014 Robocomp has a component [2] that is responsible for calculating the inverse kinematics of the social robot Ursus [3], developed by Robolab. This component has undergone a big evolution, since it was created last year to now, and is more than likely to continue evolving to achieve inverse kinematics each finer and in less time. </p>
+<p>###Problems to solve the inverse kinematics.</p>
+
+<p>If the forward kinematics is responsible for calculating the position of the end effector in a kinematic chain, given some angular values for the joints, the inverse kinematics is just the opposite: it is responsible for calculating the angle values of the joints so the end effector reaches a position. This last problem is much more difficult to solve. So difficult that we are forced to use generic mathematical methods that try to approach an optimal solution iteratively within a reasonable time. We have opted for an iterative method known as the <code class="highlighter-rouge">Levenberg-Marquardt</code> or <code class="highlighter-rouge">damped least squares</code> algorithm. This method is used for solving nonlinear least squares problems where a solution to decrease an error function is sought.</p>
+
+<p>###Inverse kinematics in Robocomp</p>
+
+<p>As a result of the TFG, <code class="highlighter-rouge">Inverse kinematics in Social Robots</code> [1], since 2014 Robocomp has a component [2] that is responsible for calculating the inverse kinematics of the social robot Ursus [3], developed by Robolab. This component has undergone a big evolution, since it was created last year to now, and is more than likely to continue evolving to achieve inverse kinematics each finer and in less time.</p>
 
 <p>Originally, this component receives three types of targets:</p>
 
 <ol>
-<li>POSE6D: It is the typical target with translations and rotations in the X, Y and Z axis. The end effector has to be positioned at coordinates (tx, ty, tz) of the target and align their rotation axes with the target, specified in (rx, ry, rz).</li>
-<li>ADVANCEAXIS: its goal is to move the end effector of the robot along a vector. This is useful for improving the outcome of the above problem, for example, imagine that the hand has been a bit away from a mug. With this feature we can calculate the error vector between the end effector and the mug, and move the effector along the space to place it in an optimal position, near the mug.</li>
-<li>ALIGNAXIS: Its goal is that the end effector is pointing to target without moving to it but rotated as the target. It may be useful in certain cases where we are more interested in oriented the end effector with the same rotation of the target.</li>
+  <li>POSE6D: It is the typical target with translations and rotations in the X, Y and Z axis. The end effector has to be positioned at coordinates (tx, ty, tz) of the target and align their rotation axes with the target, specified in (rx, ry, rz).</li>
+  <li>ADVANCEAXIS: its goal is to move the end effector of the robot along a vector. This is useful for improving the outcome of the above problem, for example, imagine that the hand has been a bit away from a mug. With this feature we can calculate the error vector between the end effector and the mug, and move the effector along the space to place it in an optimal position, near the mug.</li>
+  <li>ALIGNAXIS: Its goal is that the end effector is pointing to target without moving to it but rotated as the target. It may be useful in certain cases where we are more interested in oriented the end effector with the same rotation of the target.</li>
 </ol>
 
-<p>To solve these various inverse kinematic problems, the component uses as main base the <code>Levenberg-Marquardt</code> algorithm proposed in the article <code>SBA: A Software Package for Generic Sparse Bundle Adjustment</code> by Lourakis and Argyros:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">Input: A vector functon f: R^m → R^n with n≥m, a measurement vector x ∈ R^n and an initial parameters estimate p_0 ∈ R^m.
+<p>To solve these various inverse kinematic problems, the component uses as main base the <code class="highlighter-rouge">Levenberg-Marquardt</code> algorithm proposed in the article <code class="highlighter-rouge">SBA: A Software Package for Generic Sparse Bundle Adjustment</code> by Lourakis and Argyros:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Input: A vector functon f: R^m → R^n with n≥m, a measurement vector x ∈ R^n and an initial parameters estimate p_0 ∈ R^m.
 Output: A vector p+ ∈ R^m minimizing ||x-f(p)||^2.
 Algorithm:
     k:=0;                 v:=2;                     p:=p0;
     A:=transposed(J)·J;   error:=x-f(p);            g:=transposed(J)·error;
     stop:=(||g||∞ ≤ ε1);  μ:=t*max_i=1,...,m (Aii)
-
+    
     while(!stop) and (k&lt;k_max)
          k:=k+1;
          repeat
@@ -230,42 +240,53 @@ Algorithm:
          stop:=(||error||≤ ε3);
     endwhile
     p+:=p;
-</code></pre></div>
-<p>Where <code>A</code> is the hessian matrix, <code>J</code> is the jacobian matrix, <code>g</code> is the gradient descent, <code>δ_p</code> is the increments, <code>ρ</code> is the ratio of profit that tells us if we are approaching a minimum or not, <code>μ</code> is the damping factor, and <code>t</code> and <code>ε1, ε2, ε3, ε4</code> are different thresholds. But the IK component of Robocomp adds several concepts to the original L-M algorithm, in order to complete the proper operation of the component: </p>
+</code></pre>
+</div>
+
+<p>Where <code class="highlighter-rouge">A</code> is the hessian matrix, <code class="highlighter-rouge">J</code> is the jacobian matrix, <code class="highlighter-rouge">g</code> is the gradient descent, <code class="highlighter-rouge">δ_p</code> is the increments, <code class="highlighter-rouge">ρ</code> is the ratio of profit that tells us if we are approaching a minimum or not, <code class="highlighter-rouge">μ</code> is the damping factor, and <code class="highlighter-rouge">t</code> and <code class="highlighter-rouge">ε1, ε2, ε3, ε4</code> are different thresholds. But the IK component of Robocomp adds several concepts to the original L-M algorithm, in order to complete the proper operation of the component:</p>
 
 <ol>
-<li>Weight matrix: that controls the relevance between the translations (in meters) and rotations (in radians) of the target. So, where <code>g</code> was calculated as <code>transposed(J)·error</code>, now <code>g</code> is <code>transposed(J)·(W·error)</code></li>
-<li>Motors lock: when a motor reachs its minimun or maximun limit, we modified the jacobian matrix.</li>
+  <li>Weight matrix: that controls the relevance between the translations (in meters) and rotations (in radians) of the target. So, where <code class="highlighter-rouge">g</code> was calculated as <code class="highlighter-rouge">transposed(J)·error</code>, now <code class="highlighter-rouge">g</code> is <code class="highlighter-rouge">transposed(J)·(W·error)</code></li>
+  <li>Motors lock: when a motor reachs its minimun or maximun limit, we modified the jacobian matrix.</li>
 </ol>
 
 <p>The new version of the inverse kinematics component simplifies the code of the old version and adds some more functionality:</p>
 
 <ol>
-<li>Executes more than once a target. The inverse kinematic result is not the same if the start point of the effector is the robot&#39;s home or a point B near tho the goal point.</li>
-<li>Executes the traslations without the motors of the wrisht (only for Ursus). This makes possible to move the arm with stiff wrist, and then we can rotate easely the wrist when the end effectos is near the target.</li>
+  <li>Executes more than once a target. The inverse kinematic result is not the same if the start point of the effector is the robot’s home or a point B near tho the goal point.</li>
+  <li>Executes the traslations without the motors of the wrisht (only for Ursus). This makes possible to move the arm with stiff wrist, and then we can rotate easely the wrist when the end effectos is near the target.</li>
 </ol>
 
-<p>Another improvement being studied is to include a small planner responsible for planning the trajectories of the robot arm, in order to facilitate the work of the IK component and reduce its execution time. However, one of the problems that the inverse kinematics can not solve by itself is the problem of gaps and imperfections of the robot. These gaps and inaccuracies make the robot move its arm toward the target position improperly, so that the robot &quot;thinks&quot; that the end effector has reached the target but in reality has fallen far short of the target pose.</p>
+<p>Another improvement being studied is to include a small planner responsible for planning the trajectories of the robot arm, in order to facilitate the work of the IK component and reduce its execution time. However, one of the problems that the inverse kinematics can not solve by itself is the problem of gaps and imperfections of the robot. These gaps and inaccuracies make the robot move its arm toward the target position improperly, so that the robot “thinks” that the end effector has reached the target but in reality has fallen far short of the target pose.</p>
 
-<p>In order to solve this last problem, we need visual feedback to correct the errors and mistakes introduced for the gaps and inaccuracies in the kinematic chain. The visualBIK component, developed during this project, is responsible for solve this visual feedback and correct the inverse kinematic, but we&#39;ll talk about it in the next post. </p>
+<p>In order to solve this last problem, we need visual feedback to correct the errors and mistakes introduced for the gaps and inaccuracies in the kinematic chain. The visualBIK component, developed during this project, is responsible for solve this visual feedback and correct the inverse kinematic, but we’ll talk about it in the next post.</p>
 
 <p>Bye!</p>
 
-<hr>
-
-<p>[1] Master Thesis, Universidad de Extremadura, Escuela Politécnica de Cáceres. Mercedes Paoletti Ávila. <code>Cinemática Inversa en Robots Sociales</code>. Directed by Pablo Bustos and Luis Vicente Calderita. July 2014. Download in https://robolab.unex.es/index.php?option=com_remository&amp;Itemid=53&amp;func=startdown&amp;id=143</p>
+<hr />
+<p>[1] Master Thesis, Universidad de Extremadura, Escuela Politécnica de Cáceres. Mercedes Paoletti Ávila. <code class="highlighter-rouge">Cinemática Inversa en Robots Sociales</code>. Directed by Pablo Bustos and Luis Vicente Calderita. July 2014. Download in https://robolab.unex.es/index.php?option=com_remository&amp;Itemid=53&amp;func=startdown&amp;id=143</p>
 
 <p>[2] inverse kinematics component repository: https://github.com/robocomp/robocomp-ursus/tree/master/components/inversekinematics</p>
 
-<p>[3] C. Suárez Mejías, C. Echevarría, P. Núñez, L. Manso, P. Bustos, S. Leal and C. Parra. <code>Ursus: A Robotic Assistant for Training of Patients with Motor Impairments</code>. Book, Converging Clinical and Engineering Research on Neurorehabilitation, Springer series on BioSystems and BioRobotics, Editors, J.L Pons, D. Torricelli and Marta Pajaro. Springer, ISBN 978-3-642-34545-6, pages 249-254. January 2012. Download in https://robolab.unex.es/index.php?option=com_remository&amp;Itemid=53&amp;func=startdown&amp;id=128</p>
+<p>[3] C. Suárez Mejías, C. Echevarría, P. Núñez, L. Manso, P. Bustos, S. Leal and C. Parra. <code class="highlighter-rouge">Ursus: A Robotic Assistant for Training of Patients with Motor Impairments</code>. Book, Converging Clinical and Engineering Research on Neurorehabilitation, Springer series on BioSystems and BioRobotics, Editors, J.L Pons, D. Torricelli and Marta Pajaro. Springer, ISBN 978-3-642-34545-6, pages 249-254. January 2012. Download in https://robolab.unex.es/index.php?option=com_remository&amp;Itemid=53&amp;func=startdown&amp;id=128</p>
 
-<p>[4] Lourakis, M. I., Argyros, A. (2009). <code>SBA: A Software Package for Generic Sparse Bundle Adjustment</code>. Article of ACM Transactions on Mathematical Software, volume 36, issue 1, pages 1-30. Download in http://doi.acm.org/10.1145/1486527</p>
+<p>[4] Lourakis, M. I., Argyros, A. (2009). <code class="highlighter-rouge">SBA: A Software Package for Generic Sparse Bundle Adjustment</code>. Article of ACM Transactions on Mathematical Software, volume 36, issue 1, pages 1-30. Download in http://doi.acm.org/10.1145/1486527</p>
+
 
 </div>
 
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/website/2016/04/25/gsoc16ideas/">
+            GSoC 2016 Ideas
+            <small>25 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
@@ -280,15 +301,6 @@ Algorithm:
         <h3>
           <a href="/website/2015/08/20/rajath3/">
             <i>GSoC,</i> After Midterms
-            <small>20 Aug 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/website/2015/08/20/mercedes6/">
-            <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#6</p> grasping object
             <small>20 Aug 2015</small>
           </a>
         </h3>

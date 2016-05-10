@@ -145,36 +145,61 @@
 Following are the contributions towards the project <em>after</em> the mid-term evaluations:</p>
 
 <ul>
-<li><p>HOG based detection (with demo).</p></li>
-<li><p>Face-recognition: training as well as recognition (with demo).</p></li>
-<li><p>Cascade based detection (with demo).</p></li>
-<li><p>Functionality for confidence in a detection (to handle uncertainty).</p></li>
+  <li>
+    <p>HOG based detection (with demo).</p>
+  </li>
+  <li>
+    <p>Face-recognition: training as well as recognition (with demo).</p>
+  </li>
+  <li>
+    <p>Cascade based detection (with demo).</p>
+  </li>
+  <li>
+    <p>Functionality for confidence in a detection (to handle uncertainty).</p>
+  </li>
 </ul>
 
-<p>That concluded the functionality of whatever planned for this summer of code. Other than the planned work, I included some other new functionality which came in between and I thought was required. The other additions are: </p>
+<p>That concluded the functionality of whatever planned for this summer of code. Other than the planned work, I included some other new functionality which came in between and I thought was required. The other additions are:</p>
 
 <ul>
-<li><p>Addition of two types of detection functions for every detection class. </p>
+  <li>
+    <p>Addition of two types of detection functions for every detection class.</p>
 
-<p>a. <em>detectOmni</em> : This is the function whose purpose is to detect an object in an entire scene. Thus, other than the type of detection we also have information about the <em>location</em> of the detection w.r.t. the scene. This was the only function previously implemented.</p>
+    <p>a. <em>detectOmni</em> : This is the function whose purpose is to detect an object in an entire scene. Thus, other than the type of detection we also have information about the <em>location</em> of the detection w.r.t. the scene. This was the only function previously implemented.</p>
 
-<p>b. <em>detect</em> : The purpose of this function is to perform detection on a segmented scene or an &#39;object candidate&#39;. i.e. the entire scene is considered as an &#39;object&#39; or an detection. This function was an extra addition for most of the classes. For global descriptor based classes like ODHOGDetector this function came very naturally.</p></li>
-<li><p><strong>Standardized the training database</strong>:. Each detection class identifies its own database (which is a unique folder as of now). Training data of all classes are now put together under a single &#39;trained_data&#39; directory and the rest is resolved by the class automatically.</p></li>
-<li><p>The class <strong>ODDetectorMultiAlgo</strong>: This is one of the most interesting class and interesting contribution in this project. The idea is to run multiple detection algorithm on a same segmented or unsegmented scene (i.e. run both <em>detect</em> and <em>detectOmni</em> function) and provide the result. That is, using this class one can do object detection/recognition using multiple algorithms and provide outcome of detections (eg. people detected by HOG, face detected by Cascade, bottle detected PnPRansac in a same image). Because of the nice polymorphic design of the detection classes, one can use the concept easily with any number of detection classes with their own parameters, but with <em>ODDetectorMultiAlgo</em> one can only take benefit of the default parameters of the included classes.</p></li>
-<li><p>HOG training: There are no standard training module for training HOG (in OpenCV or in other standard library) and people are mostly confused in training svm with the HOG detector available from OpenCV. This formed a motivation for completing the HOG pipeline and provide a training module. The crucial contribution includes <em>hard negative</em> training mode where the training is repeated with hard examples or false positive windows as negative windows. I hope that this will be really a helpful contribution for the computer vision community. </p></li>
+    <p>b. <em>detect</em> : The purpose of this function is to perform detection on a segmented scene or an ‘object candidate’. i.e. the entire scene is considered as an ‘object’ or an detection. This function was an extra addition for most of the classes. For global descriptor based classes like ODHOGDetector this function came very naturally.</p>
+  </li>
+  <li>
+    <p><strong>Standardized the training database</strong>:. Each detection class identifies its own database (which is a unique folder as of now). Training data of all classes are now put together under a single ‘trained_data’ directory and the rest is resolved by the class automatically.</p>
+  </li>
+  <li>
+    <p>The class <strong>ODDetectorMultiAlgo</strong>: This is one of the most interesting class and interesting contribution in this project. The idea is to run multiple detection algorithm on a same segmented or unsegmented scene (i.e. run both <em>detect</em> and <em>detectOmni</em> function) and provide the result. That is, using this class one can do object detection/recognition using multiple algorithms and provide outcome of detections (eg. people detected by HOG, face detected by Cascade, bottle detected PnPRansac in a same image). Because of the nice polymorphic design of the detection classes, one can use the concept easily with any number of detection classes with their own parameters, but with <em>ODDetectorMultiAlgo</em> one can only take benefit of the default parameters of the included classes.</p>
+  </li>
+  <li>
+    <p>HOG training: There are no standard training module for training HOG (in OpenCV or in other standard library) and people are mostly confused in training svm with the HOG detector available from OpenCV. This formed a motivation for completing the HOG pipeline and provide a training module. The crucial contribution includes <em>hard negative</em> training mode where the training is repeated with hard examples or false positive windows as negative windows. I hope that this will be really a helpful contribution for the computer vision community.</p>
+  </li>
 </ul>
 
-<h2>Design changes, learning resources, and overall learning experiences:</h2>
+<h2 id="design-changes-learning-resources-and-overall-learning-experiences">Design changes, learning resources, and overall learning experiences:</h2>
+<p>In the next blog I’ll add the different sources I used to design and implement the above tasks and the things I learnt in this process.</p>
 
-<p>In the next blog I&#39;ll add the different sources I used to design and implement the above tasks and the things I learnt in this process. </p>
+<hr />
 
-<hr>
 
 </div>
 
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/website/2016/04/25/gsoc16ideas/">
+            GSoC 2016 Ideas
+            <small>25 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
@@ -189,15 +214,6 @@ Following are the contributions towards the project <em>after</em> the mid-term 
         <h3>
           <a href="/website/2015/08/20/rajath3/">
             <i>GSoC,</i> After Midterms
-            <small>20 Aug 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/website/2015/08/20/mercedes6/">
-            <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#6</p> grasping object
             <small>20 Aug 2015</small>
           </a>
         </h3>

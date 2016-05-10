@@ -147,8 +147,9 @@
 
 <p>In RoboComp (2005-) we have created our own component model, inspired by the <a href="http://orca-robotics.sourceforge.net/">ORCA</a> model and making it evolve to fit our needs along these years. As a middleware, RoboComp primarily uses <a href="www.zeroc.com">Ice</a> and there is ongoing experimental work to make RoboComp middleware agnostic, so its components can be re-generated to use other middlewares such as <a href="http://portals.omg.org/dds/">DDS</a>.</p>
 
-<p>RoboComp&#39;s components model is quite simple and we always try to simplify it even more. It can be best explained through two Domain Specific Languages (DSLs) that have been created to define a component at a very high level of abstraction. <strong>IDSL</strong> stands for &quot;Interface Definition Specific Language&quot; and currently is a subset of Ice&#39;s Slice interface language. With IDSL you write the data structures and functions that a component can implement, require, subscribe to or publish. A component can implement several interfaces, offering different views of its internal functioning. Also, the same interface can be implemented by many components. This is an example of a simple interface written in IDSL:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">module RoboCompSpeech
+<p>RoboComp’s components model is quite simple and we always try to simplify it even more. It can be best explained through two Domain Specific Languages (DSLs) that have been created to define a component at a very high level of abstraction. <strong>IDSL</strong> stands for “Interface Definition Specific Language” and currently is a subset of Ice’s Slice interface language. With IDSL you write the data structures and functions that a component can implement, require, subscribe to or publish. A component can implement several interfaces, offering different views of its internal functioning. Also, the same interface can be implemented by many components. This is an example of a simple interface written in IDSL:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>module RoboCompSpeech
 {
   interface Speech
   {
@@ -156,10 +157,13 @@
      bool isBusy();
   };
 };
-</code></pre></div>
-<p><strong>CDSL</strong> stands for &quot;Component Definition Specific Language&quot; and allows the user to specifiy its name, accesible interfaces, communication connections, target language and other available modules or libraries that you want to include in the building scripts.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">import &quot;/robocomp/interfaces/IDSLs/DifferentialRobot.idsl&quot;;
-import &quot;/robocomp/interfaces/IDSLs/Laser.idsl&quot;;
+</code></pre>
+</div>
+
+<p><strong>CDSL</strong> stands for “Component Definition Specific Language” and allows the user to specifiy its name, accesible interfaces, communication connections, target language and other available modules or libraries that you want to include in the building scripts.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import "/robocomp/interfaces/IDSLs/DifferentialRobot.idsl";
+import "/robocomp/interfaces/IDSLs/Laser.idsl";
 Component prueba
 {
     Communications
@@ -169,14 +173,26 @@ Component prueba
     language cpp;
     gui Qt(QWidget);
 };
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>Using these two DSLs, RoboComp can generate the source code of the component using a tool designed to this end. The complete, functioning code of a component is created ready to be compiled and executed. We use a smart inheritance mechanism to separate the generic stuff from the user specific stuff and, based on it, the next time you generate a component, your code will remain untouched but access to new defined proxies will be there.</p>
+
 
 </div>
 
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/website/2016/04/25/gsoc16ideas/">
+            GSoC 2016 Ideas
+            <small>25 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
@@ -191,15 +207,6 @@ Component prueba
         <h3>
           <a href="/website/2015/08/20/rajath3/">
             <i>GSoC,</i> After Midterms
-            <small>20 Aug 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/website/2015/08/20/mercedes6/">
-            <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#6</p> grasping object
             <small>20 Aug 2015</small>
           </a>
         </h3>

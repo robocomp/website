@@ -147,6 +147,32 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/website/2015/05/23/nithin2/">
+        <i>GSoC,</i> Building and deployment system design
+      </a>
+    </h1>
+
+    <span class="post-date">23 May 2015</span>
+
+    <p>###About Me:</p>
+
+<p>Hi all , I am Nithin Murali and i would like to introduce me a little in this post. I am pursuing my engineering degree on Electrical Engineering from Indian Institute of Technology Bombay. I am working on an Autonomous Underwater Vehicle which we are developing for the RObosub competition. We are developing in ROS framework. That was my first introduction to robotic frameworks. I have read about Robocomop before but a real chance to contribute to this ambitious framework was brought to me by GSOC 2015. I have Chosen the project <em>RoboComp Building and deployment system design</em>.</p>
+
+<p>###About the project</p>
+
+<p>Currently the the build system in Robocomp is not very efficient. It is limited only to the core libraries and some additional tools. So we will have to seprately build all the components one by one. Also as the number of component increases it will be more difficult to manage all of them. So I am planning to come up with an workspace model for Robocomp. It would accompany with various tools which will ease handling of components.</p>
+
+<p>As of now the users have to build robocomp from source for using it. But there may be users who dont want to work on the framework but is only interested in developing new components. For such users it is important that that we should supply an compiled package (preferably debian package). Also package would be more accessible if we could provide an ppa for robocomp. So i am planning to package robocomp and also create a ppa for robocomp.</p>
+
+<p>Currently Robocomp dosent have any tests written nor is it using any testinf framework. So one of my task would be decide on a testing framework/stragery and write tests for existing framework.</p>
+
+<hr />
+<p>Nithin Murali</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/website/2015/05/23/nithin1/">
         Debian Packaging 1
       </a>
@@ -154,46 +180,77 @@
 
     <span class="post-date">23 May 2015</span>
 
-    <h2>What is a package</h2>
-
-<p>By definition <em>Debian packages are standard Unix ar archives that include two tar archives optionally compressed with gzip (zlib), Bzip2, lzma, or xz (lzma2): one archive holds the control information and another contains the program data.</em>
+    <p>##What is a package
+By definition <em>Debian packages are standard Unix ar archives that include two tar archives optionally compressed with gzip (zlib), Bzip2, lzma, or xz (lzma2): one archive holds the control information and another contains the program data.</em>
 All debain packages should follow certain conventions. The root source directory should contain a directory named <em>debian</em>. This directory contains files which stores info about the package.
 These are the required files under the debian directory</p>
 
 <ul>
-<li><p><strong>rules</strong><br>
+  <li>
+    <p><strong>rules</strong><br />
 This is the maintainer script for the package building. This script is run by the packaging application to build and install the source into a <em>tmp</em> directory in the debian folder. It has the following Targets</p>
 
-<ul>
-<li><em>clean target</em> : to clean all compiled, generated, and useless files in the build-tree.</li>
-<li><em>build target</em> : to build the source into compiled programs and formatted documents in the build-tree.</li>
-<li><em>build-arch target</em> : to build the source into arch-dependent compiled programs in the build-tree.</li>
-<li><em>build-indep target</em> : to build the source into arch-independent formatted documents in the build-tree.</li>
-<li><em>binary target</em> : to create all binary packages (effectively a combination of binary-arch and binary-indep targets)</li>
-<li><em>binary-arch target</em> : to create arch-dependent (Architecture: any) binary packages in the parent directory.</li>
-<li><em>binary-indep target</em>: to create arch-independent (Architecture: all) binary packages in the parent directory.</li>
-</ul></li>
-<li><p><strong>changelog</strong><br>
-This file contains the project changelog along with the project name , version and distribution and urgency of your package.</p></li>
-<li><p><strong>compact</strong><br>
-The compact file defines the debhelper compatibility level.</p></li>
-<li><p><strong>debian/control</strong><br>
-This file contains various values which dpkg, dselect, apt-get, apt-cache, aptitude, and other package management tools will use to manage the package. The control file describes the source and binary package, and gives some information about them, such as their names, who the package maintainer is, build and run dependencies and so on.</p></li>
-<li><p><strong>copyright</strong><br>
-This file contains information about the copyright and license of the upstream sources</p></li>
-<li><p><strong>(pre/post)(inst/rm)</strong><br>
-This are the scipts which are run before or after installation or removal of package.</p></li>
+    <ul>
+      <li>
+        <p><em>clean target</em> : to clean all compiled, generated, and useless files in the build-tree.</p>
+      </li>
+      <li>
+        <p><em>build target</em> : to build the source into compiled programs and formatted documents in the build-tree.</p>
+      </li>
+      <li>
+        <p><em>build-arch target</em> : to build the source into arch-dependent compiled programs in the build-tree.</p>
+      </li>
+      <li>
+        <p><em>build-indep target</em> : to build the source into arch-independent formatted documents in the build-tree.</p>
+      </li>
+      <li>
+        <p><em>binary target</em> : to create all binary packages (effectively a combination of binary-arch and binary-indep targets)</p>
+      </li>
+      <li>
+        <p><em>binary-arch target</em> : to create arch-dependent (Architecture: any) binary packages in the parent directory.</p>
+      </li>
+      <li>
+        <p><em>binary-indep target</em>: to create arch-independent (Architecture: all) binary packages in the parent directory.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>changelog</strong><br />
+This file contains the project changelog along with the project name , version and distribution and urgency of your package.</p>
+  </li>
+  <li>
+    <p><strong>compact</strong><br />
+The compact file defines the debhelper compatibility level.</p>
+  </li>
+  <li>
+    <p><strong>debian/control</strong><br />
+This file contains various values which dpkg, dselect, apt-get, apt-cache, aptitude, and other package management tools will use to manage the package. The control file describes the source and binary package, and gives some information about them, such as their names, who the package maintainer is, build and run dependencies and so on.</p>
+  </li>
+  <li>
+    <p><strong>copyright</strong><br />
+This file contains information about the copyright and license of the upstream sources</p>
+  </li>
+  <li>
+    <p><strong>(pre/post)(inst/rm)</strong><br />
+This are the scipts which are run before or after installation or removal of package.</p>
+  </li>
 </ul>
 
-<p>Now once you have the source directory in the prescribed format. you will need a <em>.tar.gz</em> archive of the source in the same folder.Then we can create a debian binary package using </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">debuild -i -us -uc -b
-</code></pre></div>
-<p>Or a debian source package using</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">debuild -i -us -uc -S
-</code></pre></div>
-<hr>
+<p>Now once you have the source directory in the prescribed format. you will need a <em>.tar.gz</em> archive of the source in the same folder.Then we can create a debian binary package using</p>
 
+<div class="highlighter-rouge"><pre class="highlight"><code>debuild -i -us -uc -b
+</code></pre>
+</div>
+
+<p>Or a debian source package using</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>debuild -i -us -uc -S
+</code></pre>
+</div>
+
+<hr />
 <p>Nithin Murali</p>
+
 
   </div>
   
@@ -212,8 +269,9 @@ This are the scipts which are run before or after installation or removal of pac
 
 <p>In RoboComp (2005-) we have created our own component model, inspired by the <a href="http://orca-robotics.sourceforge.net/">ORCA</a> model and making it evolve to fit our needs along these years. As a middleware, RoboComp primarily uses <a href="www.zeroc.com">Ice</a> and there is ongoing experimental work to make RoboComp middleware agnostic, so its components can be re-generated to use other middlewares such as <a href="http://portals.omg.org/dds/">DDS</a>.</p>
 
-<p>RoboComp&#39;s components model is quite simple and we always try to simplify it even more. It can be best explained through two Domain Specific Languages (DSLs) that have been created to define a component at a very high level of abstraction. <strong>IDSL</strong> stands for &quot;Interface Definition Specific Language&quot; and currently is a subset of Ice&#39;s Slice interface language. With IDSL you write the data structures and functions that a component can implement, require, subscribe to or publish. A component can implement several interfaces, offering different views of its internal functioning. Also, the same interface can be implemented by many components. This is an example of a simple interface written in IDSL:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">module RoboCompSpeech
+<p>RoboComp’s components model is quite simple and we always try to simplify it even more. It can be best explained through two Domain Specific Languages (DSLs) that have been created to define a component at a very high level of abstraction. <strong>IDSL</strong> stands for “Interface Definition Specific Language” and currently is a subset of Ice’s Slice interface language. With IDSL you write the data structures and functions that a component can implement, require, subscribe to or publish. A component can implement several interfaces, offering different views of its internal functioning. Also, the same interface can be implemented by many components. This is an example of a simple interface written in IDSL:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>module RoboCompSpeech
 {
   interface Speech
   {
@@ -221,10 +279,13 @@ This are the scipts which are run before or after installation or removal of pac
      bool isBusy();
   };
 };
-</code></pre></div>
-<p><strong>CDSL</strong> stands for &quot;Component Definition Specific Language&quot; and allows the user to specifiy its name, accesible interfaces, communication connections, target language and other available modules or libraries that you want to include in the building scripts.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">import &quot;/robocomp/interfaces/IDSLs/DifferentialRobot.idsl&quot;;
-import &quot;/robocomp/interfaces/IDSLs/Laser.idsl&quot;;
+</code></pre>
+</div>
+
+<p><strong>CDSL</strong> stands for “Component Definition Specific Language” and allows the user to specifiy its name, accesible interfaces, communication connections, target language and other available modules or libraries that you want to include in the building scripts.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import "/robocomp/interfaces/IDSLs/DifferentialRobot.idsl";
+import "/robocomp/interfaces/IDSLs/Laser.idsl";
 Component prueba
 {
     Communications
@@ -234,8 +295,11 @@ Component prueba
     language cpp;
     gui Qt(QWidget);
 };
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>Using these two DSLs, RoboComp can generate the source code of the component using a tool designed to this end. The complete, functioning code of a component is created ready to be compiled and executed. We use a smart inheritance mechanism to separate the generic stuff from the user specific stuff and, based on it, the next time you generate a component, your code will remain untouched but access to new defined proxies will be there.</p>
+
 
   </div>
   

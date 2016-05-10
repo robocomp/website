@@ -145,36 +145,30 @@
 
 <p>Now lets assume that you are going to upload the package for the first time into a ppa.</p>
 
-<h3>Creating source package</h3>
+<p>###Creating source package
+* Rename  the source directory into <project_name>-<version> eg libccd-2.01
+* Crate a .tar.gz compressed file of the source directory, and place it outside source directory
+* Rename the compressed file into <project_name>_<version>.orig.tar.gz
+* Now run `debuild  -k<gpg_key> -S -sa ` if you want to include the whole source tar in upload
+* Or run `debuild  -k<gpg_key> -S -sd ` if you don't want to include the whole source tar in upload</gpg_key></gpg_key></version></project_name></version></project_name></p>
 
-<ul>
-<li>Rename  the source directory into <project_name>-<version> eg libccd-2.01</li>
-<li>Crate a .tar.gz compressed file of the source directory, and place it outside source directory</li>
-<li>Rename the compressed file into <project_name>_<version>.orig.tar.gz</li>
-<li>Now run <code>debuild  -k&lt;gpg_key&gt; -S -sa</code> if you want to include the whole source tar in upload</li>
-<li>Or run <code>debuild  -k&lt;gpg_key&gt; -S -sd</code> if you don&#39;t want to include the whole source tar in upload</li>
-</ul>
+<p>###So when should you upload the source? 
+when you are uploading for the first time (obviously) and whenever you make some changes to your source code. but as launchpad wont allow files with same name, you should increase your version number so that the source tar get a new name. For increasing the version number you should increase it in changelog for example in this case <code class="highlighter-rouge">fcl (1.0-0ppa0) vivid; urgency=low</code> increase 1.0-0ppa0 to 1.1-0ppa0 also remember to rename all names accordingly (source folder and source tar)</p>
 
-<h3>So when should you upload the source?</h3>
+<p>but if you have only changed some file in the debian directory. For example, edited changelog or added a dependency. In those cases you can skip the source upload but in such cases you have to increase your ppa number in your changelog  for example in this line  <code class="highlighter-rouge">fcl (1.0-0ppa0) vivid; urgency=low</code> change 0ppa0 to 0ppa1.</p>
 
-<p>when you are uploading for the first time (obviously) and whenever you make some changes to your source code. but as launchpad wont allow files with same name, you should increase your version number so that the source tar get a new name. For increasing the version number you should increase it in changelog for example in this case <code>fcl (1.0-0ppa0) vivid; urgency=low</code> increase 1.0-0ppa0 to 1.1-0ppa0 also remember to rename all names accordingly (source folder and source tar)</p>
+<p>###uploading
+Now once you have generated the .source_changes file use dput to upload</p>
 
-<p>but if you have only changed some file in the debian directory. For example, edited changelog or added a dependency. In those cases you can skip the source upload but in such cases you have to increase your ppa number in your changelog  for example in this line  <code>fcl (1.0-0ppa0) vivid; urgency=low</code> change 0ppa0 to 0ppa1.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>dput ppa:&lt;your-lp-id&gt;/&lt;name&gt; &lt;file_name&gt;.source_changes
+</code></pre>
+</div>
 
-<h3>uploading</h3>
+<p>###NB
+* if you want to add any dependency, edit the file debian/control add add it to <code class="highlighter-rouge">Depends</code> or <code class="highlighter-rouge">Build-Depends</code> field
+* if you want to change the target generation , edit the distribution name in first line of debian/changelog</p>
 
-<p>Now once you have generated the .source_changes file use dput to upload </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">dput ppa:&lt;your-lp-id&gt;/&lt;name&gt; &lt;file_name&gt;.source_changes
-</code></pre></div>
-<h3>NB</h3>
-
-<ul>
-<li>if you want to add any dependency, edit the file debian/control add add it to <code>Depends</code> or <code>Build-Depends</code> field</li>
-<li>if you want to change the target generation , edit the distribution name in first line of debian/changelog</li>
-</ul>
-
-<hr>
-
+<hr />
 <p>Nithin Murali</p>
 
 </div>
@@ -182,6 +176,15 @@
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/website/2016/04/25/gsoc16ideas/">
+            GSoC 2016 Ideas
+            <small>25 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
@@ -197,15 +200,6 @@
           <a href="/website/2015/08/20/mercedes6/">
             <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#6</p> grasping object
             <small>20 Aug 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/website/2015/08/19/kripasindhu_sarkar_blog_4/">
-            GSoC, Computer vision components and libraries management -Open Detection <p>#4</p>
-            <small>19 Aug 2015</small>
           </a>
         </h3>
       </li>

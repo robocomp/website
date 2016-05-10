@@ -141,37 +141,48 @@
       <div class="post">
   <h1 class="post-title">Packaging RoboComp</h1>
   <span class="post-date">23 May 2015</span>
-  <h3>deb packages</h3>
+  <p>###deb packages</p>
 
 <p>For creating a robocomp debian package :</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cd ~/robocomp
 mkdir build
 cmake ..
 make package
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>will create a .deb package in the build directory, which we can install using any packaging application like dpkg. To install the created package, just double click on it(open with Software Center) or in terminal type</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">sudo dpkg -i &lt;packagename&gt;.deb
-</code></pre></div>
-<h3>source packages for ppa</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo dpkg -i &lt;packagename&gt;.deb
+</code></pre>
+</div>
+
+<p>###source packages for ppa</p>
 
 <p>Launchpad will only accept source packages and not binary.Launchpad will then build the packages. For building source packages we are using debuild which is a wrapper around the <em>dpkg-buildpackage + lintian</em>. so you will need to install debuild and dput on your system.The source_package.cmake script is used to create debian source package.</p>
 
-<p>The main CMakeLists.txt file defines a target <code>spackage</code> that builds the source package in build/Debian with <code>make spackage</code></p>
+<p>The main CMakeLists.txt file defines a target <code class="highlighter-rouge">spackage</code> that builds the source package in build/Debian with <code class="highlighter-rouge">make spackage</code></p>
 
 <p>For uploading the package to ppa, First change the <strong>PPA_PGP_KEY</strong> in <a href="../cmake/package_details.cmake#L26">package_details.cmake</a> to the contact of the PGP key  details registered with your ppa account.Then create a source package by building the target <em>spackage</em>.Once the Source package is build successfully, upload it to your ppa by:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd Debian/
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cd Debian/
 dput ppa:&lt;lp-username&gt;/&lt;ppa-name&gt; package-source.changes
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>building of source package can be tested with:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd Debian/robocomp-&lt;version&gt;
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cd Debian/robocomp-&lt;version&gt;
 debuild -i -us -uc
-</code></pre></div>
-<h4>Note:</h4>
+</code></pre>
+</div>
 
-<p>If you want to upload another source package to ppa which doesn&#39;t have any changes in the source but maybe in the debian files. you can build the spackage after commenting out <code>set(DEB_SOURCE_CHANGES &quot;CHANGED&quot; CACHE STRING &quot;source changed since last upload&quot;)</code> in <a href="../cmake/package_details.cmake#L27">package_details.cmake</a> so that the the script will only increase the ppa version number and wont include the source package for uploading to ppa (which otherwise will give an error).</p>
+<p>####Note:</p>
 
-<hr>
+<p>If you want to upload another source package to ppa which doesn’t have any changes in the source but maybe in the debian files. you can build the spackage after commenting out <code class="highlighter-rouge">set(DEB_SOURCE_CHANGES "CHANGED" CACHE STRING "source changed since last upload")</code> in <a href="../cmake/package_details.cmake#L27">package_details.cmake</a> so that the the script will only increase the ppa version number and wont include the source package for uploading to ppa (which otherwise will give an error).</p>
 
+<hr />
 <p>Nithin Murali</p>
 
 </div>
@@ -179,6 +190,15 @@ debuild -i -us -uc
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/website/2016/04/25/gsoc16ideas/">
+            GSoC 2016 Ideas
+            <small>25 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
@@ -193,15 +213,6 @@ debuild -i -us -uc
         <h3>
           <a href="/website/2015/08/20/rajath3/">
             <i>GSoC,</i> After Midterms
-            <small>20 Aug 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/website/2015/08/20/mercedes6/">
-            <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#6</p> grasping object
             <small>20 Aug 2015</small>
           </a>
         </h3>

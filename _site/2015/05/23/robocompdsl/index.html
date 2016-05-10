@@ -143,45 +143,49 @@
   <span class="post-date">23 May 2015</span>
   <p><strong>robocompdsl</strong> is the new tool used in RoboComp to automatically generate components and modify their main properties once they have been generated (e.g., communication requirements, UI type). It is one of the core tools of the framework so, if you installed RoboComp, you can start using it right away.</p>
 
-<p>This new version can only be used from the command line, but the languages used to define components and their interfaces remain mostly the same: <strong>CDSL</strong> to specify components and <strong>IDSL</strong> to specify interfaces. The only difference with the old RoboCompDSLEditor tool is that the reserved keywords (are now case independent). Take a look to the tutorial <a href="components.md">&quot;a brief introduction to Components&quot;</a> for an introduction to the concept of component generation and the languages involved.</p>
+<p>This new version can only be used from the command line, but the languages used to define components and their interfaces remain mostly the same: <strong>CDSL</strong> to specify components and <strong>IDSL</strong> to specify interfaces. The only difference with the old RoboCompDSLEditor tool is that the reserved keywords (are now case independent). Take a look to the tutorial <a href="components.md">“a brief introduction to Components”</a> for an introduction to the concept of component generation and the languages involved.</p>
 
-<p>There are three tasks we can acomplish using <strong>robocompdsl</strong>: </p>
+<p>There are three tasks we can acomplish using <strong>robocompdsl</strong>:</p>
 
 <ul>
-<li>generating a CDSL template file</li>
-<li>generating the code for a previously existing CDSL file</li>
-<li>regenerating the code for an already generated component.</li>
+  <li>generating a CDSL template file</li>
+  <li>generating the code for a previously existing CDSL file</li>
+  <li>regenerating the code for an already generated component.</li>
 </ul>
 
-<h2>Generating a CDSL template file</h2>
+<h2 id="generating-a-cdsl-template-file">Generating a CDSL template file</h2>
+<p>Even tough writing CDSL files is easy –their structure is simple and the number of reserved words is very limited– robocompdsl can generate template CDSL files to be used as a guide when writing CDSL files.</p>
 
-<p>Even tough writing CDSL files is easy --their structure is simple and the number of reserved words is very limited-- robocompdsl can generate template CDSL files to be used as a guide when writing CDSL files.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ robocompdsl path/to/mycomponent/mycomponent.cdsl
-</code></pre></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ robocompdsl path/to/mycomponent/mycomponent.cdsl
+</code></pre>
+</div>
+
 <p>This will generate a CDSL file with the following content:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">import &quot;/robocomp/interfaces/IDSLs/import1.idsl&quot;;
-import &quot;/robocomp/interfaces/IDSLs/import2.idsl&quot;;
 
+<div class="highlighter-rouge"><pre class="highlight"><code>import "/robocomp/interfaces/IDSLs/import1.idsl";
+import "/robocomp/interfaces/IDSLs/import2.idsl";
+ 
 Component CHANGETHECOMPONENTNAME
 {
-    Communications
-    {
-        implements interfaceName;
-        requires otherName;
-        subscribesTo topicToSubscribeTo;
-        publishes topicToPublish;
-    };
-    language Cpp;
-    gui Qt(QWidget);
+	Communications
+	{
+		implements interfaceName;
+		requires otherName;
+		subscribesTo topicToSubscribeTo;
+		publishes topicToPublish;
+	};
+	language Cpp;
+	gui Qt(QWidget);
 };
-</code></pre></div>
-<p>The CDSL language is described in the tutorial <a href="components.md">&quot;A brief introduction to Components&quot;</a>. Just don&#39;t forget to change the name of the component.</p>
+</code></pre>
+</div>
 
-<h2>Generating a component given a CDSL file</h2>
+<p>The CDSL language is described in the tutorial <a href="components.md">“A brief introduction to Components”</a>. Just don’t forget to change the name of the component.</p>
 
-<p>Once we have our CDSL file we can generate the component&#39;s source code running robocompdsl with the CDSL file as first argument and the directory where the code should be placed as the second argument.</p>
+<h2 id="generating-a-component-given-a-cdsl-file">Generating a component given a CDSL file</h2>
+<p>Once we have our CDSL file we can generate the component’s source code running robocompdsl with the CDSL file as first argument and the directory where the code should be placed as the second argument.</p>
 
-<p>From the component&#39;s directory:
+<p>From the component’s directory:
     $ cd path/to/mycomponent
     $ robocompdsl mycomponent.cdsl .</p>
 
@@ -190,17 +194,26 @@ Component CHANGETHECOMPONENTNAME
 
 <p>These commands will generate the C++ or Python code in the specified directory.</p>
 
-<h2>Updating the source code of a component after modifying its CDSL file</h2>
-
+<h2 id="updating-the-source-code-of-a-component-after-modifying-its-cdsl-file">Updating the source code of a component after modifying its CDSL file</h2>
 <p>Once we generated our component we might change our mind and decide to add a new connection to another interface or to publish a new topic. In these cases we can regenerate the code of the component just by changing the <em>.cdsl</em> file and executing again the command.</p>
 
-<p>As you might have learned from the tutorial <a href="components.md">&quot;A brief introduction to Components&quot;</a> RoboComp components are divided in specific code (files where you write your code) and generic code (autogenerated code which doesn&#39;t need to be edited). Running robocompdsl again on the same directory will ony overwrite these generic files. To ensure robocompdsl doesn&#39;t overwrite the changes you made to the specific files these are left unchanged, so the component might not compile after regeneration (e.g., you might need to add new methods).</p>
+<p>As you might have learned from the tutorial <a href="components.md">“A brief introduction to Components”</a> RoboComp components are divided in specific code (files where you write your code) and generic code (autogenerated code which doesn’t need to be edited). Running robocompdsl again on the same directory will ony overwrite these generic files. To ensure robocompdsl doesn’t overwrite the changes you made to the specific files these are left unchanged, so the component might not compile after regeneration (e.g., you might need to add new methods).</p>
+
 
 </div>
 
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/website/2016/04/25/gsoc16ideas/">
+            GSoC 2016 Ideas
+            <small>25 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
@@ -215,15 +228,6 @@ Component CHANGETHECOMPONENTNAME
         <h3>
           <a href="/website/2015/08/20/rajath3/">
             <i>GSoC,</i> After Midterms
-            <small>20 Aug 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/website/2015/08/20/mercedes6/">
-            <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#6</p> grasping object
             <small>20 Aug 2015</small>
           </a>
         </h3>

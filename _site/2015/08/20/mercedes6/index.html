@@ -141,31 +141,32 @@
       <div class="post">
   <h1 class="post-title"><i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#6</p> grasping object</h1>
   <span class="post-date">20 Aug 2015</span>
-  <p><strong>Grasping object</strong> : This post will describe the planning system that implements Robocomp in order to provide to the robot a full functionality. In order for a robot be able to carry out a mission as &quot;take the cup from the table and take it to the kitchen,&quot; it needs something that in robotics calls <code>planner</code>. In this post we move away the issue of inverse kinematics and we dive into the field of artificial intelligence, making a slight revision of existing planners and delving into the planner using robocomp.</p>
+  <p><strong>Grasping object</strong> : This post will describe the planning system that implements Robocomp in order to provide to the robot a full functionality. In order for a robot be able to carry out a mission as “take the cup from the table and take it to the kitchen,” it needs something that in robotics calls <code class="highlighter-rouge">planner</code>. In this post we move away the issue of inverse kinematics and we dive into the field of artificial intelligence, making a slight revision of existing planners and delving into the planner using robocomp.</p>
 
-<h3>Planning</h3>
+<p>###Planning</p>
 
 <p>As the name suggests, the planning is to generate plans. Plans to be executed by a robot in order to reach a goal. These objectives are often complex and require the execution of a series of steps that must be organized in the best possible manner to achieve the objective with an effort and within a reasonable time.</p>
 
-<p>In order for a planner can build a series of plans, it needs an initial state of the world, a desired end state (or several) and a set of rules. For example, take the objective of frying an egg. We start with an initial world consisting of a kitchen with the necessary elements: an egg with a dozen eggs, a can of oil, a frying pan, a slotted spoon, a plate and a stove. And we have a set of rules, like <code>to pour oil</code>, <code>to water plants</code>, <code>to crack egg</code>, <code>to stir</code>, <code>to serve</code>, <code>to light fire</code> and <code>to put the fire out</code>. The duty of the planner is to select and order those rules that allow us to go from the initial state of the world (with raw eggs) to the final state in which a fried egg is served  on a plate. Thus, the planner would eliminate the rule of &quot;to water plants&quot;, and would order the rest of rules as follows:</p>
+<p>In order for a planner can build a series of plans, it needs an initial state of the world, a desired end state (or several) and a set of rules. For example, take the objective of frying an egg. We start with an initial world consisting of a kitchen with the necessary elements: an egg with a dozen eggs, a can of oil, a frying pan, a slotted spoon, a plate and a stove. And we have a set of rules, like <code class="highlighter-rouge">to pour oil</code>, <code class="highlighter-rouge">to water plants</code>, <code class="highlighter-rouge">to crack egg</code>, <code class="highlighter-rouge">to stir</code>, <code class="highlighter-rouge">to serve</code>, <code class="highlighter-rouge">to light fire</code> and <code class="highlighter-rouge">to put the fire out</code>. The duty of the planner is to select and order those rules that allow us to go from the initial state of the world (with raw eggs) to the final state in which a fried egg is served  on a plate. Thus, the planner would eliminate the rule of “to water plants”, and would order the rest of rules as follows:</p>
 
 <ol>
-<li><code>to light fire</code>: in order to light the stove.</li>
-<li><code>to pour oil</code>: to pour oil into the pan</li>
-<li><code>to crack egg</code>: to crack the egg and throw it into the pan</li>
-<li><code>to stir</code>: to catch the slotted spoon and to go stirring the oil for frying the egg well.</li>
-<li><code>to put the fire out</code>: when the egg is fried the stove is turned off.</li>
-<li><code>to serve</code>: to serve the fried egg on the plate</li>
+  <li><code class="highlighter-rouge">to light fire</code>: in order to light the stove.</li>
+  <li><code class="highlighter-rouge">to pour oil</code>: to pour oil into the pan</li>
+  <li><code class="highlighter-rouge">to crack egg</code>: to crack the egg and throw it into the pan</li>
+  <li><code class="highlighter-rouge">to stir</code>: to catch the slotted spoon and to go stirring the oil for frying the egg well.</li>
+  <li><code class="highlighter-rouge">to put the fire out</code>: when the egg is fried the stove is turned off.</li>
+  <li><code class="highlighter-rouge">to serve</code>: to serve the fried egg on the plate</li>
 </ol>
 
-<p>With these steps (very simplified) we get that our robot prepares us a fried egg... Although the example is miserable, we can see that any action we do and that we find it easy to execute, for a robot is quite complicated. That is why planning is a very complex field of artificial intelligence.</p>
+<p>With these steps (very simplified) we get that our robot prepares us a fried egg… Although the example is miserable, we can see that any action we do and that we find it easy to execute, for a robot is quite complicated. That is why planning is a very complex field of artificial intelligence.</p>
 
-<h3>Planning Domain Definition Language (PDDL)</h3>
+<p>###Planning Domain Definition Language (PDDL)</p>
 
-<p>This section will introduce the reader slightly in the planning language more used in artificial intelligence: PDDL. It was created in 1998 by Drew McDermott and his team for use in that year&#39;s edition of International Planning Competition. The aim of PDDL is to standardize the planning languages for greater reuse of planning domains. Its operation is relatively simple:</p>
+<p>This section will introduce the reader slightly in the planning language more used in artificial intelligence: PDDL. It was created in 1998 by Drew McDermott and his team for use in that year’s edition of International Planning Competition. The aim of PDDL is to standardize the planning languages for greater reuse of planning domains. Its operation is relatively simple:</p>
 
-<p>Take for example, the following domain to create geometric shapes: We presume that in our initial world there is always a vertex node. The rules increase the number of vertices nodes to create geometric identities. For example, the <code>segment</code> rule creates from the initial node a line segment, the rule <code>triangle</code> creates from the line segment an equilateral triangle, the rule &quot;square&quot; creates from the equilateral triangle a square... and so on until an octagon. In the PDDL file, the rules would be:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">(define (domain AGGL)
+<p>Take for example, the following domain to create geometric shapes: We presume that in our initial world there is always a vertex node. The rules increase the number of vertices nodes to create geometric identities. For example, the <code class="highlighter-rouge">segment</code> rule creates from the initial node a line segment, the rule <code class="highlighter-rouge">triangle</code> creates from the line segment an equilateral triangle, the rule “square” creates from the equilateral triangle a square… and so on until an octagon. In the PDDL file, the rules would be:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(define (domain AGGL)
 (:predicates
             (firstunknown ?u)
             (unknownorder ?ua ?ub)
@@ -174,7 +175,7 @@
             (isB ?n)
             (isC ?n)
             (isD ?n)
-
+            
             (union ?u ?v) # TWO NODES ?u AND ?v are united?
     )
 
@@ -203,9 +204,12 @@
             )
     )
   )
-</code></pre></div>
-<p>To represent the initial world from which we start and the final world that we want to go, we should implement a file like this: </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">(define (problem myProblemPDDL)
+</code></pre>
+</div>
+
+<p>To represent the initial world from which we start and the final world that we want to go, we should implement a file like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(define (problem myProblemPDDL)
 
     (:domain AGGL ) # planning domain ---&gt; set of rules
     (:objects
@@ -241,15 +245,18 @@
     )
     (:metric minimize (total-cost))
   )
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>This language proves to be relatively intuitive, easy to develop and test. However, in Robocomp we opted to do our own planning language: AGM.</p>
 
-<h3>Active Grammar-based Modeling</h3>
+<p>###Active Grammar-based Modeling</p>
 
-<p>AGM is the result of Luis Manso&#39;s PhD thesis that &quot;dealt with making software systems for robots more scalable, flexible and easier to develop using software engineering for robotics [...] and enhancing active perception in robots using a grammar-based technique named active grammar-based modeling and a specially tailored novelty-detection algorithm named cognitive subtraction&quot;<a href="http://ljmanso.com/thesis.php">1</a>. To not extend much this post, you can check the working of the AGM on its <a href="http://ljmanso.com/agm/">official website</a>. We will target only that AGM proves to be a useful graphical tool to program rules and  to test domains and problems, and its grammar has a reminiscent of the PDDL language (has a AGM to PDDL converter). Let&#39;s look at the same example as before but now in AGM:</p>
+<p>AGM is the result of Luis Manso’s PhD thesis that “dealt with making software systems for robots more scalable, flexible and easier to develop using software engineering for robotics […] and enhancing active perception in robots using a grammar-based technique named active grammar-based modeling and a specially tailored novelty-detection algorithm named cognitive subtraction”<a href="http://ljmanso.com/thesis.php">1</a>. To not extend much this post, you can check the working of the AGM on its <a href="http://ljmanso.com/agm/">official website</a>. We will target only that AGM proves to be a useful graphical tool to program rules and  to test domains and problems, and its grammar has a reminiscent of the PDDL language (has a AGM to PDDL converter). Let’s look at the same example as before but now in AGM:</p>
 
 <p>This would be the set of rules in a .aggl file:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">// START OF THE FILE:
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// START OF THE FILE:
 segment : active(1)
 {
     {
@@ -303,53 +310,71 @@ square : active(1)
             d-&gt;a(union)
     }
 }
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>The initial world model is stored in a xml file:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;AGMModel&gt;
-    &lt;symbol id=&quot;1&quot; type=&quot;A&quot; /&gt;  #There is only a vertex node (symbol) with the identifier &quot;1&quot; and te type &quot;A&quot;
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;AGMModel&gt;
+    &lt;symbol id="1" type="A" /&gt;  #There is only a vertex node (symbol) with the identifier "1" and te type "A"
 &lt;/AGMModel&gt;
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>The goal or target world is stored in another xml file:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;AGMModel&gt;
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;AGMModel&gt;
     # NODES:
-    &lt;symbol id=&quot;a&quot; type=&quot;A&quot; /&gt;
-    &lt;symbol id=&quot;b&quot; type=&quot;B&quot; /&gt;
-    &lt;symbol id=&quot;c&quot; type=&quot;C&quot; /&gt;
-    &lt;symbol id=&quot;d&quot; type=&quot;D&quot; /&gt;
+    &lt;symbol id="a" type="A" /&gt;
+    &lt;symbol id="b" type="B" /&gt;
+    &lt;symbol id="c" type="C" /&gt;
+    &lt;symbol id="d" type="D" /&gt;
     # LINKS BETWEEN NODES (RELATIONSHIPS)
-    &lt;link src=&quot;a&quot; dst=&quot;b&quot; label=&quot;union&quot; /&gt;
-    &lt;link src=&quot;b&quot; dst=&quot;c&quot; label=&quot;union&quot; /&gt;
-    &lt;link src=&quot;c&quot; dst=&quot;d&quot; label=&quot;union&quot; /&gt;
-    &lt;link src=&quot;d&quot; dst=&quot;a&quot; label=&quot;union&quot; /&gt;
+    &lt;link src="a" dst="b" label="union" /&gt;
+    &lt;link src="b" dst="c" label="union" /&gt;
+    &lt;link src="c" dst="d" label="union" /&gt;
+    &lt;link src="d" dst="a" label="union" /&gt;
 &lt;/AGMModel&gt;
-</code></pre></div>
-<h3>Component architecture</h3>
+</code></pre>
+</div>
+
+<p>###Component architecture</p>
 
 <p>Explained more or less the planners, we will explain the architecture of components developed by robocomp for the robot to be able to carry out actions. Oversimplifying the question in order to that the reader make a clear idea of how the architecture works, we can say that this architecture is divided into three levels:</p>
 
-<p><img src="https://github.com/mercedes92/VisualIKExperiment/blob/master/images/Arquitectura.png?raw=true" alt="Alt text"></p>
+<p><img src="https://github.com/mercedes92/VisualIKExperiment/blob/master/images/Arquitectura.png?raw=true" alt="Alt text" /></p>
 
 <ol>
-<li>First we need a problem domain (a set of rules), like problems in a home environment and a representation of the environment (a model of the robot and its environment).</li>
-<li>In the top we have the AGM planner. Given an initial world and an objective world, it is in charge of generating a plan to reach the goal with the domain defined.</li>
-<li>In the second label, we have a special component, the <code>executive</code>. Basically he is responsible for transmitting the plan generated by the planner to the lower components. These components perform their actions and alter the representation of the environment. so the executive will have to call the scheduler to verify that these changes on the environment are correct and possible. If the changes are verified, the executive will update the representation.</li>
-<li>In the third label we have the agent components. These are the components that receive the orders of the executive. They uses the operations of the lower component to change the representation. When they finish their execution, they publish the changes in order to be analyzed by the executive.</li>
-<li>In the botton we have the basic components. They are those who perform basic calculations. For example, our <code>inversekinematic</code> component, our <code>visualik</code> component and our <code>ikGraphGenerator</code> component are in this level.</li>
+  <li>First we need a problem domain (a set of rules), like problems in a home environment and a representation of the environment (a model of the robot and its environment).</li>
+  <li>In the top we have the AGM planner. Given an initial world and an objective world, it is in charge of generating a plan to reach the goal with the domain defined.</li>
+  <li>In the second label, we have a special component, the <code class="highlighter-rouge">executive</code>. Basically he is responsible for transmitting the plan generated by the planner to the lower components. These components perform their actions and alter the representation of the environment. so the executive will have to call the scheduler to verify that these changes on the environment are correct and possible. If the changes are verified, the executive will update the representation.</li>
+  <li>In the third label we have the agent components. These are the components that receive the orders of the executive. They uses the operations of the lower component to change the representation. When they finish their execution, they publish the changes in order to be analyzed by the executive.</li>
+  <li>In the botton we have the basic components. They are those who perform basic calculations. For example, our <code class="highlighter-rouge">inversekinematic</code> component, our <code class="highlighter-rouge">visualik</code> component and our <code class="highlighter-rouge">ikGraphGenerator</code> component are in this level.</li>
 </ol>
 
-<p>So the challenge that we have to complete is to create an agent that uses our three inverse kinematics components in order to reach a goal: that the robot take a cup. This component is called <code>graspingAgent</code> and is currently being developed by the laboratory. I would like to delve into its operation, but we still needs to implement many things and GSoC is coming to an end :(</p>
+<p>So the challenge that we have to complete is to create an agent that uses our three inverse kinematics components in order to reach a goal: that the robot take a cup. This component is called <code class="highlighter-rouge">graspingAgent</code> and is currently being developed by the laboratory. I would like to delve into its operation, but we still needs to implement many things and GSoC is coming to an end :(</p>
 
-<p>It&#39;s a shame to have to say goodbye with the work so close to being finished. But it doesn&#39;t matters, the next year the robot will be serving coffee to Robolab guys XD.</p>
+<p>It’s a shame to have to say goodbye with the work so close to being finished. But it doesn’t matters, the next year the robot will be serving coffee to Robolab guys XD.</p>
 
 <p>Bye!</p>
 
-<p><img src="http://photos.gograph.com/thumbs/CSP/CSP705/k24410287.jpg" alt="Alt text"></p>
+<p><img src="http://photos.gograph.com/thumbs/CSP/CSP705/k24410287.jpg" alt="Alt text" /></p>
+
 
 </div>
 
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/website/2016/04/25/gsoc16ideas/">
+            GSoC 2016 Ideas
+            <small>25 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
@@ -365,15 +390,6 @@ square : active(1)
           <a href="/website/2015/08/20/rajath3/">
             <i>GSoC,</i> After Midterms
             <small>20 Aug 2015</small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/website/2015/08/19/kripasindhu_sarkar_blog_4/">
-            GSoC, Computer vision components and libraries management -Open Detection <p>#4</p>
-            <small>19 Aug 2015</small>
           </a>
         </h3>
       </li>
