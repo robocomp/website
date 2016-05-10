@@ -13,7 +13,7 @@ title:            RoboComp
 tagline:          ''
 description:      'A simple robotics framework.'
 url:              http://robocomp.github.io
-baseurl:          /website/
+baseurl:          /website
 
 author:
   name:           'RoboComp'
