@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Introduction, Problem Statement and deliverables
+title: Introduction about me and my project
 ---
 
 Hello! My name is Daniel Gallego Sánchez, and I'm going to introduce me in this post. My date of birth is 11/08/1994, I’m ending computer engineering from the University of Extremadura, and actually I am refining my final degree project. Since last year, I have been working in the Robotics Laboratory of the UEx, Robolab. Today, I am using the robotic framework implemented by the laboratory, Robocomp, to perform my degree project which consists in improvement to robocompDSL tool.
