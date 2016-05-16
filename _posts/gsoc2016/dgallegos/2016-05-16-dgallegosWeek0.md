@@ -17,6 +17,9 @@ What do you need to understand my GSoC project? Well, I will work with **DSL** (
 I will not really use ROS, but it's necessary to know how it works to carry out the project.
 
 Cog: https://www.python.org/about/success/cog/
+
 PyParsing: http://pyparsing.wikispaces.com/
+
 DSL: https://en.wikipedia.org/wiki/Domain-specific_language
+
 RoboComp's repository: https://github.com/robocomp
