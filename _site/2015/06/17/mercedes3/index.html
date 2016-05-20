@@ -11,19 +11,19 @@
 
   <title>
     
-      <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#3</p>, Visual Inverse Kinematics &middot; RoboComp
+      <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#3</p> &middot; RoboComp
     
   </title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/website/public/css/poole.css">
-  <link rel="stylesheet" href="/website/public/css/syntax.css">
-  <link rel="stylesheet" href="/website/public/css/hyde.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/poole.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/syntax.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/hyde.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/websitepublic/apple-touch-icon-144-precomposed.png">
-                                 <link rel="shortcut icon" href="/websitepublic/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/rcwebsite2public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/rcwebsite2public/favicon.ico">
 
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
@@ -36,7 +36,7 @@
   <div class="container">
     <div class="sidebar-about">
       <h1>
-        <a href="/website">
+        <a href="/rcwebsite2">
           RoboComp
         </a>
       </h1>
@@ -44,7 +44,7 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a class="sidebar-nav-item" href="/website">Home</a>
+      <a class="sidebar-nav-item" href="/rcwebsite2">Home</a>
 
       
 
@@ -56,31 +56,31 @@
       
         
           
-            <a class="sidebar-nav-item" href="/website/Blog/">Blog</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/Blog/">Blog</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/GSoC15/">GSoC'15</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/GSoC/">GSoC</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/GSoC16/">GSoC'16</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/projects/">Projects</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/projects/">Projects</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/Tutorials/">Tutorials</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/about/">About</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/about/">About</a>
           
         
       
@@ -88,7 +88,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/website/contact/">Contact</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/contact/">Contact</a>
           
         
       
@@ -98,11 +98,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/website/install/">Install</a>
-          
-        
-      
-        
+            <a class="sidebar-nav-item" href="/rcwebsite2/install/">Install</a>
           
         
       
@@ -122,80 +118,74 @@
           
         
       
-        
-          
-        
-      
-      <a class="sidebar-nav-item" href="http://robocomp.readthedocs.org">Tutorials</a>
       <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
-      
       <span class="sidebar-nav-item">Currently v1.0.0</span>
     </nav>
 
-    <p>&copy; 2016. All rights reserved.</p>
+    <p>&copy; 2015. All rights reserved.</p>
   </div>
 </div>
 
 
     <div class="content container">
       <div class="post">
-  <h1 class="post-title"><i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#3</p>, Visual Inverse Kinematics</h1>
+  <h1 class="post-title"><i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#3</p></h1>
   <span class="post-date">17 Jun 2015</span>
   <p><strong>Visual inverse kinematics, Basic understanding :</strong> In the previous post we anticipate the problems caused by the gaps and inaccuracies of motors in the inverse kinematics of the robot. Now, in this third post we will talk about the solution implemented during the GSoC15 project.</p>
 
-<p>So, with the inverse kinematics component that we have implemented in Robocomp, we had the problem of inaccuracies and gaps in the robotic arm motors, problems that made the robot believed reach the target position without having actually achieved it. To solve this problem it was decided to implement a solution inside the visual field (which is what concerns us throughout this project), whose aim is to provide the inverse kinematics component a visual feedback that allows correct its mistakes. The operation of the algorithm is very simple and takes as its starting point the investigations of Seth Hutchinson, Greg Hager and Peter Corke, collected in <code class="highlighter-rouge">A Tutorial on Visual Servo Control</code> [1].</p>
+<p>So, with the inverse kinematics component that we have implemented in Robocomp, we had the problem of inaccuracies and gaps in the robotic arm motors, problems that made the robot believed reach the target position without having actually achieved it. To solve this problem it was decided to implement a solution inside the visual field (which is what concerns us throughout this project), whose aim is to provide the inverse kinematics component a visual feedback that allows correct its mistakes. The operation of the algorithm is very simple and takes as its starting point the investigations of Seth Hutchinson, Greg Hager and Peter Corke, collected in <code>A Tutorial on Visual Servo Control</code> [1].</p>
 
-<p>##’Looking’, then ‘moving’</p>
+<h2>&#39;Looking&#39;, then &#39;moving&#39;</h2>
 
 <p>As Hutchinson, Hager and Corke reflect in their work:</p>
 
 <blockquote>
-  <p>Vision is a useful robotic sensor since it mimics the human sense of vision and allows for non-contact measurement of the environment. […] Typically visual sensing and manipulation are combined in a open-loop fashion, ‘looking’ then ‘moving’.</p>
+<p>Vision is a useful robotic sensor since it mimics the human sense of vision and allows for non-contact measurement of the environment. [...] Typically visual sensing and manipulation are combined in a open-loop fashion, &#39;looking&#39; then &#39;moving&#39;.</p>
 </blockquote>
 
-<p>So the goal of <code class="highlighter-rouge">Visual servo control</code> is to control the movement and location of the robot using visual techniques (detection and recognition of objects in an image). To get an idea how it works, we must have clear some fundamental concepts in this field</p>
+<p>So the goal of <code>Visual servo control</code> is to control the movement and location of the robot using visual techniques (detection and recognition of objects in an image). To get an idea how it works, we must have clear some fundamental concepts in this field</p>
 
-<p>###Kinematics of a robot</p>
+<h3>Kinematics of a robot</h3>
 
 <p>We need to know what a kinematic chain is, what reference system and transformation coordinate are anda what algorithm is executed inside the robot kinematic. These concepts were explained in the second post of this collection. If you have doubts, consult it.</p>
 
 <p>If we link the kinematic chains concept with visual techniques (ie, now, in addition to the chain formed by the motors of the robotic arm, we have a camera in the chain looking one of the chain ends), we have two types of systems:</p>
 
 <ol>
-  <li>Endpoint open-loop (EOL): Systems which only observed the target object. These systems don’t need to look at his end effector so normally the camera is on the end effector (hand-eye).</li>
-  <li>Endpoint closed-loop (ECL): Systems which observed the target object and the end effector of the arm.</li>
+<li>Endpoint open-loop (EOL): Systems which only observed the target object. These systems don&#39;t need to look at his end effector so normally the camera is on the end effector (hand-eye).</li>
+<li>Endpoint closed-loop (ECL): Systems which observed the target object and the end effector of the arm.</li>
 </ol>
 
 <p>The visual inverse kinematics that we implemented in Robocomp uses this last configuration because is independent of hand-eye calibration errors (precisely, the clearances errors and inaccuracies that bother us in the inverse kinematics), although often requires solution of a more demanding vision problem, because we need to track the end effector.</p>
 
-<p>###Camera Projection Models</p>
+<h3>Camera Projection Models</h3>
 
-<p>We need to understand the geometric aspects of the imaging process if we want to understand how the information provided by the vision system is used to control the movement of the robot. The first thing to consider is that an image taken by a camera is always in 2D, so we’re losing spatial information (the depth of the scene).</p>
+<p>We need to understand the geometric aspects of the imaging process if we want to understand how the information provided by the vision system is used to control the movement of the robot. The first thing to consider is that an image taken by a camera is always in 2D, so we&#39;re losing spatial information (the depth of the scene). </p>
 
-<p><img src="http://masters.donntu.org/2012/etf/nikitin/library/article10.files/image10.01.png" alt="Alt text" /></p>
+<p><img src="http://masters.donntu.org/2012/etf/nikitin/library/article10.files/image10.01.png" alt="Alt text"></p>
 
 <p>To resolve this issue we have several options:
 1. We can use multiple cameras that capture the studio space from different positions.
 2. We can obtain multiple views with a single camera.
 3. We can have previously stored the geometric relationship between certain characteristics of the target or the elements in the studio space.</p>
 
-<p>In any case, we must keep in mind certain things common to all cameras. For example the system of axes: the <code class="highlighter-rouge">X</code> and <code class="highlighter-rouge">Y</code> axes form the basis of the image plane and the <code class="highlighter-rouge">Z</code> axis is perpendicular to the image plane, along the optical axis of the camera. The origin is located on the <code class="highlighter-rouge">Z</code> axis at a distance <code class="highlighter-rouge">λ</code> of the image plane. That distance <code class="highlighter-rouge">λ</code> is what we call focal length.</p>
+<p>In any case, we must keep in mind certain things common to all cameras. For example the system of axes: the <code>X</code> and <code>Y</code> axes form the basis of the image plane and the <code>Z</code> axis is perpendicular to the image plane, along the optical axis of the camera. The origin is located on the <code>Z</code> axis at a distance <code>λ</code> of the image plane. That distance <code>λ</code> is what we call focal length.</p>
 
-<p><img src="http://www.hitl.washington.edu/artoolkit/documentation/images/ch03-17.gif" alt="ALt text" /></p>
+<p><img src="http://www.hitl.washington.edu/artoolkit/documentation/images/ch03-17.gif" alt="ALt text"></p>
 
-<p>We can map the position and the orientation of the end effector in space calculating the projective geometry of the camera. But this method, complicated in itself, increases their difficulty because we need <code class="highlighter-rouge">recognize</code> the end effector in the picture, in addition to deriving the speed from the changes observed in each frame that the camera capture. For these reasons, in our visual inverse kinematic component, we use the algorithm proposed by Edwin Olson, <code class="highlighter-rouge">Apriltags</code> [2] a visual fiducial system that uses a 2D barcode style <code class="highlighter-rouge">tag</code> (binary, black and white synthetic brands), allowing full 6 DOF localization of features from a single image. Thus, if we put a apriltag in the end effector, we can get its position and orientation in a very simple way.</p>
+<p>We can map the position and the orientation of the end effector in space calculating the projective geometry of the camera. But this method, complicated in itself, increases their difficulty because we need <code>recognize</code> the end effector in the picture, in addition to deriving the speed from the changes observed in each frame that the camera capture. For these reasons, in our visual inverse kinematic component, we use the algorithm proposed by Edwin Olson, <code>Apriltags</code> [2] a visual fiducial system that uses a 2D barcode style <code>tag</code> (binary, black and white synthetic brands), allowing full 6 DOF localization of features from a single image. Thus, if we put a apriltag in the end effector, we can get its position and orientation in a very simple way. </p>
 
-<p>##visualBIK component</p>
+<h2>visualBIK component</h2>
 
-<p>Having already some clear concepts, let us study how the component developed in this project, <code class="highlighter-rouge">visualBIK</code>, works.</p>
+<p>Having already some clear concepts, let us study how the component developed in this project, <code>visualBIK</code>, works.</p>
 
-<p>Our component implements a simple state machine where waits the reception of a target position (a vector with traslations and rotations: [tx, ty, tz,    rx, ry, rz]) through its interface. When a target is received, the visualBIK send it to the inverse kinematics component like a <code class="highlighter-rouge">POSE6D</code> target, and waits for him to finish running the target and placing the arm. As the end effector will be a little out of the target position (due to inaccuracies), the visualBIK will be prepared to correct this error:</p>
+<p>Our component implements a simple state machine where waits the reception of a target position (a vector with traslations and rotations: [tx, ty, tz,    rx, ry, rz]) through its interface. When a target is received, the visualBIK send it to the inverse kinematics component like a <code>POSE6D</code> target, and waits for him to finish running the target and placing the arm. As the end effector will be a little out of the target position (due to inaccuracies), the visualBIK will be prepared to correct this error:</p>
 
 <ol>
-  <li>It calculates the visual pose of the end effector (through apriltags, visualBIK receives the position of the end effector mark that the camera head sees).</li>
-  <li>After, it compute the error vector between the visual pose and the target pose.</li>
-  <li>With this error vector, visualBIK corrects the target pose and sends the new position to the inverse kinematics component.</li>
-  <li>This process is repeated until the error achieved in translation and rotation is less than a predetermined threshold.</li>
+<li>It calculates the visual pose of the end effector (through apriltags, visualBIK receives the position of the end effector mark that the camera head sees).</li>
+<li>After, it compute the error vector between the visual pose and the target pose.</li>
+<li>With this error vector, visualBIK corrects the target pose and sends the new position to the inverse kinematics component.</li>
+<li>This process is repeated until the error achieved in translation and rotation is less than a predetermined threshold.</li>
 </ol>
 
 <p>In this way we can correct the errors introduced by the inaccuracies of the joints.</p>
@@ -204,10 +194,11 @@
 
 <p>Bye!</p>
 
-<hr />
-<p>[1] Hutchinson, S., Hager, G., Corke, P. <code class="highlighter-rouge">A Tutorial on Visual Servo Control</code>, IEEE Trans. Robot. Automat., 12(5):651–670, Oct. 1996. Download in http://www-cvr.ai.uiuc.edu/~seth/ResPages/pdfs/HutHagCor96.pdf</p>
+<hr>
 
-<p>[2] OLson, E. <code class="highlighter-rouge">AprilTag: A robust and flexible visual fiducial system</code>, Robotics and Automation (ICRA), 2011 IEEE International Conference on, 3400-3407</p>
+<p>[1] Hutchinson, S., Hager, G., Corke, P. <code>A Tutorial on Visual Servo Control</code>, IEEE Trans. Robot. Automat., 12(5):651--670, Oct. 1996. Download in http://www-cvr.ai.uiuc.edu/~seth/ResPages/pdfs/HutHagCor96.pdf</p>
+
+<p>[2] OLson, E. <code>AprilTag: A robust and flexible visual fiducial system</code>, Robotics and Automation (ICRA), 2011 IEEE International Conference on, 3400-3407</p>
 
 </div>
 
@@ -217,27 +208,27 @@
     
       <li>
         <h3>
-          <a href="/website/2016/04/25/gsoc16ideas/">
-            GSoC 2016 Ideas
-            <small>25 Apr 2016</small>
+          <a href="/rcwebsite2/2015/07/02/kripa1/">
+            <i>GSoC,</i> Computer vision components and libraries management <p>#1</p>
+            <small>02 Jul 2015</small>
           </a>
         </h3>
       </li>
     
       <li>
         <h3>
-          <a href="/website/2015/08/21/nithin11/">
-            Packaging FCL and libccd
-            <small>21 Aug 2015</small>
+          <a href="/rcwebsite2/2015/07/02/Kripa2/">
+            <i>GSoC,</i> Computer vision components and libraries management <p>#2</p>
+            <small>02 Jul 2015</small>
           </a>
         </h3>
       </li>
     
       <li>
         <h3>
-          <a href="/website/2015/08/20/rajath3/">
-            <i>GSoC,</i> After Midterms
-            <small>20 Aug 2015</small>
+          <a href="/rcwebsite2/2015/06/26/nithin6/">
+            Build tools
+            <small>26 Jun 2015</small>
           </a>
         </h3>
       </li>

@@ -1,11 +1,10 @@
 # Dependencies
-markdown:         kramdown
-highlighter:      rouge
+markdown:         redcarpet
+highlighter:      pygments
 
 # Permalinks
 permalink:        pretty
-
-gems:             [jekyll-paginate, jekyll-gist]
+relative_permalinks: false
 
 # Setup
 title:            RoboComp

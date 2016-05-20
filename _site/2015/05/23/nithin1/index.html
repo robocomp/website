@@ -11,19 +11,19 @@
 
   <title>
     
-      Debian Packaging 1 &middot; RoboComp
+      Introduction to debian packaging &middot; RoboComp
     
   </title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/website/public/css/poole.css">
-  <link rel="stylesheet" href="/website/public/css/syntax.css">
-  <link rel="stylesheet" href="/website/public/css/hyde.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/poole.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/syntax.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/hyde.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/websitepublic/apple-touch-icon-144-precomposed.png">
-                                 <link rel="shortcut icon" href="/websitepublic/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/rcwebsite2public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/rcwebsite2public/favicon.ico">
 
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
@@ -36,7 +36,7 @@
   <div class="container">
     <div class="sidebar-about">
       <h1>
-        <a href="/website">
+        <a href="/rcwebsite2">
           RoboComp
         </a>
       </h1>
@@ -44,7 +44,7 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a class="sidebar-nav-item" href="/website">Home</a>
+      <a class="sidebar-nav-item" href="/rcwebsite2">Home</a>
 
       
 
@@ -56,31 +56,31 @@
       
         
           
-            <a class="sidebar-nav-item" href="/website/Blog/">Blog</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/Blog/">Blog</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/GSoC15/">GSoC'15</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/GSoC/">GSoC</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/GSoC16/">GSoC'16</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/projects/">Projects</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/projects/">Projects</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/Tutorials/">Tutorials</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/about/">About</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/about/">About</a>
           
         
       
@@ -88,7 +88,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/website/contact/">Contact</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/contact/">Contact</a>
           
         
       
@@ -98,11 +98,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/website/install/">Install</a>
-          
-        
-      
-        
+            <a class="sidebar-nav-item" href="/rcwebsite2/install/">Install</a>
           
         
       
@@ -122,96 +118,59 @@
           
         
       
-        
-          
-        
-      
-      <a class="sidebar-nav-item" href="http://robocomp.readthedocs.org">Tutorials</a>
       <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
-      
       <span class="sidebar-nav-item">Currently v1.0.0</span>
     </nav>
 
-    <p>&copy; 2016. All rights reserved.</p>
+    <p>&copy; 2015. All rights reserved.</p>
   </div>
 </div>
 
 
     <div class="content container">
       <div class="post">
-  <h1 class="post-title">Debian Packaging 1</h1>
+  <h1 class="post-title">Introduction to debian packaging</h1>
   <span class="post-date">23 May 2015</span>
-  <p>##What is a package
-By definition <em>Debian packages are standard Unix ar archives that include two tar archives optionally compressed with gzip (zlib), Bzip2, lzma, or xz (lzma2): one archive holds the control information and another contains the program data.</em>
+  <h2>What is a package</h2>
+
+<p>By definition <em>Debian packages are standard Unix ar archives that include two tar archives optionally compressed with gzip (zlib), Bzip2, lzma, or xz (lzma2): one archive holds the control information and another contains the program data.</em>
 All debain packages should follow certain conventions. The root source directory should contain a directory named <em>debian</em>. This directory contains files which stores info about the package.
 These are the required files under the debian directory</p>
 
 <ul>
-  <li>
-    <p><strong>rules</strong><br />
+<li><p><strong>rules</strong><br>
 This is the maintainer script for the package building. This script is run by the packaging application to build and install the source into a <em>tmp</em> directory in the debian folder. It has the following Targets</p>
 
-    <ul>
-      <li>
-        <p><em>clean target</em> : to clean all compiled, generated, and useless files in the build-tree.</p>
-      </li>
-      <li>
-        <p><em>build target</em> : to build the source into compiled programs and formatted documents in the build-tree.</p>
-      </li>
-      <li>
-        <p><em>build-arch target</em> : to build the source into arch-dependent compiled programs in the build-tree.</p>
-      </li>
-      <li>
-        <p><em>build-indep target</em> : to build the source into arch-independent formatted documents in the build-tree.</p>
-      </li>
-      <li>
-        <p><em>binary target</em> : to create all binary packages (effectively a combination of binary-arch and binary-indep targets)</p>
-      </li>
-      <li>
-        <p><em>binary-arch target</em> : to create arch-dependent (Architecture: any) binary packages in the parent directory.</p>
-      </li>
-      <li>
-        <p><em>binary-indep target</em>: to create arch-independent (Architecture: all) binary packages in the parent directory.</p>
-      </li>
-    </ul>
-  </li>
-  <li>
-    <p><strong>changelog</strong><br />
-This file contains the project changelog along with the project name , version and distribution and urgency of your package.</p>
-  </li>
-  <li>
-    <p><strong>compact</strong><br />
-The compact file defines the debhelper compatibility level.</p>
-  </li>
-  <li>
-    <p><strong>debian/control</strong><br />
-This file contains various values which dpkg, dselect, apt-get, apt-cache, aptitude, and other package management tools will use to manage the package. The control file describes the source and binary package, and gives some information about them, such as their names, who the package maintainer is, build and run dependencies and so on.</p>
-  </li>
-  <li>
-    <p><strong>copyright</strong><br />
-This file contains information about the copyright and license of the upstream sources</p>
-  </li>
-  <li>
-    <p><strong>(pre/post)(inst/rm)</strong><br />
-This are the scipts which are run before or after installation or removal of package.</p>
-  </li>
+<ul>
+<li><em>clean target</em> : to clean all compiled, generated, and useless files in the build-tree.</li>
+<li><em>build target</em> : to build the source into compiled programs and formatted documents in the build-tree.</li>
+<li><em>build-arch target</em> : to build the source into arch-dependent compiled programs in the build-tree.</li>
+<li><em>build-indep target</em> : to build the source into arch-independent formatted documents in the build-tree.</li>
+<li><em>binary target</em> : to create all binary packages (effectively a combination of binary-arch and binary-indep targets)</li>
+<li><em>binary-arch target</em> : to create arch-dependent (Architecture: any) binary packages in the parent directory.</li>
+<li><em>binary-indep target</em>: to create arch-independent (Architecture: all) binary packages in the parent directory.</li>
+</ul></li>
+<li><p><strong>changelog</strong><br>
+This file contains the project changelog along with the project name , version and distribution and urgency of your package.</p></li>
+<li><p><strong>compact</strong><br>
+The compact file defines the debhelper compatibility level.</p></li>
+<li><p><strong>debian/control</strong><br>
+This file contains various values which dpkg, dselect, apt-get, apt-cache, aptitude, and other package management tools will use to manage the package. The control file describes the source and binary package, and gives some information about them, such as their names, who the package maintainer is, build and run dependencies and so on.</p></li>
+<li><p><strong>copyright</strong><br>
+This file contains information about the copyright and license of the upstream sources</p></li>
+<li><p><strong>(pre/post)(inst/rm)</strong><br>
+This are the scipts which are run before or after installation or removal of package.</p></li>
 </ul>
 
-<p>Now once you have the source directory in the prescribed format. you will need a <em>.tar.gz</em> archive of the source in the same folder.Then we can create a debian binary package using</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>debuild -i -us -uc -b
-</code></pre>
-</div>
-
+<p>Now once you have the source directory in the prescribed format. you will need a <em>.tar.gz</em> archive of the source in the same folder.Then we can create a debian binary package using </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">debuild -i -us -uc -b
+</code></pre></div>
 <p>Or a debian source package using</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">debuild -i -us -uc -S
+</code></pre></div>
+<hr>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>debuild -i -us -uc -S
-</code></pre>
-</div>
-
-<hr />
 <p>Nithin Murali</p>
-
 
 </div>
 
@@ -221,27 +180,27 @@ This are the scipts which are run before or after installation or removal of pac
     
       <li>
         <h3>
-          <a href="/website/2016/04/25/gsoc16ideas/">
-            GSoC 2016 Ideas
-            <small>25 Apr 2016</small>
+          <a href="/rcwebsite2/2015/07/02/kripa1/">
+            <i>GSoC,</i> Computer vision components and libraries management <p>#1</p>
+            <small>02 Jul 2015</small>
           </a>
         </h3>
       </li>
     
       <li>
         <h3>
-          <a href="/website/2015/08/21/nithin11/">
-            Packaging FCL and libccd
-            <small>21 Aug 2015</small>
+          <a href="/rcwebsite2/2015/07/02/Kripa2/">
+            <i>GSoC,</i> Computer vision components and libraries management <p>#2</p>
+            <small>02 Jul 2015</small>
           </a>
         </h3>
       </li>
     
       <li>
         <h3>
-          <a href="/website/2015/08/20/rajath3/">
-            <i>GSoC,</i> After Midterms
-            <small>20 Aug 2015</small>
+          <a href="/rcwebsite2/2015/06/26/nithin6/">
+            Build tools
+            <small>26 Jun 2015</small>
           </a>
         </h3>
       </li>

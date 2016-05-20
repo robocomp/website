@@ -16,14 +16,14 @@
   </title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/website/public/css/poole.css">
-  <link rel="stylesheet" href="/website/public/css/syntax.css">
-  <link rel="stylesheet" href="/website/public/css/hyde.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/poole.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/syntax.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/hyde.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/websitepublic/apple-touch-icon-144-precomposed.png">
-                                 <link rel="shortcut icon" href="/websitepublic/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/rcwebsite2public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/rcwebsite2public/favicon.ico">
 
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
@@ -36,7 +36,7 @@
   <div class="container">
     <div class="sidebar-about">
       <h1>
-        <a href="/website">
+        <a href="/rcwebsite2">
           RoboComp
         </a>
       </h1>
@@ -44,7 +44,7 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a class="sidebar-nav-item" href="/website">Home</a>
+      <a class="sidebar-nav-item" href="/rcwebsite2">Home</a>
 
       
 
@@ -56,31 +56,31 @@
       
         
           
-            <a class="sidebar-nav-item" href="/website/Blog/">Blog</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/Blog/">Blog</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/GSoC15/">GSoC'15</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/GSoC/">GSoC</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/GSoC16/">GSoC'16</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/projects/">Projects</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/projects/">Projects</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/Tutorials/">Tutorials</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/about/">About</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/about/">About</a>
           
         
       
@@ -88,7 +88,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/website/contact/">Contact</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/contact/">Contact</a>
           
         
       
@@ -98,11 +98,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/website/install/">Install</a>
-          
-        
-      
-        
+            <a class="sidebar-nav-item" href="/rcwebsite2/install/">Install</a>
           
         
       
@@ -122,17 +118,11 @@
           
         
       
-        
-          
-        
-      
-      <a class="sidebar-nav-item" href="http://robocomp.readthedocs.org">Tutorials</a>
       <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
-      
       <span class="sidebar-nav-item">Currently v1.0.0</span>
     </nav>
 
-    <p>&copy; 2016. All rights reserved.</p>
+    <p>&copy; 2015. All rights reserved.</p>
   </div>
 </div>
 
@@ -141,44 +131,31 @@
       <div class="post">
   <h1 class="post-title">aprilTagsComp, Tutorial to simulate virtual apriltags</h1>
   <span class="post-date">23 May 2015</span>
-  <p>If you haven’t already, Then do read about aprilTagsComp <a href="apriltags.md">here</a> for better understanding. In this tutorial you will learn the actual functionality of apriltags.</p>
+  <p>If you haven&#39;t already, Then do read about aprilTagsComp <a href="apriltags.md">here</a> for better understanding. In this tutorial you will learn the actual functionality of apriltags.</p>
 
-<p>First make sure you have installed apriltags. Please follow the steps that is given in <em>INSTALL_APRILTAGS_LIB.TXT</em>. Then move to the apriltagscomp folder</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>cd ~/robocomp/components/robocomp-robolab/components/apriltagsComp
-</code></pre>
-</div>
-
+<p>First make sure you have installed apriltags. Please follow the steps that is given in <em>INSTALL<em>APRILTAGS</em>LIB.TXT</em>. Then move to the apriltagscomp folder</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp/components/robocomp-robolab/components/apriltagsComp
+</code></pre></div>
 <p>Compile by executing</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>cmake.
+<div class="highlight"><pre><code class="language-text" data-lang="text">cmake.
 make
-</code></pre>
-</div>
-
+</code></pre></div>
 <p>Now that you have compiled the component and have the binary generated. Open a new tab in yakuake or terminal and execute</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>cd robocomp/files/innermodel
+<div class="highlight"><pre><code class="language-text" data-lang="text">cd robocomp/files/innermodel
 rcis simpleworld.xml
-</code></pre>
-</div>
-
-<p>Here we will considering <em>simpleworld.xml</em> as an example since it has virtual apriltags and a robot with a camera is present for simulation. After execution you should now see two windows, One showing the robot camera’s view pointing at one of the apriltags and the other with the site map showing the robot and two virtual apriltags.</p>
+</code></pre></div>
+<p>Here we will considering <em>simpleworld.xml</em> as an example since it has virtual apriltags and a robot with a camera is present for simulation. After execution you should now see two windows, One showing the robot camera&#39;s view pointing at one of the apriltags and the other with the site map showing the robot and two virtual apriltags.</p>
 
 <p>Now go back to the terminal where you had compiled the apriltagsComp and execute</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>bin/apriltagscomp --Ice.Config=etc/generic_config
-</code></pre>
-</div>
-
+<div class="highlight"><pre><code class="language-text" data-lang="text">bin/apriltagscomp --Ice.Config=etc/generic_config
+</code></pre></div>
 <p>You should now see the following output.</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>user@username:~/robocomp/components/robocomp-robolab/components/apriltagsComp$ bin/apriltagscomp --Ice.Config=etc/generic_config
-[/home/username/robocomp/classes/rapplication/rapplication.cpp]: Loading [camera:tcp -h localhost -p 10001] proxy at 'CameraProxy'...
+<div class="highlight"><pre><code class="language-text" data-lang="text">user@username:~/robocomp/components/robocomp-robolab/components/apriltagsComp$ bin/apriltagscomp --Ice.Config=etc/generic_config
+[/home/username/robocomp/classes/rapplication/rapplication.cpp]: Loading [camera:tcp -h localhost -p 10001] proxy at &#39;CameraProxy&#39;...
 18:20:19:421::Info::apriltagscomp.cpp::139::/home/username/robocomp/components/robocomp-robolab/components/apriltagsComp/src/apriltagscomp.cpp::run::CameraProxy initialized Ok!
-[/home/username/robocomp/classes/rapplication/rapplication.cpp]: Loading [rgbd:tcp -h localhost -p 10096] proxy at 'RGBDProxy'...
+[/home/username/robocomp/classes/rapplication/rapplication.cpp]: Loading [rgbd:tcp -h localhost -p 10096] proxy at &#39;RGBDProxy&#39;...
 18:20:19:421::Info::apriltagscomp.cpp::150::/home/username/robocomp/components/robocomp-robolab/components/apriltagsComp/src/apriltagscomp.cpp::run::RGBDProxy initialized Ok!
-[/home/username/robocomp/classes/rapplication/rapplication.cpp]: Loading [rgbdbus:tcp -h localhost -p 10239] proxy at 'RGBDBusProxy'...
+[/home/username/robocomp/classes/rapplication/rapplication.cpp]: Loading [rgbdbus:tcp -h localhost -p 10239] proxy at &#39;RGBDBusProxy&#39;...
 18:20:19:421::Info::apriltagscomp.cpp::161::/home/username/robocomp/components/robocomp-robolab/components/apriltagsComp/src/apriltagscomp.cpp::run::RGBDBusProxy initialized Ok!
 18:20:19:423::Debug::genericworker.cpp::53::/home/username/robocomp/components/robocomp-robolab/components/apriltagsComp/src/genericworker.cpp::setPeriod::Period changed100
 18:20:19:423::Info::specificmonitor.cpp::56::/home/username/robocomp/components/robocomp-robolab/components/apriltagsComp/src/specificmonitor.cpp::initialize::Starting monitor ...
@@ -191,7 +168,7 @@ InnerModelPath /home/robocomp/robocomp/files/innermodel/simpleworld.xml
 RoboCompAprilTagsComp::AprilTagsComp started
 InnerModelReader: reading /home/robocomp/robocomp/files/innermodel/simpleworld.xml
 InnerModelRGBD: 0.000000 {10096}
-"/home/robocomp/robocomp/files/innermodel/simpleworld.xml"   "rgbd" 
+&quot;/home/robocomp/robocomp/files/innermodel/simpleworld.xml&quot;   &quot;rgbd&quot; 
 FOCAL LENGHT: 480 
   6.45862 fps
   7.17213 fps
@@ -208,10 +185,7 @@ FOCAL LENGHT: 480
   7.14883 fps
   6.92038 fps
   7.03233 fps
-</code></pre>
-</div>
-
-
+</code></pre></div>
 </div>
 
 <div class="related">
@@ -220,27 +194,27 @@ FOCAL LENGHT: 480
     
       <li>
         <h3>
-          <a href="/website/2016/04/25/gsoc16ideas/">
-            GSoC 2016 Ideas
-            <small>25 Apr 2016</small>
+          <a href="/rcwebsite2/2015/07/02/kripa1/">
+            <i>GSoC,</i> Computer vision components and libraries management <p>#1</p>
+            <small>02 Jul 2015</small>
           </a>
         </h3>
       </li>
     
       <li>
         <h3>
-          <a href="/website/2015/08/21/nithin11/">
-            Packaging FCL and libccd
-            <small>21 Aug 2015</small>
+          <a href="/rcwebsite2/2015/07/02/Kripa2/">
+            <i>GSoC,</i> Computer vision components and libraries management <p>#2</p>
+            <small>02 Jul 2015</small>
           </a>
         </h3>
       </li>
     
       <li>
         <h3>
-          <a href="/website/2015/08/20/rajath3/">
-            <i>GSoC,</i> After Midterms
-            <small>20 Aug 2015</small>
+          <a href="/rcwebsite2/2015/06/26/nithin6/">
+            Build tools
+            <small>26 Jun 2015</small>
           </a>
         </h3>
       </li>

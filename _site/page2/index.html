@@ -16,14 +16,14 @@
   </title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/website/public/css/poole.css">
-  <link rel="stylesheet" href="/website/public/css/syntax.css">
-  <link rel="stylesheet" href="/website/public/css/hyde.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/poole.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/syntax.css">
+  <link rel="stylesheet" href="/rcwebsite2/public/css/hyde.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/websitepublic/apple-touch-icon-144-precomposed.png">
-                                 <link rel="shortcut icon" href="/websitepublic/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/rcwebsite2public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/rcwebsite2public/favicon.ico">
 
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
@@ -36,7 +36,7 @@
   <div class="container">
     <div class="sidebar-about">
       <h1>
-        <a href="/website">
+        <a href="/rcwebsite2">
           RoboComp
         </a>
       </h1>
@@ -44,7 +44,7 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a class="sidebar-nav-item" href="/website">Home</a>
+      <a class="sidebar-nav-item" href="/rcwebsite2">Home</a>
 
       
 
@@ -56,31 +56,31 @@
       
         
           
-            <a class="sidebar-nav-item" href="/website/Blog/">Blog</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/Blog/">Blog</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/GSoC15/">GSoC'15</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/GSoC/">GSoC</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/GSoC16/">GSoC'16</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/projects/">Projects</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/projects/">Projects</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/Tutorials/">Tutorials</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/website/about/">About</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/about/">About</a>
           
         
       
@@ -88,7 +88,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/website/contact/">Contact</a>
+            <a class="sidebar-nav-item" href="/rcwebsite2/contact/">Contact</a>
           
         
       
@@ -98,11 +98,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/website/install/">Install</a>
-          
-        
-      
-        
+            <a class="sidebar-nav-item" href="/rcwebsite2/install/">Install</a>
           
         
       
@@ -122,17 +118,11 @@
           
         
       
-        
-          
-        
-      
-      <a class="sidebar-nav-item" href="http://robocomp.readthedocs.org">Tutorials</a>
       <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
-      
       <span class="sidebar-nav-item">Currently v1.0.0</span>
     </nav>
 
-    <p>&copy; 2016. All rights reserved.</p>
+    <p>&copy; 2015. All rights reserved.</p>
   </div>
 </div>
 
@@ -147,384 +137,330 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="/website/2015/08/19/kripasindhu_sarkar_blog_3/">
-        GSoC, Computer vision components and libraries management - Open Detction <p>#3</p>
+      <a href="/rcwebsite2/2015/06/22/gsoc15/">
+        <i>GSoC,</i> 2015 ideas
       </a>
     </h1>
 
-    <span class="post-date">19 Aug 2015</span>
+    <span class="post-date">22 Jun 2015</span>
 
-    <p><strong>Contributions after Mid-term</strong>
-Following are the contributions towards the project <em>after</em> the mid-term evaluations:</p>
+    <p>1.- <strong>RoboComp tutorial, social management and documentation</strong>: RoboComp’ sources has been ported to GitHub and we are building a new documentation repository there. We are using GitHub markdown language (GFM) write new docs and turorials. We want to build a set of short tutorials that guide the new users along several interconnected topics, such as component oriented programming, robotics, computer vision, robotics software modules integrating heterogeneous sources, cognitive architectures and testing and validating, all from inside RoboComp. These new tutorials will be developed using RoboComp’s robotics simulator, RCIS, so interactive examples can be created and used in the explanations. This package also includes work on automated installation scripts using CMake. Generic knowledge of linux systems, website and wiki administration is needed. This is a key task for our project as it would bring more attention to it as it will open the development to new people interested in the field.</p>
+
+<p>Required student level: intermediate programming and systems administration.</p>
+
+<p>2.- <strong>Computer vision components and libraries management</strong>: RoboComp is being used to build a new cognitive architecture called RoboCog. Among the different modules already in progress, the object detection module is crucially important. We are pursuing an efficient 2D/3D vision pipeline that, working with the robot body control module, is able to localize, recognize, fit a pre-existing model and track a series of daily objects that the robot might encounter. Grasping would be one target of this pipeline, or even a means to complete recognition. There are currently many components implementing computer vision algorithms and intensive work done in pipeline construction. The key tasks on this idea would be to collaborate in the creation of high level tools to organize, document and test different pipelines for an specific task. These tools will be designed in collaboration with the mentors and tested in RoboComp’s RCIS simulator and real robots.</p>
+
+<p>Required student level: intermediate computer vision knowledge, C++ programming, basic CMake knowledge</p>
+
+<p>3.- <strong>RoboComp Building and deployment system design</strong>: Current CMake building system in RoboComp is limited only to the core libraries, the RCIS simulator and some additional tools. A very useful task would be to come up with a more complex CMake structure that could build the entire system, including all finished components, without breaking current dependencies. Also, a few scripts will have to be built to compile individual components, run tests, search and inspect the source tree efficiently, check dependencies and documentation requirements. This code needs also to take into account the dependencies between components that can be stored in xml-like files -i,e, manifestos- within the component itself.</p>
+
+<p>Required student level: intermediate CMake knowledge, programming in C++, basic knowledge of shell scripting</p>
+
+<p>4.- <strong>Deployment generator and run-time monitoring</strong>: When creating a specific robot architecture, many components have to be brought into a common deployment environment. Each component has its runtime configuration and network parameters that have to be declared in a common deployment file, from where the complete system can be brought to life. This task proposes the design of a domain specific language to facilitate the creation of shellscript deployment files that are syntactically and semantically correct. Once a net of RoboComp components is up and running, additional tools are needed to monitorize their execution through an existing default interface called CommonBehavior.This tool will use the DSL as input and will show a graphical representation of the running system. It will be written in Python and will extend important efforts already made in this direction.</p>
+
+<p>Required student level: intermediate programming with Python and introductory knowledge of formal languages</p>
+
+<p>For any questions, proposals, or comments please contact RoboComp&#39;s org admin at:
+marcogunex.es</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/rcwebsite2/2015/06/20/nithin4/">
+        New build system and workspace model in Robocomp <p>#1</p>
+      </a>
+    </h1>
+
+    <span class="post-date">20 Jun 2015</span>
+
+    <p>I have started the workspace model design keeping in mind the following points.</p>
 
 <ul>
-  <li>
-    <p>HOG based detection (with demo).</p>
-  </li>
-  <li>
-    <p>Face-recognition: training as well as recognition (with demo).</p>
-  </li>
-  <li>
-    <p>Cascade based detection (with demo).</p>
-  </li>
-  <li>
-    <p>Functionality for confidence in a detection (to handle uncertainty).</p>
-  </li>
+<li>you should be able to build all packages at once, if necessary and also separately<br></li>
+<li>the source tree should be kept clean<br></li>
+<li>It should scalable and also existing components should be easily moved in<br></li>
+<li>dependencies should be easily handled<br></li>
 </ul>
 
-<p>That concluded the functionality of whatever planned for this summer of code. Other than the planned work, I included some other new functionality which came in between and I thought was required. The other additions are:</p>
+<p>Referring to other similar workspace models i came up with the following model.</p>
 
-<ul>
-  <li>
-    <p>Addition of two types of detection functions for every detection class.</p>
+<p>The recommended layout for development is as follows:</p>
 
-    <p>a. <em>detectOmni</em> : This is the function whose purpose is to detect an object in an entire scene. Thus, other than the type of detection we also have information about the <em>location</em> of the detection w.r.t. the scene. This was the only function previously implemented.</p>
+<p><img src="/website/img/workspace_model.jpg" alt=" Robocomp workspace model" title="Robocomp workspace model"></p>
 
-    <p>b. <em>detect</em> : The purpose of this function is to perform detection on a segmented scene or an ‘object candidate’. i.e. the entire scene is considered as an ‘object’ or an detection. This function was an extra addition for most of the classes. For global descriptor based classes like ODHOGDetector this function came very naturally.</p>
-  </li>
-  <li>
-    <p><strong>Standardized the training database</strong>:. Each detection class identifies its own database (which is a unique folder as of now). Training data of all classes are now put together under a single ‘trained_data’ directory and the rest is resolved by the class automatically.</p>
-  </li>
-  <li>
-    <p>The class <strong>ODDetectorMultiAlgo</strong>: This is one of the most interesting class and interesting contribution in this project. The idea is to run multiple detection algorithm on a same segmented or unsegmented scene (i.e. run both <em>detect</em> and <em>detectOmni</em> function) and provide the result. That is, using this class one can do object detection/recognition using multiple algorithms and provide outcome of detections (eg. people detected by HOG, face detected by Cascade, bottle detected PnPRansac in a same image). Because of the nice polymorphic design of the detection classes, one can use the concept easily with any number of detection classes with their own parameters, but with <em>ODDetectorMultiAlgo</em> one can only take benefit of the default parameters of the included classes.</p>
-  </li>
-  <li>
-    <p>HOG training: There are no standard training module for training HOG (in OpenCV or in other standard library) and people are mostly confused in training svm with the HOG detector available from OpenCV. This formed a motivation for completing the HOG pipeline and provide a training module. The crucial contribution includes <em>hard negative</em> training mode where the training is repeated with hard examples or false positive windows as negative windows. I hope that this will be really a helpful contribution for the computer vision community.</p>
-  </li>
-</ul>
+<h2>Elements of workspace</h2>
 
-<h2 id="design-changes-learning-resources-and-overall-learning-experiences">Design changes, learning resources, and overall learning experiences:</h2>
-<p>In the next blog I’ll add the different sources I used to design and implement the above tasks and the things I learnt in this process.</p>
+<h3>Workspace</h3>
 
-<hr />
+<p>The workspace is the folder inside which you are going to be actively developing. Keeping things in a folder with connected development helps keep separation of development models.</p>
 
+<h3>Source space</h3>
 
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/website/2015/08/16/mercedes5/">
-        <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#5</p> System Review
-      </a>
-    </h1>
+<p>The source space is the folder is where it will be expected to look for packages when building. This folder is easily identified as it is where the toplevel.cmake is linked from the catkin project. Each component should be in a direct subdirectory. if the directory contains a file named <em>IGNORE_COMP</em> the component will be ignored while building the workspace.</p>
 
-    <span class="post-date">16 Aug 2015</span>
+<h3>Build Space</h3>
 
-    <p><strong>Full object manipulation system</strong> : In this post we will describe the full system developed for manipulating objects using a robotic arm. We start at the highest level, VisualIK (the correction system), and we will go down to the base of the system, the IK (which calculates the final angle of the joints of the robotic arm).</p>
+<p>The build space is the folder in which cmake is invoked and generates artifacts such as the CMakeCache. A typical invocation of cmake will look like this when following the recommended layout.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cmake ../src
+</code></pre></div>
+<p>This need not be a direct sub directory of workspace. It can be any where.</p>
 
-<p><img src="https://github.com/mercedes92/VisualIKExperiment/blob/master/images/Dibujo%20sin%20t%C3%ADtulo.png?raw=true" alt="Alt text" /></p>
+<h3>Development Space</h3>
 
-<p>All the components that will be described below implement the <code class="highlighter-rouge">InverseKinematics</code> interface. This interface is defined by a series of data structures:</p>
+<p>The development space is where build system generates the binaries and config files which are executable before installation. This should be a direst subdirectory of workspace. Currently the <code>devel space is merged with the source space</code>.</p>
 
-<ol>
-  <li><code class="highlighter-rouge">Pose6D</code>: It represents a pose with three translations and three rotations [x, y, z, rx, ry, rz]</li>
-  <li><code class="highlighter-rouge">WeightVector</code>: It represents the weight vector of each element of Pose6D. This will help us later in the Levenberg-Marquardt algorithm.</li>
-  <li><code class="highlighter-rouge">TargetState</code>: It is the state when the targets reach the end of their execution by ik. It has some information like the elapsed time, the final error in translations and rotations and the values of each joint.</li>
-  <li><code class="highlighter-rouge">Axis</code>: This structure represents the Cartesian axes. It is necessary for certain special types of targets.</li>
-  <li><code class="highlighter-rouge">Motor</code>: This structure stores the name and the angular value of a motor of the kinematic chain.</li>
-</ol>
+<h3>Install Space</h3>
 
-<p>Also, the interface defines a number of methods:</p>
+<p>If make install is called this is the directory into which cmake will target all installations. This directory contains a file names <em>.rc_install</em> which contain a semi colon separated paths of workspaces which are installed to this install space. Please note that the robocomp istall path <em>/opt/robocomp</em> can is also an install space.</p>
 
-<ol>
-  <li><code class="highlighter-rouge">getTargetState</code>: this method returns the state of one target, given the name of the robot part that executed the target and the numerical identifier of the target.</li>
-  <li><code class="highlighter-rouge">getPartState</code>: this method returns the state (if the part has pending targets or not) of one of the robot part (RIGHTARM, LEFTARM or HEAD).</li>
-  <li><code class="highlighter-rouge">setTargetPose6D</code>: This method is used to send targets to the ik. We need to indicate the part of the robot that will execute the target, the pose of the target and the weight vector of the pose. It returns the identifier of the target.</li>
-  <li><code class="highlighter-rouge">setTargetAlignaxis</code>: This method sends a special target for the IK. This target is achieved by aligning the end effector to the target axes. We must indicate the the part of the robot that will execute the target, the pose and the axes. It returns the identifier of the target.</li>
-  <li><code class="highlighter-rouge">setTargetAdvanceAxis</code>: This method sends another special target for the IK. The goal is that the end effector advance along a vector in the Cartesian system. We must indicate the part of the robot that will execute the target, the axes of the vector and the dist to advance. Like always, it return the identifier of the target.</li>
-  <li><code class="highlighter-rouge">goHome</code>: this method send a robot part to the idle position.</li>
-  <li><code class="highlighter-rouge">stop</code>: this method abort the execution of the targets of one of the robot part.</li>
-  <li><code class="highlighter-rouge">setJoint</code>: this method changes the angular value of one of the joint of the kinematic chain.</li>
-  <li><code class="highlighter-rouge">setFingers</code>: this method opens and closes the fingers of the end effector.</li>
-</ol>
+<hr>
 
-<p>Now, we will describe the basic operation of our components.</p>
-
-<p>###The <code class="highlighter-rouge">visualIK</code> component</p>
-
-<p>The old <a href="http://robocomp.github.io/website/2015/06/17/mercedes3.html"><code class="highlighter-rouge">VisualBIK</code> component</a> has been reorganized, resulting in the current <a href="https://github.com/robocomp/robocomp-ursus/tree/master/components/visualik"><code class="highlighter-rouge">visualik</code> component</a>. The basic principle of operation of the component remains, adding some improvements and changing its communication with the <code class="highlighter-rouge">inversekinematics</code> component, by the <code class="highlighter-rouge">ikGraphGenerator</code> component.</p>
-
-<p>Its goal remains the same, correct errors produced by the inaccuracies of the joints in the IK. To this end, it bases its operation on a state machine:</p>
-
-<ol>
-  <li><code class="highlighter-rouge">IDLE</code>: It is the resting state of <code class="highlighter-rouge">visualik</code>. The component is waiting to receive a target through one of the methods of its interface. When a target comes through the interface (stored in the <code class="highlighter-rouge">currentTarget</code> variable), the state machine switches to INIT_BIK and prepares the global variables for the execution of correction.</li>
-  <li><code class="highlighter-rouge">INIT_BIK</code>: in this state, the visualik applies an initial correction to the target (Ec). This correction is based on experience in the correction of previous targets, so the first correction, having no previous experience, will be zero. Then, it sends the target to his proxy of kinematic, the <code class="highlighter-rouge">ikGraphGenerator</code> component. Finally, the state of the machine is changed to <code class="highlighter-rouge">WAIT_BIK</code>.</li>
-  <li><code class="highlighter-rouge">WAIT_BIK</code>: in this state, the <code class="highlighter-rouge">visualik</code> waits the end of execution of the target by the <code class="highlighter-rouge">ikGraphGenerator</code>. When the <code class="highlighter-rouge">ikGraphGenerator</code> finishes executing the target, the <code class="highlighter-rouge">visualik</code> changes his state to <code class="highlighter-rouge">CORRECT_ROTATION</code>.</li>
-  <li><code class="highlighter-rouge">CORRECT_ROTATION</code>: It is the latest machine status. In this state is when the <code class="highlighter-rouge">visualik</code> does all the calculations in order to correct the deviations and errors of the joints. The procedure is simple: a) by apriltags, the <code class="highlighter-rouge">visualik</code> calculates the visual pose of the end effector; b) then, it computes the error vector between the visual pose and the target pose (Ev); c) with this error vector Ev, the <code class="highlighter-rouge">visualik</code> corrects the target pose and sends the new position to the <code class="highlighter-rouge">ikGraphGenerator</code> component; d) this process is repeated until the error achieved in translation and rotation is less than a predetermined threshold; e) finally the <code class="highlighter-rouge">visualik</code> calculates the error vector between the original target and the last corrected target (Ec), with this error the component realizes the first correction in <code class="highlighter-rouge">INIT_BIK</code>.</li>
-</ol>
-
-<p>Here there is a scheme of the procedure performed by the <code class="highlighter-rouge">visualik</code>. It is very summarized to facilitate the understanding of the procedure by the reader:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>1: procedure VISUAL CALIBRATION
-2:    Xt = TargetArrives()
-3:    Ct = Xt + Ec
-4:    sendTargetToGIK(Ct)
-5:    Xv = getAprilTagPose(robot)
-6:    while (Ev = Xv- Xt) &gt; threshold ^¬ timeOut() do
-7:         Xi = getInternalPose(robot)
-8:         Xc = Xi + Ev
-9:         sendTargetToGIK(Xc)
-10:        Xv = getAprilTagPose(robot)
-11:   end while
-12:   Ec = Xc - Xt
-13: end procedure
-</code></pre>
-</div>
-
-<p>Like all components developed by robocomp, the <code class="highlighter-rouge">visualik</code> needs a configuration file in which the components required (the <a href="https://github.com/robocomp/robocomp-ursus/tree/master/components/ikGraphGenerator"><code class="highlighter-rouge">ikGraphGenerator</code></a>) and the components to subscribe (the <a href="https://github.com/robocomp/robocomp-robolab/tree/master/components/apriltagsComp"><code class="highlighter-rouge">apriltagsComp</code></a>) and other configuration parameters are determined. In this case, a configuration file may have the following elements:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>CommonBehavior.Endpoints=tcp -p 14537
-# Endpoints for implemented interfaces:
-InverseKinematics.Endpoints=tcp -p 10242
-
-# Endpoints for interfaces to subscribe:
-AprilTagsTopic.Endpoints=tcp -p 12938
-
-# Proxies for required interfaces
-InverseKinematicsProxy =inversekinematics:tcp -h localhost -p 10241 # `ikGraphGenerator`
-
-InnerModel=/home/robocomp/robocomp/components/robocomp-ursus-rockin/etc/ficheros_Test_VisualBIK/ursus_bik.xml # the internal model of the robot environment 
-
-# This property is used by the clients to connect to IceStorm.
-TopicManager.Proxy=IceStorm/TopicManager:default -p 9999
-Ice.Warn.Connections=0
-Ice.Trace.Network=0
-Ice.Trace.Protocol=0
-Ice.ACM.Client=10
-Ice.ACM.Server=10
-</code></pre>
-</div>
-
-<p>###The <code class="highlighter-rouge">ikGraphGenerator</code> component</p>
-
-<p>As we explain in the previous <a href="http://robocomp.github.io/website/2015/08/13/mercedes4.html">post</a>, the <a href="https://github.com/robocomp/robocomp-ursus/tree/master/components/ikGraphGenerator"><code class="highlighter-rouge">ikGraphGenerator</code>component</a> creates and stores a graph representing the work 3D space of the arm, where each node stores the euclidean space pose of the end effector and the configuration of the joints that compose the arm. So the <code class="highlighter-rouge">ikGraphGenerator</code> waits until the <code class="highlighter-rouge">visualik</code> send a target to him through the <code class="highlighter-rouge">InverseKinematics</code> interface. In this moment, the <code class="highlighter-rouge">ikGraphGenerator</code> performs four steps:</p>
-
-<ol>
-  <li>the component searches the node A whose pose is closest to the initial end effector pose and moves the arm there.</li>
-  <li>the component finds in the graph  the node B whose pose is closest to the target position, disabling those nodes which would make the robot’s arm collide with external objects.</li>
-  <li>the component computes the shortest path between the node A and the node B and moves the end effector among the nodes to reach the node B.</li>
-  <li>Finally, the component moves from the graph to the actual target sending the original target to the <code class="highlighter-rouge">inversekinematic</code>component and taking the final values of the joints.</li>
-</ol>
-
-<p>The <code class="highlighter-rouge">ikGraphGenerator</code>needs a config file too:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>CommonBehavior.Endpoints=tcp -p 14536
-# Endpoints for implemented interfaces:
-InverseKinematics.Endpoints=tcp -p 10241
-
-InnerModel=/home/robocomp/robocomp/components/robocomp-ursus/etc/ursus.xml # the internal model of the robot environment 
-
-# Proxies for required interfaces
-InverseKinematicsProxy = inversekinematics:tcp -h localhost -p 10240
-JointMotorProxy = jointmotor:tcp -h localhost -p 20000
-
-Ice.Warn.Connections=0
-Ice.Trace.Network=0 
-Ice.Trace.Protocol=0
-Ice.ACM.Client=10
-Ice.ACM.Server=10
-</code></pre>
-</div>
-
-<p>###The <code class="highlighter-rouge">inversekinematic</code> component</p>
-
-<p>Finally, we will explain the basic component of the system, the <a href="https://github.com/robocomp/robocomp-ursus/tree/master/components/inversekinematics"><code class="highlighter-rouge">inversekinematic</code> component</a>. As we said in the <a href="http://robocomp.github.io/website/2015/06/15/mercedes2.html">second post</a>, this component receives three types of targets through the <code class="highlighter-rouge">InverseKinematics</code> interface:</p>
-
-<ol>
-  <li><code class="highlighter-rouge">POSE6D</code>: the typical target with translations and rotations [tx, ty, tz, rx,ry, rz]. The end effector has to be positioned at coordinates (tx, ty, tz) of the target and align their rotation axes with the target, specified in (rx, ry, rz). This target arrives from the method <code class="highlighter-rouge">setTargetPose6D</code>.</li>
-  <li><code class="highlighter-rouge">ADVANCEAXIS</code>: its goal is to move the end effector of the robot along a vector. This target arrives from the method <code class="highlighter-rouge">setTargetAdvanceAxis</code>.</li>
-  <li><code class="highlighter-rouge">ALIGNAXIS</code>: Its goal is that the end effector has the axes aligned with the target. This target arrives from the method <code class="highlighter-rouge">setTargetAlignaxis</code>.</li>
-</ol>
-
-<p>Targets received are stored into the queues of the corresponding robot part and they are executed by order of arrival. When the ik ends the execution of one target, it stores the target into the solved targets queue:</p>
-
-<p><img src="https://github.com/mercedes92/VisualIKExperiment/blob/master/images/iksystem.png?raw=true" alt="Alt text" /></p>
-
-<p>The config file of the <code class="highlighter-rouge">inversekinematic</code>component is the next:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>CommonBehavior.Endpoints=tcp -p 12207
-# Endpoints for implemented interfaces:
-InverseKinematics.Endpoints=tcp -p 10240
-
-# Kinematic chain lists: they stores the joints names.
-RIGHTARM=rightShoulder1;rightShoulder2;rightShoulder3;rightElbow;rightForeArm;rightWrist1;rightWrist2
-RIGHTTIP=grabPositionHandR # end effector of the RIGHTARM
-
-LEFTARM=leftShoulder1;leftShoulder2;leftShoulder3;leftElbow;leftForeArm;leftWrist1;leftWrist2
-LEFTTIP=grabPositionHandL
-
-HEAD=head_yaw_joint;head_pitch_joint
-HEADTIP=rgbd_transform
-
-InnerModel=/home/robocomp/robocomp/components/robocomp-ursus/etc/ursus.xml #Internal model of the robot environment
-
- # Proxies for required interfaces
-JointMotorProxy = jointmotor:tcp -h localhost -p 20000
-
-TopicManager.Proxy=IceStorm/TopicManager:default -p 9999
-Ice.Warn.Connections=0
-Ice.Trace.Network=0
-Ice.Trace.Protocol=0
-Ice.ACM.Client=10
-Ice.ACM.Server=10
-</code></pre>
-</div>
-
-<p>When <code class="highlighter-rouge">visualik</code> and <code class="highlighter-rouge">ikGraphGenerator</code> components submit their targets to the immediately below component, they store the identifier of the target and are waiting until the target be resolved, calling the method <code class="highlighter-rouge">getTargetState</code>. So, when the <code class="highlighter-rouge">inversekinematic</code> component ends one target execution, the <code class="highlighter-rouge">ikGraphGenerator</code> moves the arm with the values given by the <code class="highlighter-rouge">inversekinematic</code> component and then, the <code class="highlighter-rouge">visualik</code> continues with the corrections.</p>
-
-<p>Having explained the handling system, the next post will explain the planning system developed by ROBOLAB to plan the robot’s actions.</p>
-
-<p>Bye!</p>
-
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/website/2015/08/13/mercedes4/">
-        <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#4</p>, Inverse kinematics Graph Generator
-      </a>
-    </h1>
-
-    <span class="post-date">13 Aug 2015</span>
-
-    <p><strong>ikGraphGenerator, an alternative to ik</strong> : As the project has progressed, many improvements have emerged. One of them is the new component, <code class="highlighter-rouge">ikGraphGenerator</code>. This component has been developed by Professor Luis Manso, and its goal is to remove weight to the inverse kinematics in the process of handling objects with a robotic effector.</p>
-
-<p>One of the problems of the inverse kinematics is that, given a target for a particular end-effector, it can calculate different solutions or values for each motor of the kinematic chain. For example, to pick up a cup, the IK can position the end effector at the target extending his arm more or less forcing or not the elbow or or separating more or less the shoulder. It doesn’t matter that the final position of the chain be more forced or more natural, the goal is reached and the solution is accepted.</p>
-
-<p>This is not convenient, since there is no way to control the trajectory of the arm. The control on the trajectory arm is crucial at certain times, for example when the robot avoids collisions between his arm and another objects (tables, chairs, walls, including his own body). The current <code class="highlighter-rouge">inversekinematics</code> component does not allow us this control, so that we need the <code class="highlighter-rouge">ikGraphGenerator</code> component.</p>
-
-<p>The main concept is to create a spatial graph where each node stores the pose of the point, [tx, ty, tz, rx, ry, rz], and the set of angular values for each motor of the kinematic chain (that has 7 DOFs). The links connecting the nodes whose positions are close to each other. In this way we can calculate paths between two different and separate points.</p>
-
-<p><img src="https://github.com/robocomp/robocomp-ursus/blob/master/components/ikGraphGenerator/etc/ikg.jpg?raw=true" alt="Alt text" /></p>
-
-<p>###What does the <code class="highlighter-rouge">ikGraphGenerator</code> component?</p>
-
-<p>Basically the <code class="highlighter-rouge">ikGraphGenerator</code> realizes two functions:</p>
-
-<ol>
-  <li>It calculates the graph with random poses and their respective angular values. To do this, first it defines a spatial cube that represents the workspace of the robot arm. In this space a set of poses are selected and are sent to the <code class="highlighter-rouge">inversekinematic</code> component as targets. The poses that are not achievable by the ik are automatically deleted. The resultant graph is stored in a file in order to use it in later calculations.</li>
-  <li>Once the graph has been calculated and stored, we can send a target to the <code class="highlighter-rouge">ikGraphGenerator</code>. First the component searches the node <code class="highlighter-rouge">A</code> whose pose is closest to the initial end effector pose and the node <code class="highlighter-rouge">B</code> whose pose is closest to the target position (to do this, the <code class="highlighter-rouge">ikGraphGenerator</code> uses a fast low-dimension k-d tree). Then, the component calculates a path between node A and node B through the graph  using Dijkstra’s algorithm, so that the arm moves through the graph from the position marked by node A to the position marked by the node B. Finally, in order to achieve the final target, the <code class="highlighter-rouge">inversekinematic</code> component is called to compute the final values of the joints, starting from the position marked by the node B.</li>
-</ol>
-
-<p><img src="https://github.com/robocomp/robocomp-ursus/blob/master/components/ikGraphGenerator/etc/GIK.png?raw=true" alt="Alt text" /></p>
-
-<p>In the next post I will describe how the whole system works with all the components, the <code class="highlighter-rouge">inversekinematic</code>, the <code class="highlighter-rouge">ikGraphGenerator</code> and the <code class="highlighter-rouge">visualik</code> component.</p>
-
-<p>Bye!</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/website/2015/08/08/nithin9/">
-        Till now ... after midterm
-      </a>
-    </h1>
-
-    <span class="post-date">08 Aug 2015</span>
-
-    <p>Hi all , In this post i will talk about what i have been working on after midterm evaluation. I have spend my time working mostly on packaging supporting libraries for Robocomp.This includes FCL and libccd. FCL is a library for performing three types of proximity queries on a pair of geometric models composed of triangles. libccd is a library for collision detection between two convex shapes.Technically Robocomp is only using FCL but libccd is an dependency of fcl, as i couldn’t find an updated ppa for it i decided to package it too. you can see those packages <a href="https://launchpad.net/~imnmfotmal">here</a></p>
-
-<p>Also i added ability for generating robocomp source packages for different distributions. Initially i added the option only for trusty, now we could generate packages for any distribution.I worked a bit on build tools also. Currently if someone created an workspace and made a github repo of it, some one else cant use it as we store the repo names in ~/.config directory, so i added an option to reinit an repo.</p>
-
-<p>well i guess thats all for now</p>
-
-<hr />
 <p>Nithin Murali</p>
 
   </div>
   
   <div class="post">
     <h1 class="post-title">
-      <a href="/website/2015/07/25/nithin10/">
-        Setting up ppa
+      <a href="/rcwebsite2/2015/06/17/mercedes3/">
+        <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#3</p>
       </a>
     </h1>
 
-    <span class="post-date">25 Jul 2015</span>
+    <span class="post-date">17 Jun 2015</span>
 
-    <p>##Setting up an ppa in launchpad</p>
+    <p><strong>Visual inverse kinematics, Basic understanding :</strong> In the previous post we anticipate the problems caused by the gaps and inaccuracies of motors in the inverse kinematics of the robot. Now, in this third post we will talk about the solution implemented during the GSoC15 project.</p>
 
-<p>After creating an launchpad account First you need to create and publish an OPENPGP key</p>
+<p>So, with the inverse kinematics component that we have implemented in Robocomp, we had the problem of inaccuracies and gaps in the robotic arm motors, problems that made the robot believed reach the target position without having actually achieved it. To solve this problem it was decided to implement a solution inside the visual field (which is what concerns us throughout this project), whose aim is to provide the inverse kinematics component a visual feedback that allows correct its mistakes. The operation of the algorithm is very simple and takes as its starting point the investigations of Seth Hutchinson, Greg Hager and Peter Corke, collected in <code>A Tutorial on Visual Servo Control</code> [1].</p>
 
-<p>###Generating your key in Ubuntu
-The easiest way to generate a new OpenPGP key in Ubuntu is to use the Passwords and Encryption Keys tool.</p>
+<h2>&#39;Looking&#39;, then &#39;moving&#39;</h2>
 
-<p><strong>Step 1</strong> open Passwords and Encryption Keys.</p>
+<p>As Hutchinson, Hager and Corke reflect in their work:</p>
 
-<p><strong>Step 2</strong> Select File &gt; New, select PGP Key and then follow the on-screen instructions.</p>
+<blockquote>
+<p>Vision is a useful robotic sensor since it mimics the human sense of vision and allows for non-contact measurement of the environment. [...] Typically visual sensing and manipulation are combined in a open-loop fashion, &#39;looking&#39; then &#39;moving&#39;.</p>
+</blockquote>
 
-<p>Now you’ll see your new key listed in the Passwords and Encryption Keys tool. (it may take some time)</p>
+<p>So the goal of <code>Visual servo control</code> is to control the movement and location of the robot using visual techniques (detection and recognition of objects in an image). To get an idea how it works, we must have clear some fundamental concepts in this field</p>
 
-<p>###Publishing your key</p>
+<h3>Kinematics of a robot</h3>
 
-<p>Your key is useful only if other people can verify items that you sign. By publishing your key to a keyserver, which acts as a directory of people’s public keys, you can make your public key available to anyone else.Before you add your key to Launchpad, you need to push it to the Ubuntu keyserver.</p>
+<p>We need to know what a kinematic chain is, what reference system and transformation coordinate are anda what algorithm is executed inside the robot kinematic. These concepts were explained in the second post of this collection. If you have doubts, consult it.</p>
 
-<p><strong>Step 1</strong> Open Passwords and Encryption Keys.</p>
+<p>If we link the kinematic chains concept with visual techniques (ie, now, in addition to the chain formed by the motors of the robotic arm, we have a camera in the chain looking one of the chain ends), we have two types of systems:</p>
 
-<p><strong>Step 2</strong> Select the My Personal Keys tab, select your key.</p>
+<ol>
+<li>Endpoint open-loop (EOL): Systems which only observed the target object. These systems don&#39;t need to look at his end effector so normally the camera is on the end effector (hand-eye).</li>
+<li>Endpoint closed-loop (ECL): Systems which observed the target object and the end effector of the arm.</li>
+</ol>
 
-<p><strong>Step 3</strong>  Select Remote &gt; Sync and Publish Keys from the menu. Choose the Sync button. (You may need to add htp://keyserver.ubuntu.com to your key servers if you are not using Ubuntu.)</p>
+<p>The visual inverse kinematics that we implemented in Robocomp uses this last configuration because is independent of hand-eye calibration errors (precisely, the clearances errors and inaccuracies that bother us in the inverse kinematics), although often requires solution of a more demanding vision problem, because we need to track the end effector.</p>
 
-<p>It can take up to thirty minutes before your key is available to Launchpad. After that time, you’re ready to import your new key into Launchpad!</p>
+<h3>Camera Projection Models</h3>
 
-<p>OR you can direclty to go <code class="highlighter-rouge">http://keyserver.ubuntu.com/</code> on your browser and add the PGP key there</p>
+<p>We need to understand the geometric aspects of the imaging process if we want to understand how the information provided by the vision system is used to control the movement of the robot. The first thing to consider is that an image taken by a camera is always in 2D, so we&#39;re losing spatial information (the depth of the scene). </p>
 
-<p>###Register your key in launchpad
-fire up an terminal and run <code class="highlighter-rouge">gpg --fingerprint</code> should give you fingerprints of all the keys. copy paste the required fingerprint into launchpad</p>
+<p><img src="http://masters.donntu.org/2012/etf/nikitin/library/article10.files/image10.01.png" alt="Alt text"></p>
 
-<p>###Sign Ubunutu Code of Conduct
-Download the ubuntu code of conduct form launchpad
-<code class="highlighter-rouge">gpg --clearsign UbuntuCodeofConductFile</code>  will sign the file
-now copy the contents of the signed file and paste in launchpad</p>
+<p>To resolve this issue we have several options:
+1. We can use multiple cameras that capture the studio space from different positions.
+2. We can obtain multiple views with a single camera.
+3. We can have previously stored the geometric relationship between certain characteristics of the target or the elements in the studio space.</p>
 
-<p>###Wrapping Up
-Now everything is set up. make sure you have some key in <code class="highlighter-rouge">OPENPGP Keys</code> section and also the signed code of code of conduct as <code class="highlighter-rouge">Yes</code> as shown.
-<img src="./launchpad.png" alt="" /></p>
+<p>In any case, we must keep in mind certain things common to all cameras. For example the system of axes: the <code>X</code> and <code>Y</code> axes form the basis of the image plane and the <code>Z</code> axis is perpendicular to the image plane, along the optical axis of the camera. The origin is located on the <code>Z</code> axis at a distance <code>λ</code> of the image plane. That distance <code>λ</code> is what we call focal length.</p>
 
-<p>##Uploading package to ppa</p>
+<p><img src="http://www.hitl.washington.edu/artoolkit/documentation/images/ch03-17.gif" alt="ALt text"></p>
 
-<p>launchpad will only accept source packages and not binary.Launchpad will then build the packages. For building source packages we are using debuild which is a wrapper around the <em>dpkg-buildpackage + lintian</em>. so you will need to install debuild and dput on your system;</p>
+<p>We can map the position and the orientation of the end effector in space calculating the projective geometry of the camera. But this method, complicated in itself, increases their difficulty because we need <code>recognize</code> the end effector in the picture, in addition to deriving the speed from the changes observed in each frame that the camera capture. For these reasons, in our visual inverse kinematic component, we use the algorithm proposed by Edwin Olson, <code>Apriltags</code> [2] a visual fiducial system that uses a 2D barcode style <code>tag</code> (binary, black and white synthetic brands), allowing full 6 DOF localization of features from a single image. Thus, if we put a apriltag in the end effector, we can get its position and orientation in a very simple way. </p>
 
-<p>The source_package.cmake script is used to create debian source package.</p>
+<h2>visualBIK component</h2>
 
-<p>The main CMakeLists.txt file defines a target <code class="highlighter-rouge">spackage</code> that builds the source package in build/Debian with <code class="highlighter-rouge">make spackage</code></p>
+<p>Having already some clear concepts, let us study how the component developed in this project, <code>visualBIK</code>, works.</p>
 
-<p>For uploading the package to ppa, First change the <strong>PPA_PGP_KEY</strong> in <a href="../cmake/package_details.cmake#L26">package_details.cmake</a> to details to the full-name of the PGP key  details registered with your ppa account For more details on setting up the pgp key see the <a href="./setting_up_ppa.md">tutorial</a>.Then create a source package by building the target <em>spackage</em>.Once the Source package is build successfully, upload it to your ppa by:</p>
+<p>Our component implements a simple state machine where waits the reception of a target position (a vector with traslations and rotations: [tx, ty, tz,    rx, ry, rz]) through its interface. When a target is received, the visualBIK send it to the inverse kinematics component like a <code>POSE6D</code> target, and waits for him to finish running the target and placing the arm. As the end effector will be a little out of the target position (due to inaccuracies), the visualBIK will be prepared to correct this error:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>cd Debian/
-dput ppa:&lt;lp-username&gt;/&lt;ppa-name&gt; &lt;packet-&gt;source.changes
-</code></pre>
-</div>
+<ol>
+<li>It calculates the visual pose of the end effector (through apriltags, visualBIK receives the position of the end effector mark that the camera head sees).</li>
+<li>After, it compute the error vector between the visual pose and the target pose.</li>
+<li>With this error vector, visualBIK corrects the target pose and sends the new position to the inverse kinematics component.</li>
+<li>This process is repeated until the error achieved in translation and rotation is less than a predetermined threshold.</li>
+</ol>
 
-<p>building of source package can be tested with:</p>
+<p>In this way we can correct the errors introduced by the inaccuracies of the joints.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>cd Debian/robocomp-&lt;version&gt;
-debuild -i -us -uc -S
-</code></pre>
-</div>
+<p>This component (like component inverse kinematics) is still in the testing phase and is more than likely suffer some changes that improve its operation.</p>
 
-<p>If you are uploading a new version of robocomp, change the version number  accordingly in the <a href="../CMakeLists.txt#L31">toplevel cmake</a> before building, and then upload the source package as mentioned.</p>
+<p>Bye!</p>
 
-<p>###Note:</p>
+<hr>
 
-<p>If you want to upload another source package to ppa which doesn’t have any changes in the source but maybe in the debian files. you can build the spackage after commenting out <code class="highlighter-rouge">set(DEB_SOURCE_CHANGES "CHANGED" CACHE STRING "source changed since last upload")</code> in <a href="../cmake/package_details.cmake#L27">package_details.cmake</a> so that the the script will only increase the ppa version number and won’t include the source package for uploading to ppa (which otherwise will give an error).</p>
+<p>[1] Hutchinson, S., Hager, G., Corke, P. <code>A Tutorial on Visual Servo Control</code>, IEEE Trans. Robot. Automat., 12(5):651--670, Oct. 1996. Download in http://www-cvr.ai.uiuc.edu/~seth/ResPages/pdfs/HutHagCor96.pdf</p>
 
-<p>##Installing robocomp from ppa</p>
+<p>[2] OLson, E. <code>AprilTag: A robust and flexible visual fiducial system</code>, Robotics and Automation (ICRA), 2011 IEEE International Conference on, 3400-3407</p>
 
-<p>First you will need to add the ppa in your sources, and then install robocomp package.</p>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/rcwebsite2/2015/06/15/nithin7/">
+        Debian Packaging <p>#2</p>
+      </a>
+    </h1>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>sudo add-apt-repository ppa:&lt;lp-username&gt;/robocomp
-sudo apt-get update
-sudo apt-get install robocomp
-</code></pre>
-</div>
+    <span class="post-date">15 Jun 2015</span>
 
-<p>this will install robocomp along with basic components into /opt/robocomp.</p>
+    <h2>Source packages and ppa</h2>
 
-<hr />
+<p>A Personal Package Archive (PPA) s a special software repository for uploading source packages to be built and published as an APT repository by Launchpad.So basically if a software has a ppa then users can just add the pa to their sources and they will be able to install the software package and will also get updates automatically. As alreasy mentioned we can only upload source packages into a ppa, by definition <em>Source packages provide you with all of the necessary files to compile or otherwise, build the desired piece of software.</em> now the next question is how can we create source packages. I have explained it in tutorial <a href="http://robocomp.github.io/website/2015/05/23/nithin1.html">Debian packaging</a>.</p>
+
+<h2>Implementation in Robocomp</h2>
+
+<p>For creating source package for robocomp i wrote a cmake module <em>source_package</em>.The module will basically copy the source in to another directory (currently <em>Debian</em> in build folder) and will create the source tar.Then it will create all debian/ files dynamically. The script will be executed when the target <code>spackage</code> is made.</p>
+
+<p>After creating the source packages one trouble i faces was in setting up (registering) the PGP keys. Once you have created a launchpad account you should sign the Ubuntu Code of Conduct.Then you can upload the package using <code>dput</code> utility.</p>
+
+<h3>NB</h3>
+
+<ul>
+<li><p>You cant upload a package with same name into same ppa again, launchpad will reject it. so you need to change the package name and hence the version, every time you upload. This is automatically taken care off by the script.  </p></li>
+<li><p>If there are any changes to the source, then you should upload the whole source into the ppa. Well, any changes to fies in <em>debian</em> folder is not considered a source change. In Robocomp its implemented in such a way that if there is any changes to the source, then you have to change the Robocomp version.  </p></li>
+<li><p>Right now we are not generating the changelog automatically. But that is a feature we could add, generating changelog from the git commit messages.  </p></li>
+</ul>
+
+<hr>
+
 <p>Nithin Murali</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/rcwebsite2/2015/06/15/mercedes2/">
+        <i>GSoC,</i> Symbolic planning techniques for recognizing objects domestic <p>#2</p>
+      </a>
+    </h1>
+
+    <span class="post-date">15 Jun 2015</span>
+
+    <p><strong>What is inverse kinematics?</strong> : In this second post, although it may seem begin the house from the roof, let&#39;s talk about how a robot moves its arms and hands in order to manipulate daily objects.</p>
+
+<p>The ultimate goal of this work is make the robot to be able to recognize certain daily objects in a house (for example a mug), and to manipulate these objects with its effectors (hands). To do this, one of the things we need to implement is the inverse kinematics of the robot. Although this is the last step, we start by inverse kinematics to be easier and more intuitive than object recognition (besides that we have almost finalized the cinematic component in Robocomp).</p>
+
+<h3>What does the inverse kinematics?</h3>
+
+<p>A recurring problem in robotics is to give to robots a certain autonomy in terms of movement. Focusing on a practical and realistic example, as is the trajectory of a robotic arm from an initial position to a target point, the question is how does the robot move its arm from the starting pose to the final pose? or what values take its engines arm to reach the final position? This is the typical problem of inverse kinematics, which is responsible for calculating the angular values of a kinematic chain composed engines (joints) of the arm to reach a target position. </p>
+
+<p>But before we get down to work, we need to review a few concepts.</p>
+
+<h3>Previous concepts</h3>
+
+<h4>kinematic chains</h4>
+
+<p>The first concept that we should be clear is the <code>kinematic chain</code>. The kinematic chain is a set of elements that produce motion, deforming the chain to adapt it to movement. Kinematic chains are composed of two elements:</p>
+
+<ol>
+<li><code>joints</code>: joints or motors that produce the movement. Each joint gives a degree of freedom.</li>
+<li><code>links</code>: rigid segments that connect the joints together.</li>
+</ol>
+
+<p>An example of kinematic chain in robotic is the arm of the robot, that is composed by all the motors that the robot has and the segments that connect this motors in order to create the arm form.</p>
+
+<p><img src="http://www.sitenordeste.com/mecanica/images/cadena_cinematica.JPG" alt="Alt text"></p>
+
+<h4>Reference systems and Transformation coordinate.</h4>
+
+<p>One of the problems of robot manipulators is to know where their structural elements are arranged in the space in which they move. We therefore need a referral system that puts or position the elements of the robot in the workspace. So, a <code>reference system</code> is a set of agreements or conventions used by an observer to measure positions, rotations and other physical parameters of the system being studied. In our case, the arm of the robot is into the three-dimensional workspace (R³, with the axis X, Y and Z), where each components (for example, each joint) has one traslation (tx, ty, tz) and one rotation (rx, ry, rz). Therefore, the position of each component is given by a vector of six elements: <code>P=[tx, ty, tz,   rx, ry, rz]</code> (the first three translational and three rotational recent). Normally, we represent the poses by homogeneous trasnformation matrices, which are of the form:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    | R  T |
+P = | 0  1 |
+</code></pre></div>
+<p>where <code>R</code> is the rotation matrix and <code>T</code> the traslation coordenates.</p>
+
+<p>One of the kinematic problems is that each motor (which can be moved and/or rotated with respect to the previous motor of the chain) has his own reference system, so if we want to calculate the position of a particular point or joint, we will have to make a number of changes (<code>transformations</code>) to move from one reference system to another. For example, if we have the newt arm:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">X_1--------------X_2--------X_3-----O
+       M_1&gt;2          M_2&gt;3    M_3&gt;O
+</code></pre></div>
+<p>where <code>X_n</code> represents the position of the joints, <code>-</code> is the link that connects the joints, <code>o</code> is the end effector of the arm and <code>M_n&gt;m</code> are the transformation matrices to change the reference system n to the system m, and we want to calculate the position of the end effector in the reference system of the joint X_1, we have to calculate this equation:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Po_inX_1 = M_2&gt;1 * M_3&gt;2 * M_o&gt;3 * Po_inO.
+</code></pre></div>
+<h3>Problems to solve the inverse kinematics.</h3>
+
+<p>If the forward kinematics is responsible for calculating the position of the end effector in a kinematic chain, given some angular values for the joints, the inverse kinematics is just the opposite: it is responsible for calculating the angle values of the joints so the end effector reaches a position. This last problem is much more difficult to solve. So difficult that we are forced to use generic mathematical methods that try to approach an optimal solution iteratively within a reasonable time. We have opted for an iterative method known as the <code>Levenberg-Marquardt</code> or <code>damped least squares</code> algorithm. This method is used for solving nonlinear least squares problems where a solution to decrease an error function is sought.</p>
+
+<h3>Inverse kinematics in Robocomp</h3>
+
+<p>As a result of the TFG, <code>Inverse kinematics in Social Robots</code> [1], since 2014 Robocomp has a component [2] that is responsible for calculating the inverse kinematics of the social robot Ursus [3], developed by Robolab. This component has undergone a big evolution, since it was created last year to now, and is more than likely to continue evolving to achieve inverse kinematics each finer and in less time. </p>
+
+<p>Originally, this component receives three types of targets:</p>
+
+<ol>
+<li>POSE6D: It is the typical target with with translations and rotations in the X, Y and Z axis. The end effector has to be positioned at coordinates (tx, ty, tz) of the target and align their rotation axes with the target, specified in (rx, ry, rz).</li>
+<li>ADVANCEAXIS: its goal is to move the end effector of the robot along a vector. This is useful for improving the outcome of the above problem, for example, imagine that the hand has been a bit away from a mug. With this feature we can calculate the error vector between the end effector and the mug, and move the effector along the space to place it in an optimal position, near the mug.</li>
+<li>ALIGNAXIS: Its goal is that the end effector is pointing to target without moving to it but rotated as the target. It may be useful in certain cases where we are more interested in oriented the end effector with the same rotation of the target.</li>
+</ol>
+
+<p>To solve these various inverse kinematic problems, the component uses as main base the <code>Levenberg-Marquardt</code> algorithm proposed in the article <code>SBA: A Software Package for Generic Sparse Bundle Adjustment</code> by Lourakis and Argyros:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Input: A vector functon f: R^m → R^n with n≥m, a measurement vector x ∈ R^n and an initial parameters estimate p_0 ∈ R^m.
+Output: A vector p+ ∈ R^m minimizing ||x-f(p)||^2.
+Algorithm:
+    k:=0;                 v:=2;                     p:=p0;
+    A:=transposed(J)·J;   error:=x-f(p);            g:=transposed(J)·error;
+    stop:=(||g||∞ ≤ ε1);  μ:=t*max_i=1,...,m (Aii)
+
+    while(!stop) and (k&lt;k_max)
+         k:=k+1;
+         repeat
+               SOLVE (A+μ·I)·δ_p=g;
+               if(||δ_p||≤ ε2·(||p||+ε2))
+                    stop:=true;
+               else
+                    p_new:=p+δ_p
+                    ρ:=(||error||^2-||x-f(p_new)||^2)/(transposed(δ_p)·(μ·δ_p+g));
+                    if ρ&gt;0
+                        stop:=(||error||-||x-f(p_new)||&lt;ε4·||error||);
+                        p:=p_new;
+                        A:=transposed(J)·J;    error:=x-f(p);    g:=transposed(J)·error;
+                        stop:=(stop) or (||g||∞ ≤ ε1);
+                        μ:=μ*max(1/3, 1-(2·ρ-1)^3);
+                        v:=2;
+                    else
+                        μ:=μ*v;
+                        v:=2*v;
+                    endif
+               endif
+         until(ρ&gt;0) or (stop)
+         stop:=(||error||≤ ε3);
+    endwhile
+    p+:=p;
+</code></pre></div>
+<p>Where <code>A</code> is the hessian matrix, <code>J</code> is the jacobian matrix, <code>g</code> is the gradient descent, <code>δ_p</code> is the increments, <code>ρ</code> is the ratio of profit that tells us if we are approaching a minimum or not, <code>μ</code> is the damping factor, and <code>t</code> and <code>ε1, ε2, ε3, ε4</code> are different thresholds. But the IK component of Robocomp adds several concepts to the original L-M algorithm, in order to complete the proper operation of the component: </p>
+
+<ol>
+<li>Weight matrix: that controls the relevance between the translations (in meters) and rotations (in radians) of the target. So, where <code>g</code> was calculated as <code>transposed(J)·error</code>, now <code>g</code> is <code>transposed(J)·(W·error)</code></li>
+<li>Motors lock: when a motor reachs its minimun or maximun limit, we modified the jacobian matrix.</li>
+</ol>
+
+<p>The new version of the inverse kinematics component simplifies the code of the old version and adds some more functionality:</p>
+
+<ol>
+<li>Executes more than once a target. The inverse kinematic result is not the same if the start point of the effector is the robot&#39;s home or a point B near tho the goal point.</li>
+<li>Executes the traslations without the motors of the wrisht (only for Ursus). This makes possible to move the arm with stiff wrist, and then we can rotate easely the wrist when the end effectos is near the target.</li>
+</ol>
+
+<p>Another improvement being studied is to include a small planner responsible for planning the trajectories of the robot arm, in order to facilitate the work of the IK component and reduce its execution time. However, one of the problems that the inverse kinematics can not solve by itself is the problem of gaps and imperfections of the robot. These gaps and inaccuracies make the robot move its arm toward the target position improperly, so that the robot &quot;thinks&quot; that the end effector has reached the target but in reality has fallen far short of the target pose.</p>
+
+<p>In order to solve this last problem, we need visual feedback to correct the errors and mistakes introduced for the gaps and inaccuracies in the kinematic chain. The visualBIK component, developed during this project, is responsible for solve this visual feedback and correct the inverse kinematic, but we&#39;ll talk about it in the next post. </p>
+
+<p>Bye!</p>
+
+<hr>
+
+<p>[1] Master Thesis, Universidad de Extremadura, Escuela Politécnica de Cáceres. Mercedes Paoletti Ávila. <code>Cinemática Inversa en Robots Sociales</code>. Directed by Pablo Bustos and Luis Vicente Calderita. July 2014. Download in https://robolab.unex.es/index.php?option=com_remository&amp;Itemid=53&amp;func=startdown&amp;id=143</p>
+
+<p>[2] inverse kinematics component repository: https://github.com/robocomp/robocomp-ursus/tree/master/components/inversekinematics</p>
+
+<p>[3] C. Suárez Mejías, C. Echevarría, P. Núñez, L. Manso, P. Bustos, S. Leal and C. Parra. <code>Ursus: A Robotic Assistant for Training of Patients with Motor Impairments</code>. Book, Converging Clinical and Engineering Research on Neurorehabilitation, Springer series on BioSystems and BioRobotics, Editors, J.L Pons, D. Torricelli and Marta Pajaro. Springer, ISBN 978-3-642-34545-6, pages 249-254. January 2012. Download in https://robolab.unex.es/index.php?option=com_remository&amp;Itemid=53&amp;func=startdown&amp;id=128</p>
+
+<p>[4] Lourakis, M. I., Argyros, A. (2009). <code>SBA: A Software Package for Generic Sparse Bundle Adjustment</code>. Article of ACM Transactions on Mathematical Software, volume 36, issue 1, pages 1-30. Download in http://doi.acm.org/10.1145/1486527</p>
 
   </div>
   
@@ -532,11 +468,11 @@ sudo apt-get install robocomp
 
 <div class="pagination">
   
-    <a class="pagination-item older" href="/website/page3">Older</a>
+    <a class="pagination-item older" href="/rcwebsite2page3">Older</a>
   
   
     
-      <a class="pagination-item newer" href="/website">Newer</a>
+      <a class="pagination-item newer" href="/rcwebsite2">Newer</a>
     
   
 </div>
