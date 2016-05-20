@@ -16,14 +16,14 @@
   </title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/rcwebsite2/public/css/poole.css">
-  <link rel="stylesheet" href="/rcwebsite2/public/css/syntax.css">
-  <link rel="stylesheet" href="/rcwebsite2/public/css/hyde.css">
+  <link rel="stylesheet" href="/website/public/css/poole.css">
+  <link rel="stylesheet" href="/website/public/css/syntax.css">
+  <link rel="stylesheet" href="/website/public/css/hyde.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/rcwebsite2public/apple-touch-icon-144-precomposed.png">
-                                 <link rel="shortcut icon" href="/rcwebsite2public/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/websitepublic/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/websitepublic/favicon.ico">
 
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
@@ -36,7 +36,7 @@
   <div class="container">
     <div class="sidebar-about">
       <h1>
-        <a href="/rcwebsite2">
+        <a href="/website">
           RoboComp
         </a>
       </h1>
@@ -44,7 +44,7 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a class="sidebar-nav-item" href="/rcwebsite2">Home</a>
+      <a class="sidebar-nav-item" href="/website">Home</a>
 
       
 
@@ -56,31 +56,31 @@
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/Blog/">Blog</a>
+            <a class="sidebar-nav-item" href="/website/Blog/">Blog</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/GSoC/">GSoC</a>
+            <a class="sidebar-nav-item" href="/website/GSoC15/">GSoC'15</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/projects/">Projects</a>
+            <a class="sidebar-nav-item" href="/website/GSoC16/">GSoC'16</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/Tutorials/">Tutorials</a>
+            <a class="sidebar-nav-item" href="/website/projects/">Projects</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/about/">About</a>
+            <a class="sidebar-nav-item" href="/website/about/">About</a>
           
         
       
@@ -88,7 +88,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/contact/">Contact</a>
+            <a class="sidebar-nav-item" href="/website/contact/">Contact</a>
           
         
       
@@ -98,11 +98,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/install/">Install</a>
-          
-        
-      
-        
+            <a class="sidebar-nav-item" href="/website/install/">Install</a>
           
         
       
@@ -118,11 +114,25 @@
           
         
       
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <a class="sidebar-nav-item" href="http://robocomp.readthedocs.org">Tutorials</a>
       <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
+      
       <span class="sidebar-nav-item">Currently v1.0.0</span>
     </nav>
 
-    <p>&copy; 2015. All rights reserved.</p>
+    <p>&copy; 2016. All rights reserved.</p>
   </div>
 </div>
 
@@ -137,8 +147,9 @@
 
 <p>In RoboComp (2005-) we have created our own component model, inspired by the <a href="http://orca-robotics.sourceforge.net/">ORCA</a> model and making it evolve to fit our needs along these years. As a middleware, RoboComp primarily uses <a href="www.zeroc.com">Ice</a> and there is ongoing experimental work to make RoboComp middleware agnostic, so its components can be re-generated to use other middlewares such as <a href="http://portals.omg.org/dds/">DDS</a>.</p>
 
-<p>RoboComp&#39;s components model is quite simple and we always try to simplify it even more. It can be best explained through two Domain Specific Languages (DSLs) that have been created to define a component at a very high level of abstraction. <strong>IDSL</strong> stands for &quot;Interface Definition Specific Language&quot; and currently is a subset of Ice&#39;s Slice interface language. With IDSL you write the data structures and functions that a component can implement, require, subscribe to or publish. A component can implement several interfaces, offering different views of its internal functioning. Also, the same interface can be implemented by many components. This is an example of a simple interface written in IDSL:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">module RoboCompSpeech
+<p>RoboComp’s components model is quite simple and we always try to simplify it even more. It can be best explained through two Domain Specific Languages (DSLs) that have been created to define a component at a very high level of abstraction. <strong>IDSL</strong> stands for “Interface Definition Specific Language” and currently is a subset of Ice’s Slice interface language. With IDSL you write the data structures and functions that a component can implement, require, subscribe to or publish. A component can implement several interfaces, offering different views of its internal functioning. Also, the same interface can be implemented by many components. This is an example of a simple interface written in IDSL:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>module RoboCompSpeech
 {
   interface Speech
   {
@@ -146,10 +157,13 @@
      bool isBusy();
   };
 };
-</code></pre></div>
-<p><strong>CDSL</strong> stands for &quot;Component Definition Specific Language&quot; and allows the user to specifiy its name, accesible interfaces, communication connections, target language and other available modules or libraries that you want to include in the building scripts.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">import &quot;/robocomp/interfaces/IDSLs/DifferentialRobot.idsl&quot;;
-import &quot;/robocomp/interfaces/IDSLs/Laser.idsl&quot;;
+</code></pre>
+</div>
+
+<p><strong>CDSL</strong> stands for “Component Definition Specific Language” and allows the user to specifiy its name, accesible interfaces, communication connections, target language and other available modules or libraries that you want to include in the building scripts.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import "/robocomp/interfaces/IDSLs/DifferentialRobot.idsl";
+import "/robocomp/interfaces/IDSLs/Laser.idsl";
 Component prueba
 {
     Communications
@@ -159,8 +173,11 @@ Component prueba
     language cpp;
     gui Qt(QWidget);
 };
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>Using these two DSLs, RoboComp can generate the source code of the component using a tool designed to this end. The complete, functioning code of a component is created ready to be compiled and executed. We use a smart inheritance mechanism to separate the generic stuff from the user specific stuff and, based on it, the next time you generate a component, your code will remain untouched but access to new defined proxies will be there.</p>
+
 
 </div>
 
@@ -170,27 +187,27 @@ Component prueba
     
       <li>
         <h3>
-          <a href="/rcwebsite2/2015/07/02/kripa1/">
-            <i>GSoC,</i> Computer vision components and libraries management <p>#1</p>
-            <small>02 Jul 2015</small>
+          <a href="/website/2016/04/25/gsoc16ideas/">
+            GSoC 2016 Ideas
+            <small>25 Apr 2016</small>
           </a>
         </h3>
       </li>
     
       <li>
         <h3>
-          <a href="/rcwebsite2/2015/07/02/Kripa2/">
-            <i>GSoC,</i> Computer vision components and libraries management <p>#2</p>
-            <small>02 Jul 2015</small>
+          <a href="/website/2015/08/21/nithin11/">
+            Packaging FCL and libccd
+            <small>21 Aug 2015</small>
           </a>
         </h3>
       </li>
     
       <li>
         <h3>
-          <a href="/rcwebsite2/2015/06/26/nithin6/">
-            Build tools
-            <small>26 Jun 2015</small>
+          <a href="/website/2015/08/20/rajath3/">
+            <i>GSoC,</i> After Midterms
+            <small>20 Aug 2015</small>
           </a>
         </h3>
       </li>
