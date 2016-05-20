@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Setting up ppa &middot; RoboComp
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/website/public/css/poole.css">
+  <link rel="stylesheet" href="/website/public/css/syntax.css">
+  <link rel="stylesheet" href="/website/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/websitepublic/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/websitepublic/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/website">
+          RoboComp
+        </a>
+      </h1>
+      <p class="lead">A simple robotics framework.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/website">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/Blog/">Blog</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/GSoC15/">GSoC'15</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/GSoC16/">GSoC'16</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/projects/">Projects</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/contact/">Contact</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/install/">Install</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <a class="sidebar-nav-item" href="http://robocomp.readthedocs.org">Tutorials</a>
+      <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
+      
+      <span class="sidebar-nav-item">Currently v1.0.0</span>
+    </nav>
+
+    <p>&copy; 2016. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Setting up ppa</h1>
+  <span class="post-date">25 Jul 2015</span>
+  <p>##Setting up an ppa in launchpad</p>
+
+<p>After creating an launchpad account First you need to create and publish an OPENPGP key</p>
+
+<p>###Generating your key in Ubuntu
+The easiest way to generate a new OpenPGP key in Ubuntu is to use the Passwords and Encryption Keys tool.</p>
+
+<p><strong>Step 1</strong> open Passwords and Encryption Keys.</p>
+
+<p><strong>Step 2</strong> Select File &gt; New, select PGP Key and then follow the on-screen instructions.</p>
+
+<p>Now you’ll see your new key listed in the Passwords and Encryption Keys tool. (it may take some time)</p>
+
+<p>###Publishing your key</p>
+
+<p>Your key is useful only if other people can verify items that you sign. By publishing your key to a keyserver, which acts as a directory of people’s public keys, you can make your public key available to anyone else.Before you add your key to Launchpad, you need to push it to the Ubuntu keyserver.</p>
+
+<p><strong>Step 1</strong> Open Passwords and Encryption Keys.</p>
+
+<p><strong>Step 2</strong> Select the My Personal Keys tab, select your key.</p>
+
+<p><strong>Step 3</strong>  Select Remote &gt; Sync and Publish Keys from the menu. Choose the Sync button. (You may need to add htp://keyserver.ubuntu.com to your key servers if you are not using Ubuntu.)</p>
+
+<p>It can take up to thirty minutes before your key is available to Launchpad. After that time, you’re ready to import your new key into Launchpad!</p>
+
+<p>OR you can direclty to go <code class="highlighter-rouge">http://keyserver.ubuntu.com/</code> on your browser and add the PGP key there</p>
+
+<p>###Register your key in launchpad
+fire up an terminal and run <code class="highlighter-rouge">gpg --fingerprint</code> should give you fingerprints of all the keys. copy paste the required fingerprint into launchpad</p>
+
+<p>###Sign Ubunutu Code of Conduct
+Download the ubuntu code of conduct form launchpad
+<code class="highlighter-rouge">gpg --clearsign UbuntuCodeofConductFile</code>  will sign the file
+now copy the contents of the signed file and paste in launchpad</p>
+
+<p>###Wrapping Up
+Now everything is set up. make sure you have some key in <code class="highlighter-rouge">OPENPGP Keys</code> section and also the signed code of code of conduct as <code class="highlighter-rouge">Yes</code> as shown.
+<img src="./launchpad.png" alt="" /></p>
+
+<p>##Uploading package to ppa</p>
+
+<p>launchpad will only accept source packages and not binary.Launchpad will then build the packages. For building source packages we are using debuild which is a wrapper around the <em>dpkg-buildpackage + lintian</em>. so you will need to install debuild and dput on your system;</p>
+
+<p>The source_package.cmake script is used to create debian source package.</p>
+
+<p>The main CMakeLists.txt file defines a target <code class="highlighter-rouge">spackage</code> that builds the source package in build/Debian with <code class="highlighter-rouge">make spackage</code></p>
+
+<p>For uploading the package to ppa, First change the <strong>PPA_PGP_KEY</strong> in <a href="../cmake/package_details.cmake#L26">package_details.cmake</a> to details to the full-name of the PGP key  details registered with your ppa account For more details on setting up the pgp key see the <a href="./setting_up_ppa.md">tutorial</a>.Then create a source package by building the target <em>spackage</em>.Once the Source package is build successfully, upload it to your ppa by:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cd Debian/
+dput ppa:&lt;lp-username&gt;/&lt;ppa-name&gt; &lt;packet-&gt;source.changes
+</code></pre>
+</div>
+
+<p>building of source package can be tested with:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cd Debian/robocomp-&lt;version&gt;
+debuild -i -us -uc -S
+</code></pre>
+</div>
+
+<p>If you are uploading a new version of robocomp, change the version number  accordingly in the <a href="../CMakeLists.txt#L31">toplevel cmake</a> before building, and then upload the source package as mentioned.</p>
+
+<p>###Note:</p>
+
+<p>If you want to upload another source package to ppa which doesn’t have any changes in the source but maybe in the debian files. you can build the spackage after commenting out <code class="highlighter-rouge">set(DEB_SOURCE_CHANGES "CHANGED" CACHE STRING "source changed since last upload")</code> in <a href="../cmake/package_details.cmake#L27">package_details.cmake</a> so that the the script will only increase the ppa version number and won’t include the source package for uploading to ppa (which otherwise will give an error).</p>
+
+<p>##Installing robocomp from ppa</p>
+
+<p>First you will need to add the ppa in your sources, and then install robocomp package.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo add-apt-repository ppa:&lt;lp-username&gt;/robocomp
+sudo apt-get update
+sudo apt-get install robocomp
+</code></pre>
+</div>
+
+<p>this will install robocomp along with basic components into /opt/robocomp.</p>
+
+<hr />
+<p>Nithin Murali</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/website/2016/04/25/gsoc16ideas/">
+            GSoC 2016 Ideas
+            <small>25 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/website/2015/08/21/nithin11/">
+            Packaging FCL and libccd
+            <small>21 Aug 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/website/2015/08/20/rajath3/">
+            <i>GSoC,</i> After Midterms
+            <small>20 Aug 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

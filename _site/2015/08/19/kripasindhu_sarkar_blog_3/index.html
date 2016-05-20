@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      GSoC, Computer vision components and libraries management - Open Detction <p>#3</p> &middot; RoboComp
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/website/public/css/poole.css">
+  <link rel="stylesheet" href="/website/public/css/syntax.css">
+  <link rel="stylesheet" href="/website/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/websitepublic/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/websitepublic/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/website">
+          RoboComp
+        </a>
+      </h1>
+      <p class="lead">A simple robotics framework.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/website">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/Blog/">Blog</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/GSoC15/">GSoC'15</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/GSoC16/">GSoC'16</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/projects/">Projects</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/contact/">Contact</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/website/install/">Install</a>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <a class="sidebar-nav-item" href="http://robocomp.readthedocs.org">Tutorials</a>
+      <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
+      
+      <span class="sidebar-nav-item">Currently v1.0.0</span>
+    </nav>
+
+    <p>&copy; 2016. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">GSoC, Computer vision components and libraries management - Open Detction <p>#3</p></h1>
+  <span class="post-date">19 Aug 2015</span>
+  <p><strong>Contributions after Mid-term</strong>
+Following are the contributions towards the project <em>after</em> the mid-term evaluations:</p>
+
+<ul>
+  <li>
+    <p>HOG based detection (with demo).</p>
+  </li>
+  <li>
+    <p>Face-recognition: training as well as recognition (with demo).</p>
+  </li>
+  <li>
+    <p>Cascade based detection (with demo).</p>
+  </li>
+  <li>
+    <p>Functionality for confidence in a detection (to handle uncertainty).</p>
+  </li>
+</ul>
+
+<p>That concluded the functionality of whatever planned for this summer of code. Other than the planned work, I included some other new functionality which came in between and I thought was required. The other additions are:</p>
+
+<ul>
+  <li>
+    <p>Addition of two types of detection functions for every detection class.</p>
+
+    <p>a. <em>detectOmni</em> : This is the function whose purpose is to detect an object in an entire scene. Thus, other than the type of detection we also have information about the <em>location</em> of the detection w.r.t. the scene. This was the only function previously implemented.</p>
+
+    <p>b. <em>detect</em> : The purpose of this function is to perform detection on a segmented scene or an ‘object candidate’. i.e. the entire scene is considered as an ‘object’ or an detection. This function was an extra addition for most of the classes. For global descriptor based classes like ODHOGDetector this function came very naturally.</p>
+  </li>
+  <li>
+    <p><strong>Standardized the training database</strong>:. Each detection class identifies its own database (which is a unique folder as of now). Training data of all classes are now put together under a single ‘trained_data’ directory and the rest is resolved by the class automatically.</p>
+  </li>
+  <li>
+    <p>The class <strong>ODDetectorMultiAlgo</strong>: This is one of the most interesting class and interesting contribution in this project. The idea is to run multiple detection algorithm on a same segmented or unsegmented scene (i.e. run both <em>detect</em> and <em>detectOmni</em> function) and provide the result. That is, using this class one can do object detection/recognition using multiple algorithms and provide outcome of detections (eg. people detected by HOG, face detected by Cascade, bottle detected PnPRansac in a same image). Because of the nice polymorphic design of the detection classes, one can use the concept easily with any number of detection classes with their own parameters, but with <em>ODDetectorMultiAlgo</em> one can only take benefit of the default parameters of the included classes.</p>
+  </li>
+  <li>
+    <p>HOG training: There are no standard training module for training HOG (in OpenCV or in other standard library) and people are mostly confused in training svm with the HOG detector available from OpenCV. This formed a motivation for completing the HOG pipeline and provide a training module. The crucial contribution includes <em>hard negative</em> training mode where the training is repeated with hard examples or false positive windows as negative windows. I hope that this will be really a helpful contribution for the computer vision community.</p>
+  </li>
+</ul>
+
+<h2 id="design-changes-learning-resources-and-overall-learning-experiences">Design changes, learning resources, and overall learning experiences:</h2>
+<p>In the next blog I’ll add the different sources I used to design and implement the above tasks and the things I learnt in this process.</p>
+
+<hr />
+
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/website/2016/04/25/gsoc16ideas/">
+            GSoC 2016 Ideas
+            <small>25 Apr 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/website/2015/08/21/nithin11/">
+            Packaging FCL and libccd
+            <small>21 Aug 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/website/2015/08/20/rajath3/">
+            <i>GSoC,</i> After Midterms
+            <small>20 Aug 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>
