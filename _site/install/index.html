@@ -16,14 +16,14 @@
   </title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/rcwebsite2/public/css/poole.css">
-  <link rel="stylesheet" href="/rcwebsite2/public/css/syntax.css">
-  <link rel="stylesheet" href="/rcwebsite2/public/css/hyde.css">
+  <link rel="stylesheet" href="/website/public/css/poole.css">
+  <link rel="stylesheet" href="/website/public/css/syntax.css">
+  <link rel="stylesheet" href="/website/public/css/hyde.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/rcwebsite2public/apple-touch-icon-144-precomposed.png">
-                                 <link rel="shortcut icon" href="/rcwebsite2public/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/websitepublic/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/websitepublic/favicon.ico">
 
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
@@ -36,7 +36,7 @@
   <div class="container">
     <div class="sidebar-about">
       <h1>
-        <a href="/rcwebsite2">
+        <a href="/website">
           RoboComp
         </a>
       </h1>
@@ -44,7 +44,7 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a class="sidebar-nav-item" href="/rcwebsite2">Home</a>
+      <a class="sidebar-nav-item" href="/website">Home</a>
 
       
 
@@ -56,31 +56,31 @@
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/Blog/">Blog</a>
+            <a class="sidebar-nav-item" href="/website/Blog/">Blog</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/GSoC/">GSoC</a>
+            <a class="sidebar-nav-item" href="/website/GSoC15/">GSoC'15</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/projects/">Projects</a>
+            <a class="sidebar-nav-item" href="/website/GSoC16/">GSoC'16</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/Tutorials/">Tutorials</a>
+            <a class="sidebar-nav-item" href="/website/projects/">Projects</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/about/">About</a>
+            <a class="sidebar-nav-item" href="/website/about/">About</a>
           
         
       
@@ -88,7 +88,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/contact/">Contact</a>
+            <a class="sidebar-nav-item" href="/website/contact/">Contact</a>
           
         
       
@@ -98,11 +98,7 @@
       
         
           
-            <a class="sidebar-nav-item active" href="/rcwebsite2/install/">Install</a>
-          
-        
-      
-        
+            <a class="sidebar-nav-item active" href="/website/install/">Install</a>
           
         
       
@@ -118,11 +114,25 @@
           
         
       
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <a class="sidebar-nav-item" href="http://robocomp.readthedocs.org">Tutorials</a>
       <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
+      
       <span class="sidebar-nav-item">Currently v1.0.0</span>
     </nav>
 
-    <p>&copy; 2015. All rights reserved.</p>
+    <p>&copy; 2016. All rights reserved.</p>
   </div>
 </div>
 
@@ -130,106 +140,8 @@
     <div class="content container">
       <div class="page">
   <h1 class="page-title">Install</h1>
-  <h1><a href="http://robocomp.net">RoboComp</a></h1>
+  <p>https://github.com/robocomp/robocomp</p>
 
-<p><a href="https://gitter.im/robocomp/robocomp?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/robocomp/robocomp"></a></p>
-
-<p>by <a href="http://robolab.unex.es">RoboLab</a>, <a href="http://www.grupoisis.uma.es/index.php?option=com_jresearch&amp;view=staff&amp;Itemid=3&amp;lang=es">ISIS</a> and many other collaborators.</p>
-
-<p>RoboComp is an open-source Robotics framework providing the tools to create and modify software components that communicate through public interfaces. Components may <em>require</em>, <em>subscribe</em>, <em>implement</em> or <em>publish</em>
-interfaces in a seamless way. Building new components is done using two domain specific languages, IDSL and CDSL. With IDSL you define an interface and with CDSL you specify how the component will communicate with the world. With this information, a code generator creates C++ and/or Python sources, based on CMake, that compile and execute flawlessly. When some of these features have to be changed, the component can be easily regenerated and all the user specific code is preserved thanks to a simple inheritance mechanism.</p>
-
-<h1>Installation in Ubuntu ( tested in 14.04 and 14.10)</h1>
-
-<p>Make sure you have installed the following packages from the Ubuntu repository:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">sudo apt-get update
-sudo apt-get install git git-annex cmake g++ libgsl0-dev libopenscenegraph-dev cmake-qt-gui zeroc-ice35 freeglut3-dev libboost-system-dev libboost-thread-dev qt4-dev-tools yakuake openjdk-7-jre python-pip  python-pyparsing python-numpy python-pyside pyside-tools libxt-dev pyqt4-dev-tools qt4-designer 
-</code></pre></div>
-<h3>RoboComp core libraries</h3>
-
-<p><em>cd</em> to your home directory (you are probably in it already) and type:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">git clone https://github.com/robocomp/robocomp.git
-</code></pre></div>
-<p>Now we will create a symbolic link so RobComp can find everything. You will have to enter your passwd:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">sudo ln -s /home/&lt;your-linux-user&gt; /home/robocomp 
-</code></pre></div>
-<p>Edit your ~/.bashrc file </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">gedit ~/.bashrc
-</code></pre></div>
-<p>Add these lines at the end:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">export ROBOCOMP=/home/&lt;your-linux-user&gt;/robocomp
-export PATH=$PATH:/opt/robocomp/bin
-</code></pre></div>
-<p>make bash process the modified file by typing: </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">source ~/.bashrc
-</code></pre></div>
-<p>Done! Now let&#39;s compile and install the whole thing:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">sudo rm -r /opt/robocomp
-cd robocomp
-mkdir build
-cd build
-cmake ..
-make
-sudo make install
-</code></pre></div>
-<p>The RoboComp&#39;s core libraries and simulator should now be compiled and installed in <code>/opt/robocomp</code>.</p>
-
-<p>Let&#39;s now tell Linux where to find RoboComp&#39;s libraries:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">sudo nano /etc/ld.so.conf
-</code></pre></div>
-<p>and add the following line:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">/opt/robocomp/lib/
-</code></pre></div>
-<p>save the file and type:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">sudo ldconfig
-</code></pre></div>
-<p>Done! Now let&#39;s have some fun.</p>
-
-<h3>Running the RCIS Robotics simulator</h3>
-
-<p>We will first fetch some meshes and textures used by the simulator (it will take a while):</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp
-git annex get .
-</code></pre></div>
-<p>Now let&#39;s run the simulator. </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp/files/innermodel
-rcis simpleworld.xml
-</code></pre></div>
-<p>Congratulations! RCIS should be up and running with a simple robot endowed with a laser and an RGBD camera, moving on a wooden floor. Don&#39;t forget to turn around the floor to see the robot from above.</p>
-
-<h4>Installing some RoboLab&#39;s components from GitHub</h4>
-
-<p>The software of the robots using RoboComp is composed of different software components working together, communicating among them. What we just installed is just the core of RoboComp (the simulator, a component generator and some libraries). To have other features like joystick control we have to run additional software components available from other repositories, for example robocomp-robolab:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp/components
-git clone https://github.com/robocomp/robocomp-robolab.git
-</code></pre></div>
-<p>The RoboLab&#39;s set of basic robotics components are now dowloaded. You can see them in <code>~/robocomp/components/robocomp-robolab/components</code></p>
-
-<h4>Connecting a JoyStick</h4>
-
-<p>If you have a joystick around, connect it to the USB port and:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp/components/robocomp-robolab/components/joystickComp
-cmake .
-make
-cd bin
-sudo addgroup your-user dialout   // To solve some permissions issues in Ubuntu
-./startJoyStick.sh 
-</code></pre></div>
-<p>Your joystick should be now running. It will make the robot advance and turn at your will. If the component does not start or the robot does not move stop joystickcomp with:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">./forceStopJoyStickComp.sh
-</code></pre></div>
-<p>and check where the joystick device file has been created (e.g., <code>/dev/input/js0</code>). If it is not <code>/dev/input/js0</code>, edit <code>~/robocomp/components/robocomp-robolab/components/joystickComp/etc/config</code> change it accordingly and restart. Note that you might want to save the <em>config</em> file to the component&#39;s home directory so it does not interfere with future github updates.</p>
-
-<p>You can find more tutorials on RoboComp in <a href="doc/README.md">tutorials!</a></p>
-
-<p>Drop comments and ask questions in:</p>
-
-<ul>
-<li>https://groups.google.com/forum/?hl=es#!forum/robocomp-dev</li>
-<li>https://gitter.im/robocomp</li>
-</ul>
-
-<p>Please, report any bugs to pbustos@unex.es</p>
 
 </div>
 

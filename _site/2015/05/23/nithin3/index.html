@@ -16,14 +16,14 @@
   </title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/rcwebsite2/public/css/poole.css">
-  <link rel="stylesheet" href="/rcwebsite2/public/css/syntax.css">
-  <link rel="stylesheet" href="/rcwebsite2/public/css/hyde.css">
+  <link rel="stylesheet" href="/website/public/css/poole.css">
+  <link rel="stylesheet" href="/website/public/css/syntax.css">
+  <link rel="stylesheet" href="/website/public/css/hyde.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
   <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/rcwebsite2public/apple-touch-icon-144-precomposed.png">
-                                 <link rel="shortcut icon" href="/rcwebsite2public/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/websitepublic/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/websitepublic/favicon.ico">
 
   <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
@@ -36,7 +36,7 @@
   <div class="container">
     <div class="sidebar-about">
       <h1>
-        <a href="/rcwebsite2">
+        <a href="/website">
           RoboComp
         </a>
       </h1>
@@ -44,7 +44,7 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a class="sidebar-nav-item" href="/rcwebsite2">Home</a>
+      <a class="sidebar-nav-item" href="/website">Home</a>
 
       
 
@@ -56,31 +56,31 @@
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/Blog/">Blog</a>
+            <a class="sidebar-nav-item" href="/website/Blog/">Blog</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/GSoC/">GSoC</a>
+            <a class="sidebar-nav-item" href="/website/GSoC15/">GSoC'15</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/projects/">Projects</a>
+            <a class="sidebar-nav-item" href="/website/GSoC16/">GSoC'16</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/Tutorials/">Tutorials</a>
+            <a class="sidebar-nav-item" href="/website/projects/">Projects</a>
           
         
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/about/">About</a>
+            <a class="sidebar-nav-item" href="/website/about/">About</a>
           
         
       
@@ -88,7 +88,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/contact/">Contact</a>
+            <a class="sidebar-nav-item" href="/website/contact/">Contact</a>
           
         
       
@@ -98,11 +98,7 @@
       
         
           
-            <a class="sidebar-nav-item" href="/rcwebsite2/install/">Install</a>
-          
-        
-      
-        
+            <a class="sidebar-nav-item" href="/website/install/">Install</a>
           
         
       
@@ -118,11 +114,25 @@
           
         
       
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <a class="sidebar-nav-item" href="http://robocomp.readthedocs.org">Tutorials</a>
       <a class="sidebar-nav-item" href="https://github.com/robocomp">GitHub project</a>
+      
       <span class="sidebar-nav-item">Currently v1.0.0</span>
     </nav>
 
-    <p>&copy; 2015. All rights reserved.</p>
+    <p>&copy; 2016. All rights reserved.</p>
   </div>
 </div>
 
@@ -131,37 +141,48 @@
       <div class="post">
   <h1 class="post-title">Packaging RoboComp</h1>
   <span class="post-date">23 May 2015</span>
-  <h3>deb packages</h3>
+  <p>###deb packages</p>
 
 <p>For creating a robocomp debian package :</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd ~/robocomp
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cd ~/robocomp
 mkdir build
 cmake ..
 make package
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>will create a .deb package in the build directory, which we can install using any packaging application like dpkg. To install the created package, just double click on it(open with Software Center) or in terminal type</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">sudo dpkg -i &lt;packagename&gt;.deb
-</code></pre></div>
-<h3>source packages for ppa</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo dpkg -i &lt;packagename&gt;.deb
+</code></pre>
+</div>
+
+<p>###source packages for ppa</p>
 
 <p>Launchpad will only accept source packages and not binary.Launchpad will then build the packages. For building source packages we are using debuild which is a wrapper around the <em>dpkg-buildpackage + lintian</em>. so you will need to install debuild and dput on your system.The source_package.cmake script is used to create debian source package.</p>
 
-<p>The main CMakeLists.txt file defines a target <code>spackage</code> that builds the source package in build/Debian with <code>make spackage</code></p>
+<p>The main CMakeLists.txt file defines a target <code class="highlighter-rouge">spackage</code> that builds the source package in build/Debian with <code class="highlighter-rouge">make spackage</code></p>
 
 <p>For uploading the package to ppa, First change the <strong>PPA_PGP_KEY</strong> in <a href="../cmake/package_details.cmake#L26">package_details.cmake</a> to the contact of the PGP key  details registered with your ppa account.Then create a source package by building the target <em>spackage</em>.Once the Source package is build successfully, upload it to your ppa by:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd Debian/
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cd Debian/
 dput ppa:&lt;lp-username&gt;/&lt;ppa-name&gt; package-source.changes
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>building of source package can be tested with:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">cd Debian/robocomp-&lt;version&gt;
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cd Debian/robocomp-&lt;version&gt;
 debuild -i -us -uc
-</code></pre></div>
-<h4>Note:</h4>
+</code></pre>
+</div>
 
-<p>If you want to upload another source package to ppa which doesn&#39;t have any changes in the source but maybe in the debian files. you can build the spackage after commenting out <code>set(DEB_SOURCE_CHANGES &quot;CHANGED&quot; CACHE STRING &quot;source changed since last upload&quot;)</code> in <a href="../cmake/package_details.cmake#L27">package_details.cmake</a> so that the the script will only increase the ppa version number and wont include the source package for uploading to ppa (which otherwise will give an error).</p>
+<p>####Note:</p>
 
-<hr>
+<p>If you want to upload another source package to ppa which doesn’t have any changes in the source but maybe in the debian files. you can build the spackage after commenting out <code class="highlighter-rouge">set(DEB_SOURCE_CHANGES "CHANGED" CACHE STRING "source changed since last upload")</code> in <a href="../cmake/package_details.cmake#L27">package_details.cmake</a> so that the the script will only increase the ppa version number and wont include the source package for uploading to ppa (which otherwise will give an error).</p>
 
+<hr />
 <p>Nithin Murali</p>
 
 </div>
@@ -172,27 +193,27 @@ debuild -i -us -uc
     
       <li>
         <h3>
-          <a href="/rcwebsite2/2015/07/02/kripa1/">
-            <i>GSoC,</i> Computer vision components and libraries management <p>#1</p>
-            <small>02 Jul 2015</small>
+          <a href="/website/2016/04/25/gsoc16ideas/">
+            GSoC 2016 Ideas
+            <small>25 Apr 2016</small>
           </a>
         </h3>
       </li>
     
       <li>
         <h3>
-          <a href="/rcwebsite2/2015/07/02/Kripa2/">
-            <i>GSoC,</i> Computer vision components and libraries management <p>#2</p>
-            <small>02 Jul 2015</small>
+          <a href="/website/2015/08/21/nithin11/">
+            Packaging FCL and libccd
+            <small>21 Aug 2015</small>
           </a>
         </h3>
       </li>
     
       <li>
         <h3>
-          <a href="/rcwebsite2/2015/06/26/nithin6/">
-            Build tools
-            <small>26 Jun 2015</small>
+          <a href="/website/2015/08/20/rajath3/">
+            <i>GSoC,</i> After Midterms
+            <small>20 Aug 2015</small>
           </a>
         </h3>
       </li>
