@@ -21,7 +21,7 @@ So we indeed require training.
 <img src="images/week1/week1_overfeat_71.jpg" alt="" width="200"/> <img src="images/week1/week1_overfeat_192.jpg" alt="" width="200"/> <img src="images/week1/week1_overfeat_445.jpg" alt="" width="200"/> <img src="images/week1/week1_overfeat_706.jpg" alt="" width="200"/>
 <img src="images/week1/week1_VGG16_71.jpg" alt="" width="200"/> <img src="images/week1/week1_VGG16_192.jpg" alt="" width="200"/> <img src="images/week1/week1_VGG16_445.jpg" alt="" width="200"/> <img src="images/week1/week1_VGG16_706.jpg" alt="" width="200"/>
 
-Figure 2: Object detection results form RCNN(row 1) compared to my object proposel fed to Overfeat(row 2) and VGG16 (row3) for sample images.(Kindly click on images to view in larger size.)
+Figure 2: Object detection results form RCNN (row 1) compared to my object proposel fed to Overfeat (row 2) and VGG16 (row3) for sample images.(Kindly click on images to view in larger size.)
 
 Next steps
 ============
