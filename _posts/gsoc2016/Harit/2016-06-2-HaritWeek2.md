@@ -8,6 +8,7 @@ Is CNN solution to every object classification problem?
 Given the hype about CNNs and how they outperform the state-of-art object classifiers it would be interesting to see how they perform on images of day-today objects placed o a table . Figure 1 shows sample images given to CNN for classification. Although being a simple non-cluttered object identification problem, it is a non-trivial and challenging for vision tasks. Because, the the resolution is low and and objects are small. CNNs are good classifiers for a primary object in the scene i.e. we need to extract the object before giving it to a CNN. So let’s manually crop every object and give it to CNN and see how it performs. I have used 2 state-of-art CNNs. One is VGG16 by Oxford research group and the other is Overfeat by CILVR Lab @ NYU. I tried to qualitatively analyse the performance of both networks using top and top-5 classification results. I found that the performance is not very good for top-result, however the performance is acceptable for top-5 results.
 
 ![alt tag](images/week1/week1_dataset.png)
+
 Figure 1: Settings we are interested to work with. A table with some objects. 
 
 How to handle Object detections?
