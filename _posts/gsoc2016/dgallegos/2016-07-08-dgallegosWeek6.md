@@ -20,6 +20,6 @@ Finally I would like to highlight a further set of additions that I made:
 
 **Written a Syntax Highlighting File** that allow in KDE applications results like:
 
-<img src="images/week6.png" alt="" width="200"/> <img src="images/week6.png" alt="" width="200"/> <img src="images/week6.png" alt="" width="200"/>
+<img src="images/week6.png" alt="" width="200"/>
 
 **Support QT5** completed and tested (an example of use in the image above).
