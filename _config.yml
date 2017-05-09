@@ -25,3 +25,5 @@ version:          1.0.0
 
 github:
   repo:           https://github.com/robocomp
+
+theme: jekyll-theme-time-machine
